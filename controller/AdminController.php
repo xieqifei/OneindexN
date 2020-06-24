@@ -66,7 +66,15 @@ class AdminController{
 
 		return view::load('settings')->with('config', $config)->with('message', $message);
 	}
-
+	
+	function offline(){
+		
+		return view::load('offline');
+	}
+    
+    function yaaw(){
+        return view::load('yaaw/yaaw');
+    }
 	/**
 	 * 判断缓存类型
 	 *
