@@ -27,7 +27,6 @@ route::group(function(){
 	route::any('/admin/setpass','AdminController@setpass');
 	route::any('/admin/images','AdminController@images');
     route::any('/admin/offline','AdminController@offline');
-    route::any('/admin/yaaw','AdminController@yaaw');
 	route::any('/admin/upload','UploadController@index');
 	//守护进程
 	route::any('/admin/upload/run','UploadController@run');
@@ -37,6 +36,8 @@ route::group(function(){
 //登陆
 route::any('/login','AdminController@login');
 
+route::any('/offline','OfflineController@offline');
+    
 //跳转到登陆
 route::any('/admin/',function(){
 	return view::direct(get_absolute_path(dirname($_SERVER['SCRIPT_NAME'])).'?/login');
