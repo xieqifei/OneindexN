@@ -8,7 +8,7 @@ Demo：https://pan.sci.ci
 
 后台预览：
 
-![image-20200625111751929](C:\Users\97532\AppData\Roaming\Typora\typora-user-images\image-20200625111751929.png)
+![](https://i.loli.net/2020/06/25/f2SZynlY4DQixwL.png)
 
 # 二：部署网站
 
@@ -16,7 +16,9 @@ Demo：https://pan.sci.ci
 
 在github上将网站下载下来。可以直接下载为zip压缩包
 
-![image-20200625112023229](C:\Users\97532\AppData\Roaming\Typora\typora-user-images\image-20200625112023229.png)
+
+
+![](https://i.loli.net/2020/06/25/T4RShHIUQ9NVEnx.png)
 
 将文件解压到网站根目录。
 
@@ -155,7 +157,7 @@ location /jsonrpc {
 
 这样RPC可以配置为http://yoursite/jsonrpc。网站后台默认的RPC就是http://yoursite/jsonrpc
 
-![image-20200625113038730](C:\Users\97532\AppData\Roaming\Typora\typora-user-images\image-20200625113038730.png)
+![](https://i.loli.net/2020/06/25/9cY2PiBr6usqXen.png)
 
 **关闭aria2远程RPC**
 
