@@ -8,8 +8,12 @@ class OfflineController{
 
 	
 	function offline(){
-		
-		return view::load('offline');
+		if(config('offline')['offline']){
+			return view::load('offline');
+		}
+		else{
+			return "管理员未开启离线上传功能";
+		}
 	}
    
 }

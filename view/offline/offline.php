@@ -17,10 +17,10 @@
   You may get a copy of the GNU Lesser General Public License
   from http://www.gnu.org/licenses/lgpl.txt
 -->
-<html lang="en" manifest="https://raw.githubusercontent.com/xieqifei/yaaw/master/offline.appcache">
+<html lang="zh-CN" manifest="https://raw.githubusercontent.com/xieqifei/yaaw/master/offline.appcache">
   <head>
     <meta charset=utf-8 />
-    <title>Yet Another Aria2 Web Frontend</title>
+    <title>Aria2前端工具</title>
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, width=device-width">
     <meta name="author" content="Binux" />
     <meta http-equiv="Access-Control-Allow-Origin" content="*" />
@@ -38,7 +38,7 @@
   <body>
     <div class="container">
       <header class="main-head page-header">
-        <h1>Yet Another Aria2 Web Frontend</h1>
+        <h1>Aria2前端工具</h1>
         <span id="offline-cached"></span>
         <div id="global-info" class="pull-right">
           <div id="global-version"></div>
@@ -63,10 +63,10 @@
               <span class="caret"></span>
             </a>
             <ul class="dropdown-menu">
-              <li><a href="#" id="btnSelectActive" >Select Active</a></li>
-              <li><a href="#" id="btnSelectWaiting">Select Waiting</a></li>
-              <li><a href="#" id="btnSelectPaused" >Select Paused</a></li>
-              <li><a href="#" id="btnSelectStopped" >Select Stopped</a></li>
+              <li><a href="#" id="btnSelectActive" >进行中</a></li>
+              <li><a href="#" id="btnSelectWaiting">等待中</a></li>
+              <li><a href="#" id="btnSelectPaused" >暂停中</a></li>
+              <li><a href="#" id="btnSelectStopped" >已完成</a></li>
             </ul>
           </div>
         </div>
@@ -74,7 +74,7 @@
         <div class="pull-left" id="not-selected-grp">
           <div class="pull-left btn-group">
             <a class="btn" id="add-task-btn" data-toggle="modal" href="#add-task-modal" rel="tooltip" title="Add Task">
-              <i class="icon-plus"></i> Add
+              <i class="icon-plus"></i> 添加
             </a>
           </div>
           <div class="pull-left btn-group" id="do-all-btn">
@@ -110,7 +110,7 @@
         <div class="pull-right" id="other-grp">
           <div class="btn-group">
             <a href="#" class="btn" id="refresh-btn" rel="tooltip" title="Refresh">
-              <i class="icon-refresh"></i> Refresh
+              <i class="icon-refresh"></i> 刷新
             </a>
             <a class="btn" id="setting-btn" data-toggle="modal" href="#setting-modal" rel="tooltip" title="Settings">
               <i class="icon-wrench"></i>
@@ -121,12 +121,12 @@
 
       <section id="active-tasks">
       <div class="section-header">
-        <i class="icon-chevron-down"></i><b>Active Tasks</b>
+        <i class="icon-chevron-down"></i><b>活动任务</b>
       </div>
       <ul class="tasks-table" id="active-tasks-table">
         <li>
           <div class="empty-tasks">
-            <strong>No Active Tasks</strong>
+            <strong>无活动任务</strong>
           </div>
         </li>
       </ul>
@@ -134,12 +134,12 @@
 
       <section id="other-tasks">
       <div class="section-header">
-        <i class="icon-chevron-down"></i><b>Other Tasks</b>
+        <i class="icon-chevron-down"></i><b>其他任务</b>
       </div>
       <ul id="waiting-tasks-table" class="tasks-table">
         <li>
           <div class="empty-tasks">
-            <strong>No Tasks</strong>
+            <strong>无任务</strong>
           </div>
         </li>
       </ul>
@@ -148,21 +148,21 @@
     </div>
 
     <ul id="task-contextmenu" class="dropdown-menu">
-      <li class="task-restart"><a href="#" id="menuRestart" >ReStart</a></li>
-      <li class="task-start"><a href="#" id="menuStart" >Start</a></li>
-      <li class="task-pause"><a href="#" id="menuPause" >Pause</a></li>
-      <li><a href="#" id="menuRemove" >Remove</a></li>
+      <li class="task-restart"><a href="#" id="menuRestart" >重启</a></li>
+      <li class="task-start"><a href="#" id="menuStart" >启动</a></li>
+      <li class="task-pause"><a href="#" id="menuPause" >暂停</a></li>
+      <li><a href="#" id="menuRemove" >移动</a></li>
       <li class="task-move divider"></li>
-      <li class="task-move"><a href="#" id="menuMoveTop" >MoveTop</a></li>
-      <li class="task-move"><a href="#" id="menuMoveUp" >MoveUp</a></li>
-      <li class="task-move"><a href="#" id="menuMoveDown" >MoveDown</a></li>
-      <li class="task-move"><a href="#" id="menuMoveEnd" >MoveEnd</a></li>
+      <li class="task-move"><a href="#" id="menuMoveTop" >移至顶部</a></li>
+      <li class="task-move"><a href="#" id="menuMoveUp" >向上移动</a></li>
+      <li class="task-move"><a href="#" id="menuMoveDown" >向下移动</a></li>
+      <li class="task-move"><a href="#" id="menuMoveEnd" >移至底部</a></li>
     </ul>
 
     <section class="modal hide fade" id="add-task-modal">
     <div class="modal-header">
       <button class="close" data-dismiss="modal">×</button>
-      <h3>Add Task</h3>
+      <h3>添加任务</h3>
     </div>
     <div class="modal-body">
       <div id="add-task-alert" class="alert alert-error hide">
@@ -179,21 +179,21 @@
       <div id="add-task-option-wrap"></div>
     </div>
     <div class="modal-footer">
-      <a href="#" id="add-task-submit" class="btn btn-primary">Add</a>
-      <a href="#" id="add-task-clear" class="btn" data-dismiss="modal">Cancel</a>
+      <a href="#" id="add-task-submit" class="btn btn-primary">添加</a>
+      <a href="#" id="add-task-clear" class="btn" data-dismiss="modal">取消</a>
     </div>
     </section>
 
     <section class="modal hide fade" id="setting-modal">
     <div class="modal-header">
       <button class="close" data-dismiss="modal">×</button>
-      <h2>Settings</h2>
+      <h2>设置</h2>
     </div>
     <div class="modal-body">
       <form id="setting-form" class="form-horizontal">
         <fieldset>
           <div class="control-group rpc-path-group">
-            <label class="control-label" for="rpc-path">JSON-RPC Path</label>
+            <label class="control-label" for="rpc-path">JSON-RPC 路径</label>
             <div class="controls">
               <div class="input-append btn-group rpc-path-wrap">
                 <input type="text" class="input-xlarge" id="rpc-path"><a class="add-on btn dropdown-toggle" href="#" disabled><b class="caret"></b></a>
@@ -201,7 +201,7 @@
             </div>
           </div>
           <div class="control-group">
-            <label class="control-label">Auto Refresh</label>
+            <label class="control-label">自动刷新</label>
             <div class="controls">
               <label class="radio inline">
                 <input type="radio" name="refresh_interval" value="1000"> 1s
@@ -221,13 +221,13 @@
             </div>
           </div>
           <div class="control-group">
-            <label class="control-label">Finish Notification</label>
+            <label class="control-label">完成时提醒</label>
             <div class="controls">
               <label class="radio inline">
-                <input type="radio" name="finish_notification" value="1" checked> Enable
+                <input type="radio" name="finish_notification" value="1" checked> 开启提醒
               </label>
               <label class="radio inline">
-                <input type="radio" name="finish_notification" value="0"> Disable
+                <input type="radio" name="finish_notification" value="0"> 关闭提醒
               </label>
             </div>
           </div>
@@ -238,8 +238,8 @@
     </div>
     <div class="modal-footer">
       <div id="copyright">© Copyright <a href="https://github.com/binux/yaaw">Binux</a></div>
-      <a href="#" id="saveSettings"  class="btn btn-success">Save</a>
-      <a href="#" class="btn" data-dismiss="modal">Cancel</a>
+      <a href="#" id="saveSettings"  class="btn btn-success">保存</a>
+      <a href="#" class="btn" data-dismiss="modal">取消</a>
     </div>
     </section>
     
@@ -280,7 +280,7 @@
       {{^tasks}}
       <li>
         <div class="empty-tasks">
-          <strong>No Active Tasks</strong>
+          <strong>无活动任务</strong>
         </div>
       </li>
       {{/tasks}}
@@ -383,7 +383,7 @@
     <script id="other-task-empty" type="text/mustache-template">
       <li>
         <div class="empty-tasks">
-          <strong>No Tasks</strong>
+          <strong>无任务</strong>
         </div>
       </li>
     </script>
@@ -508,7 +508,7 @@
     <script src="https://qn.xieqifei.com/js/mustache.js"></script>
     <script src="https://qn.xieqifei.com/js/peerid.js"></script>
     <script src="https://qn.xieqifei.com/js/aria2.js"></script>
-    <script src="https://qn.xieqifei.com/js/yaaw.js"></script>
+    <script src="https://qn.xieqifei.com/js/yaaw-1.1.js"></script>
   </body>
 </html>
 <!-- vim: set et sw=2 ts=2 sts=2 ff=unix fenc=utf8: -->

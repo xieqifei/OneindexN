@@ -5,14 +5,33 @@
 
 	<div class="mdui-typo">
 	  <h1> 离线上传<small>需开启aria2的RPC功能</small></h1>
-	</div>
+  </div>
+  <form action="" method="post">
+		<div class="mdui-textfield">
+		  <h4>游客前台离线上传</h4>
+		  <label class="mdui-textfield-label"></label>
+		  <label class="mdui-switch">
+			  <input type="checkbox" name="offline" value="1" <?php echo ($config['offline']==false)?'':'checked';?>/>
+			  <i class="mdui-switch-icon"></i>
+		  </label>
+		</div>
+	   <Br>
+	   <button type="submit" class="mdui-btn mdui-color-theme-accent mdui-ripple mdui-float-right">
+	   	<i class="mdui-icon material-icons">&#xe161;</i> 保存
+     </button>
+     <Br>
+     <Br>
+     <Br>
+     <div class="mdui-divider"></div>
+     <Br>
+	</form>
     <link rel="stylesheet" href="https://qn.xieqifei.com/bootstrap.min.css">
     <link href="https://qn.xieqifei.com/bootstrap-responsive.min.css" rel="stylesheet" type="text/css"/>
     <link href="https://qn.xieqifei.com/main.css" rel="stylesheet" type="text/css"/>
     <body>
       <header class="main-head page-header">
         <span id="offline-cached"></span>
-        <div id="global-info" class="pull-right">
+        <div id="global-info" class="pull-right bg-info">
           <div id="global-version"></div>
           <div id="global-speed"></div>
         </div>
@@ -34,10 +53,10 @@
               <span class="caret"></span>
             </a>
             <ul class="dropdown-menu">
-              <li><a href="#" id="btnSelectActive" >选择 进行中</a></li>
-              <li><a href="#" id="btnSelectWaiting">选择 等待中</a></li>
-              <li><a href="#" id="btnSelectPaused" >选择 暂停中</a></li>
-              <li><a href="#" id="btnSelectStopped" >选择 已停止</a></li>
+              <li><a href="#" id="btnSelectActive" >进行中</a></li>
+              <li><a href="#" id="btnSelectWaiting">等待中</a></li>
+              <li><a href="#" id="btnSelectPaused" >暂停中</a></li>
+              <li><a href="#" id="btnSelectStopped" >已完成</a></li>
             </ul>
           </div>
         </div>
@@ -92,7 +111,7 @@
 
       <section id="active-tasks">
       <div class="section-header">
-        <i class="icon-chevron-down"></i><b>活动中任务</b>
+        <i class="icon-chevron-down"></i><b>进行中任务</b>
       </div>
       <ul class="tasks-table" id="active-tasks-table">
         <li>
@@ -353,7 +372,7 @@
     <script id="other-task-empty" type="text/mustache-template">
       <li>
         <div class="empty-tasks">
-          <strong>No Tasks</strong>
+          <strong>无任务</strong>
         </div>
       </li>
     </script>
@@ -478,7 +497,7 @@
     <script src="https://qn.xieqifei.com/js/mustache.js"></script>
     <script src="https://qn.xieqifei.com/js/peerid.js"></script>
     <script src="https://qn.xieqifei.com/js/aria2.js"></script>
-    <script src="https://qn.xieqifei.com/js/yaaw.js"></script>
+    <script src="https://qn.xieqifei.com/js/yaaw-1.1.js"></script>
    
   </body>
 </div>

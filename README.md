@@ -155,7 +155,7 @@ location /jsonrpc {
 	}
 ```
 
-这样RPC可以配置为http://yoursite/jsonrpc。网站后台默认的RPC就是http://yoursite/jsonrpc
+这样RPC可以配置为`http://yoursite/jsonrpc`。网站后台默认的RPC就是`http://yoursite/jsonrpc`
 
 ![](https://i.loli.net/2020/06/25/9cY2PiBr6usqXen.png)
 
