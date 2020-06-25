@@ -6,6 +6,7 @@ class AdminController{
 	  'password' => 'oneindex',
 	  'style'=>'nexmoe',
 	  'onedrive_root' =>'',
+	  'except_path' =>'',
 	  'cache_type'=>'secache',
 	  'cache_expire_time' => 3600,
 	  'cache_refresh_time' => 600,
@@ -52,10 +53,16 @@ class AdminController{
 				$message = '缓存类型不可用，请确认已经安装了该拓展。';
 				config('cache_type', 'secache');
 			}
-
+			//判断不渲染目录是否为全部不渲染
+			if($_POST['except_path']){
+				$except_path=(strcmp($_POST['except_path'],'all')==0?'all':get_absolute_path($_POST['except_path']));
+			}else{
+				$except_path='';
+			}
 			config('site_name', $_POST['site_name']);
 			config('style', $_POST['style']);
 			config('onedrive_root', get_absolute_path($_POST['onedrive_root']));
+			config('except_path',$except_path);
 			config('onedrive_hide', $_POST['onedrive_hide']);
 			config('onedrive_hotlink', $_POST['onedrive_hotlink']);
 			config('cache_expire_time', intval($_POST['cache_expire_time']));

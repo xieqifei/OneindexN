@@ -16,11 +16,11 @@
 		  <h4>网站主题<small></small></h4>
 		  <select name="style" class="mdui-select">
 			  <?php 
-				foreach(scandir(ROOT.'view') as $k=>$s){
+				foreach(scandir(ROOT.'themes') as $k=>$s){
 				    $styles[$k] = trim($s, '/');
 				}
 				$styles = array_diff($styles, [".", "..", "admin"]);
-				$style = config("style")?config("style"):'material';
+				$style = config("style")?config("style"):'nexmoe';
 				$cache_type  = config("cache_type")?config("cache_type"):'secache';
 			 	foreach($styles as $style_name):
 			  ?>
@@ -34,12 +34,18 @@
 		  <input class="mdui-textfield-input" type="text" name="onedrive_root" value="<?php echo $config['onedrive_root'];?>"/>
 		</div>
 
+		<div class="mdui-textfield">
+		  <h4>不渲染目录<small> 该目录下index.html、readme.md、head.md文件不会被渲染</small></h4>
+		  <input class="mdui-textfield-input" type="text" name="except_path" value="<?php echo $config['except_path'];?>"/>
+		  <small>设置所有目录都不渲染输入all，设置名为all的目录不渲染，输入/all</small>
+		</div>
 
 		<div class="mdui-textfield">
 		  <h4>需要隐藏的目录<small> 不需要列出的目录(一行一个) 清空缓存后生效</small></h4>
 		  <textarea class="mdui-textfield-input" placeholder="输入后回车换行" name="onedrive_hide"><?=@$config['onedrive_hide'];?></textarea>
 		  <small>这里是通配识别，就是存在以上字符文件夹一律会隐藏</small>
 		</div>
+
 
 		<div class="mdui-textfield">
 		  <h4>防盗链(白名单)<small> 不填写则不启用, 多个用英文 <code>;</code> 分割</small></h4>

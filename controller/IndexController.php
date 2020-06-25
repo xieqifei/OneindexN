@@ -87,33 +87,38 @@ class IndexController{
 	function dir(){
 		$root = get_absolute_path(dirname($_SERVER['SCRIPT_NAME'])).config('root_path');
 		$navs = $this->navs();
-
-		if($this->items['index.html']){
-			$this->items['index.html']['path'] = get_absolute_path($this->path).'index.html';
-			$index = $this->get_content($this->items['index.html']);
-			header('Content-type: text/html');
-			echo $index;
-			exit();
+		$paths_buffer = explode('/', config('except_path'));
+		$except_path_buffer = get_absolute_path(join('/', $paths_buffer));
+		//以下情况不渲染index.html
+		if((strcmp(config('except_path'),'all')!=0&&(get_absolute_path($this->path)!=get_absolute_path(config('onedrive_root').$except_path_buffer)))||empty(config('except_path')))
+		{
+			if($this->items['index.html']){
+				$this->items['index.html']['path'] = get_absolute_path($this->path).'index.html';
+				$index = $this->get_content($this->items['index.html']);
+				header('Content-type: text/html');
+				echo $index;
+				exit();
+			}
+	
+			if($this->items['README.md']){
+				$this->items['README.md']['path'] = get_absolute_path($this->path).'README.md';
+				$readme = $this->get_content($this->items['README.md']);
+				$Parsedown = new Parsedown();
+				$readme = $Parsedown->text($readme);
+				//不在列表中展示
+				unset($this->items['README.md']);
+			}
+	
+			if($this->items['HEAD.md']){
+				$this->items['HEAD.md']['path'] = get_absolute_path($this->path).'HEAD.md';
+				$head = $this->get_content($this->items['HEAD.md']);
+				$Parsedown = new Parsedown();
+				$head = $Parsedown->text($head);
+				//不在列表中展示
+				unset($this->items['HEAD.md']);
+			}
 		}
-
-		if($this->items['README.md']){
-			$this->items['README.md']['path'] = get_absolute_path($this->path).'README.md';
-			$readme = $this->get_content($this->items['README.md']);
-			$Parsedown = new Parsedown();
-			$readme = $Parsedown->text($readme);
-			//不在列表中展示
-			unset($this->items['README.md']);
-		}
-
-		if($this->items['HEAD.md']){
-			$this->items['HEAD.md']['path'] = get_absolute_path($this->path).'HEAD.md';
-			$head = $this->get_content($this->items['HEAD.md']);
-			$Parsedown = new Parsedown();
-			$head = $Parsedown->text($head);
-			//不在列表中展示
-			unset($this->items['HEAD.md']);
-		}
-		return view::load('list')->with('title', 'index of '. urldecode($this->url_path))
+		return view::load('list')->with('title', '处在 '. urldecode($this->url_path))
 					->with('navs', $navs)
 					->with('path',join("/", array_map("rawurlencode", explode("/", $this->url_path)))  )
 					->with('root', $root)

@@ -45,7 +45,7 @@ route::any('/admin/',function(){
 
 
 
-define('VIEW_PATH', ROOT.'view/'.(config('style')?config('style'):'material').'/');
+define('VIEW_PATH', ROOT.'themes/'.(config('style')?config('style'):'material').'/');
 /**
  *    OneImg
  */
