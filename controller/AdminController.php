@@ -72,9 +72,6 @@ class AdminController{
 		return view::load('offline');
 	}
     
-    function yaaw(){
-        return view::load('yaaw/yaaw');
-    }
 	/**
 	 * 判断缓存类型
 	 *
