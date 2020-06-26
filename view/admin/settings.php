@@ -16,7 +16,7 @@
 		  <h4>网站主题<small></small></h4>
 		  <select name="style" class="mdui-select">
 			  <?php 
-				foreach(scandir(ROOT.'themes') as $k=>$s){
+				foreach(scandir(ROOT.'/view/themes') as $k=>$s){
 				    $styles[$k] = trim($s, '/');
 				}
 				$styles = array_diff($styles, [".", "..", "admin"]);

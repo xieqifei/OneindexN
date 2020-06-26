@@ -108,7 +108,7 @@ function file_ico($item){
 </div>
 </div>
 <?php if($readme):?>
-<div class="mdui-typo mdui-shadow-3" style="padding: 20px;margin: 20px; 0">
+<div class="mdui-typo mdui-shadow-3" style="padding: 20px;margin: 20px; ">
 	<div class="mdui-chip">
 	  <span class="mdui-chip-icon"><i class="mdui-icon material-icons">face</i></span>
 	  <span class="mdui-chip-title">README.md</span>

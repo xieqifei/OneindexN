@@ -1,5 +1,5 @@
 <?php 
-define('VIEW_PATH', ROOT.'view/offline/');
+define('VIEW_PATH', ROOT.'view/');
 class OfflineController{
 	
 	function __construct(){
@@ -8,11 +8,11 @@ class OfflineController{
 
 	
 	function offline(){
-		if(config('offline')['offline']){
-			return view::load('offline');
+		if(config('offline')['offline']||$_COOKIE['admin'] == md5(config('password').config('refresh_token'))){
+			return view::load('offline/offline');
 		}
 		else{
-			return "管理员未开启离线上传功能";
+			return view::load('offline/tips');
 		}
 	}
    

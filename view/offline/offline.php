@@ -1,42 +1,10 @@
-<!DOCTYPE html>
-<!--
-  Copyright (C) 2015 Binux <roy@binux.me>
+<?php view::layout('themes/'.(config('style')?config('style'):'material').'/layout')?>
 
-  This file is part of YAAW (https://github.com/binux/yaaw).
-
-  YAAW is free software: you can redistribute it and/or modify
-  it under the terms of the GNU Lesser General Public License as
-  published by the Free Software Foundation, either version 3 of
-  the License, or (at your option) any later version.
-
-  YAAW is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-  GNU Lesser General Public License for more details.
-
-  You may get a copy of the GNU Lesser General Public License
-  from http://www.gnu.org/licenses/lgpl.txt
--->
-<html lang="zh-CN" manifest="https://raw.githubusercontent.com/xieqifei/yaaw/master/offline.appcache">
-  <head>
-    <meta charset=utf-8 />
-    <title>Aria2前端工具</title>
-    <meta name="viewport" content="initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, width=device-width">
-    <meta name="author" content="Binux" />
-    <meta http-equiv="Access-Control-Allow-Origin" content="*" />
-    
-    <link rel="stylesheet" href="https://qn.xieqifei.com/bootstrap.min.css">
-    <link href="https://qn.xieqifei.com/bootstrap-responsive.min.css" rel="stylesheet" type="text/css"/>
-    <link href="https://qn.xieqifei.com/main.css" rel="stylesheet" type="text/css"/>
-    
-
-   
-    <!--[if lt IE 9]>
-      <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-  </head>
+<?php view::begin('content');?>
+  <link rel="stylesheet" href="https://qn.xieqifei.com/bootstrap.min.css">
+  <link href="https://qn.xieqifei.com/bootstrap-responsive.min.css" rel="stylesheet" type="text/css"/>
+  <link href="https://qn.xieqifei.com/main.css" rel="stylesheet" type="text/css"/>
   <body>
-    <div class="container">
       <header class="main-head page-header">
         <h1>Aria2前端工具</h1>
         <span id="offline-cached"></span>
@@ -145,7 +113,6 @@
       </ul>
       <ul id="stopped-tasks-table" class="tasks-table"> </ul>
       </section>
-    </div>
 
     <ul id="task-contextmenu" class="dropdown-menu">
       <li class="task-restart"><a href="#" id="menuRestart" >重启</a></li>
@@ -510,5 +477,4 @@
     <script src="https://qn.xieqifei.com/js/aria2.js"></script>
     <script src="https://qn.xieqifei.com/js/yaaw-1.1.js"></script>
   </body>
-</html>
-<!-- vim: set et sw=2 ts=2 sts=2 ff=unix fenc=utf8: -->
+<?php view::end('content');?>

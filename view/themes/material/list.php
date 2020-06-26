@@ -137,4 +137,21 @@ $(function () {
 
 });
 </script>
+<div class="mdui-fab-wrapper" id="myFab">
+    <button class="mdui-fab mdui-ripple mdui-color-theme-accent">
+      <i class="mdui-icon material-icons">add</i>
+      <i class="mdui-icon mdui-fab-opened material-icons">mode_edit</i>
+    </button>
+    <div class="mdui-fab-dial">
+      <button class="mdui-fab mdui-fab-mini mdui-ripple mdui-color-pink" onclick="location.href='/?/offline'"><i class="mdui-icon material-icons">cloud_upload</i>
+      </button>
+      <button class="mdui-fab mdui-fab-mini mdui-ripple mdui-color-red" onclick="addFavorite2()"><i class="mdui-icon material-icons">bookmark</i>
+      </button>
+      <button class="mdui-fab mdui-fab-mini mdui-ripple mdui-color-orange" onclick="location.href='/?/admin'"><i class="mdui-icon material-icons">account_circle</i>
+      </button>
+    </div>
+  </div>
+<script>
+    var inst = new mdui.Fab('#myFab');
+</script>
 <?php view::end('content');?>
