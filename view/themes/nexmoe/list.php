@@ -179,32 +179,6 @@ function thumb(){
 
 }	
 
-function addFavorite2() {
-    var url = window.location || 'https://pan.sci.ci';
-    var title = document.title;
-    var ua = navigator.userAgent.toLowerCase();
-    if (ua.indexOf("360se") > -1) {
-        alert("由于360浏览器功能限制，请按 Ctrl+D 手动收藏！");
-    }
-    else if (ua.indexOf("msie 8") > -1) {
-        window.external.AddToFavoritesBar(url, title); //IE8
-    }
-    else if (document.all) {
-  try{
-   window.external.addFavorite(url, title);
-  }catch(e){
-   alert('您的浏览器不支持,请按 Ctrl+D 手动收藏!');
-  }
-    }
-    else if (window.sidebar) {
-        window.sidebar.addPanel(title, url, "");
-    }
-    else {
-  alert('您的浏览器不支持,请按 Ctrl+D 手动收藏!');
-    }
-}
-
-
 
 $(function(){
 	$('.file a').each(function(){
@@ -240,7 +214,7 @@ $(function(){
     <div class="mdui-fab-dial">
       <button class="mdui-fab mdui-fab-mini mdui-ripple mdui-color-pink" onclick="location.href='/?/offline'"><i class="mdui-icon material-icons">cloud_upload</i>
       </button>
-      <button class="mdui-fab mdui-fab-mini mdui-ripple mdui-color-red" onclick="addFavorite2()"><i class="mdui-icon material-icons">bookmark</i>
+      <button class="mdui-fab mdui-fab-mini mdui-ripple mdui-color-red" id="open"><i class="mdui-icon material-icons">file_upload</i>
       </button>
       <button class="mdui-fab mdui-fab-mini mdui-ripple mdui-color-orange" onclick="location.href='/?/admin'"><i class="mdui-icon material-icons">account_circle</i>
       </button>
@@ -248,7 +222,66 @@ $(function(){
       </button>
     </div>
   </div>
+
+  <div class="mdui-container">
+
+  <div class="mdui-dialog" id="fileupload-dialog">
+    <div class="mdui-dialog-title">文件上传</div>
+    <div class="mdui-dialog-content">
+		<form action="?/onlinefileupload" method="post" enctype="multipart/form-data">
+			<input class="mdui-center" type="file" style="margin: 50px 0;" name="onlinefile" />
+			<div class="mdui-row-xs-3">
+			<div class="mdui-col"></div>
+				<div class="mdui-col">
+					<button class="mdui-btn mdui-btn-block mdui-color-theme-accent mdui-ripple">上传</button>
+				</div>
+			</div>
+
+		</form>
+	</div>
+    <div class="mdui-dialog-actions">
+      <button class="mdui-btn mdui-ripple" mdui-dialog-cancel>取消</button>
+    </div>
+  </div>
+
+</div>
+		
 <script>
     var inst = new mdui.Fab('#myFab');
+
+	var inst = new mdui.Dialog('#fileupload-dialog');
+
+// method
+document.getElementById('open').addEventListener('click', function () {
+  inst.open();
+});
+
+
+// event
+var dialog = document.getElementById('dialog');
+
+dialog.addEventListener('open.mdui.dialog', function () {
+  console.log('open');
+});
+
+dialog.addEventListener('opened.mdui.dialog', function () {
+  console.log('opened');
+});
+
+dialog.addEventListener('close.mdui.dialog', function () {
+  console.log('close');
+});
+
+dialog.addEventListener('closed.mdui.dialog', function () {
+  console.log('closed');
+});
+
+dialog.addEventListener('cancel.mdui.dialog', function () {
+  console.log('cancel');
+});
+
+dialog.addEventListener('confirm.mdui.dialog', function () {
+  console.log('confirm');
+});
 </script>
 <?php view::end('content');?>

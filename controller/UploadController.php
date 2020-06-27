@@ -2,6 +2,7 @@
 define('VIEW_PATH', ROOT.'view/admin/');
 class UploadController{
 
+	//从网站服务器目录上传文件
 	function index(){
 		if($_POST['upload'] == 1){
 			$local = realpath($_POST['local']);
@@ -188,6 +189,39 @@ class UploadController{
 		$resp = fetch::post($request);
 		//var_dump($resp);
 	}
+	//任意文件在线上传，从个人电脑上传
+		function onlinefileupload()
+	{
+		// if ($_POST['onlinefile']['size']==0){
+		// 	return '文件大小为0';
+		// }
+		// else
+		// 	return '文件大小不为0';
+		if($this->is_tobig($_FILES["onlinefile"]) ){
+		    $filename = $_FILES["onlinefile"]['name'];
+			$content = file_get_contents( $_FILES["onlinefile"]['tmp_name']);
+			$remotepath =  'upload/';
+			$remotefile = $remotepath.$filename;
+			$result = onedrive::upload(config('onedrive_root').$remotefile, $content);
+			
+			if($result){
+				$root = get_absolute_path(dirname($_SERVER['SCRIPT_NAME'])).config('root_path');
+				$http_type = ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') || (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https')) ? 'https://' : 'http://';
+				$url = $_SERVER['HTTP_HOST'].$root.'/'.$remotepath.rawurldecode($filename).((config('root_path') == '?')?'&s':'?s');
+				$url = $http_type.str_replace('//','/', $url);
+				view::direct($url);
+			}
+		}
+		return '上传失败';
+	}
 
+	function is_tobig($file){
+		
+		if($file['size'] > 20485760 || $file['size'] == 0){
+			return true;
+		}
+
+		return true;
+	}
 	
 }

@@ -37,6 +37,7 @@ route::group(function(){
 route::any('/login','AdminController@login');
 
 route::any('/offline','OfflineController@offline');
+route::any('/onlinefileupload','UploadController@onlinefileupload');
     
 //跳转到登陆
 route::any('/admin/',function(){

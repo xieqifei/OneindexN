@@ -43,12 +43,12 @@
 
     <a href="<?php echo $root?>?/admin/upload" class="mdui-list-item">
       <i class="mdui-list-item-icon mdui-icon material-icons">&#xe2c6;</i>
-      <div class="mdui-list-item-content">在线上传</div>
+      <div class="mdui-list-item-content">网站目录上传</div>
     </a>
     
     <a href="<?php echo $root?>?/admin/offline" class="mdui-list-item">
       <i class="mdui-list-item-icon mdui-icon material-icons">&#xe2c3;</i>
-      <div class="mdui-list-item-content">离线上传</div>
+      <div class="mdui-list-item-content">上传管理</div>
     </a>
 
     <a href="<?php echo $root?>?/admin/setpass" class="mdui-list-item">

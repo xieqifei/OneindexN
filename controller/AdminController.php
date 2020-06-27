@@ -22,7 +22,10 @@ class AdminController{
 	    'doc'=>['csv','doc','docx','odp','ods','odt','pot','potm','potx','pps','ppsx','ppsxm','ppt','pptm','pptx','rtf','xls','xlsx']
 	  ),
 	  'images'=>['home'=>false,'public'=>false, 'exts'=>['jpg','png','gif','bmp']],
-	  'offline'=>['offline'=>false]
+	  'offline'=>array(
+		  'offline'=>false,
+		  'online'=>false
+		)
 	);
 	
 	function __construct(){
@@ -77,7 +80,9 @@ class AdminController{
 	
 	function offline(){
 		$config['offline'] = empty($_POST['offline'])?false:true;
+		$config['online'] = empty($_POST['online'])?false:true;
 		config('offline@base',$config);
+
 		$config = config('offline@base');
 		return view::load('offline')->with('config',$config);
 	}

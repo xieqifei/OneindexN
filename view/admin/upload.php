@@ -3,14 +3,14 @@
 <div class="mdui-container-fluid">
 
 	<div class="mdui-typo">
-	  <h1> 上传管理 <small>文件上传添加和管理</small></h1>
+	  <h1> 网站目录上传 <small>文件上传添加和管理</small></h1>
 	</div>
 
 	<div class="mdui-row">
 	  <form action="" method="post">
 		  <div class="mdui-col-xs-7">
 			<div class="mdui-textfield">
-			  <label class="mdui-textfield-label">服务器文件/文件夹</label>
+			  <label class="mdui-textfield-label">网站目录下的文件或文件夹</label>
 			  <input name="local" class="mdui-textfield-input" type="text"/>
 			</div>
 		  </div>
