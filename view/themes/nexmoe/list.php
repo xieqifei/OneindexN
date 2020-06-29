@@ -228,7 +228,7 @@ $(function(){
   <div class="mdui-dialog" id="fileupload-dialog">
     <div class="mdui-dialog-title">文件上传</div>
     <div class="mdui-dialog-content">
-		<form action="?/onlinefileupload" method="post" enctype="multipart/form-data">
+		<form action="?/onlinefileupload" method="post" enctype="multipart/form-data" style="display: <?php if(!$online) echo "none" ;else echo "inline" ?>;">
 			<input class="mdui-center" type="file" style="margin: 50px 0;" name="onlinefile" />
 			<div class="mdui-row-xs-3">
 			<div class="mdui-col"></div>
@@ -236,8 +236,8 @@ $(function(){
 					<button class="mdui-btn mdui-btn-block mdui-color-theme-accent mdui-ripple">上传</button>
 				</div>
 			</div>
-
 		</form>
+		<h4 style="display: <?php if($online) echo "none" ;else echo "inline" ?>;">管理员未允许游客上传</h4>
 	</div>
     <div class="mdui-dialog-actions">
       <button class="mdui-btn mdui-ripple" mdui-dialog-cancel>取消</button>

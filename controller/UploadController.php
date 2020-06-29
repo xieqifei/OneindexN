@@ -192,11 +192,7 @@ class UploadController{
 	//任意文件在线上传，从个人电脑上传
 		function onlinefileupload()
 	{
-		// if ($_POST['onlinefile']['size']==0){
-		// 	return '文件大小为0';
-		// }
-		// else
-		// 	return '文件大小不为0';
+		
 		if($this->is_tobig($_FILES["onlinefile"]) ){
 		    $filename = $_FILES["onlinefile"]['name'];
 			$content = file_get_contents( $_FILES["onlinefile"]['tmp_name']);
@@ -217,7 +213,7 @@ class UploadController{
 
 	function is_tobig($file){
 		
-		if($file['size'] > 20485760 || $file['size'] == 0){
+		if($file['size'] > 4485760 || $file['size'] == 0){
 			return true;
 		}
 

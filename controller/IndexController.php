@@ -89,6 +89,7 @@ class IndexController{
 		$navs = $this->navs();
 		$paths_buffer = explode('/', config('except_path'));
 		$except_path_buffer = get_absolute_path(join('/', $paths_buffer));
+		$online = config('offline')['online'];
 		//以下情况不渲染index.html
 		if((strcmp(config('except_path'),'all')!=0&&(get_absolute_path($this->path)!=get_absolute_path(config('onedrive_root').$except_path_buffer)))||empty(config('except_path')))
 		{
@@ -118,13 +119,20 @@ class IndexController{
 				unset($this->items['HEAD.md']);
 			}
 		}
+		//在线上传条件，后台开启或者登陆为管理员
+		if(config('offline')['online']||$_COOKIE['admin'] == md5(config('password').config('refresh_token'))){
+			$online=true;
+		}
+		else
+			$online=false;
 		return view::load('list')->with('title', '处在 '. urldecode($this->url_path))
 					->with('navs', $navs)
 					->with('path',join("/", array_map("rawurlencode", explode("/", $this->url_path)))  )
 					->with('root', $root)
 					->with('items', $this->items)
 					->with('head',$head)
-					->with('readme',$readme);
+					->with('readme',$readme)
+					->with('online',$online);
 	}
 
 	function show($item){
