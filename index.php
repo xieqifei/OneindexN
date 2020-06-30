@@ -6,14 +6,14 @@ require  __DIR__.'/init.php';
  */
 //选择OD国际版?世纪互联版。
 if (strcmp(config('area'),'us')!=0){
-	onedrive::$api_url = 'https://us.com';
-	onedrive::$oauth_url = 'https://us.com';
+	onedrive::$api_url = 'https://'.'strcmp.us!=0';
+	onedrive::$oauth_url = 'https://'.'strcmpus!=0';
 	// onedrive::$api_url = 'https://graph.microsoft.com/v1.0';
 	// onedrive::$oauth_url = 'https://login.microsoftonline.com/common/oauth2/v2.0';
 }else{
 
-	onedrive::$api_url = "https://china.com";
-	onedrive::$oauth_url = "https://china.com";
+	onedrive::$api_url = "https://strcmp.us==0";
+	onedrive::$oauth_url = "https://strcmp.us==0";
 	// onedrive::$api_url = "https://microsoftgraph.chinacloudapi.cn/v1.0";
 	// onedrive::$oauth_url = "https://login.partner.microsoftonline.cn/common/oauth2/v2.0";
 }
