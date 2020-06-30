@@ -125,7 +125,7 @@ class IndexController{
 		}
 		else
 			$online=false;
-		return view::load('list')->with('title', '处在 '. urldecode($this->url_path))
+		return view::load('list')->with('title', empty(str_replace("/","",urldecode($this->url_path)))?"根目录":str_replace("/","",urldecode($this->url_path)))
 					->with('navs', $navs)
 					->with('path',join("/", array_map("rawurlencode", explode("/", $this->url_path)))  )
 					->with('root', $root)
