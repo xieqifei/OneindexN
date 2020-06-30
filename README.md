@@ -1,30 +1,26 @@
 # 一：简介
 
-Yaaw是个开源的aria2的WebUI，通过这个UI可以使用aria2的rpc功能，向aria2发送下载某文件的指令。我将yaaw嵌入到了Oneindex后台，同时在前台也部署了yaaw供游客使用。
+本项目是Oneindex的继承版本。主要针对后台和nexmoe主题进行优化修改。
 
 项目地址：https://github.com/xieqifei/OneindexN
 
 Demo：https://pan.sci.ci
 
-后台预览：
+## 修改功能：
 
-![](https://i.loli.net/2020/06/25/f2SZynlY4DQixwL.png)
+- 安装时，选择世纪互联/国际版
+- 文件前台游客/管理员在线上传（后台可关闭游客上传、指定上传路径）
+- 文件前台游客/管理员离线上传（需安装aria2，后台可关闭游客上传）
+- 后台可指定文件夹/全部文件夹，关闭Readme.md、index.html、head.md渲染（如果离线上传路径和在线上传路径不同，可在这里设置离线上传路径为不渲染）
+- 外部视频播放器播放。
+
+> 默认在线上床
 
 # 二：部署网站
 
 网站环境尽量使用nginx。后面会用nginx做反代，可以避免修改yaaw的rpc参数。
 
-在github上将网站下载下来。可以直接下载为zip压缩包
 
-
-
-![](https://i.loli.net/2020/06/25/T4RShHIUQ9NVEnx.png)
-
-将文件解压到网站根目录。
-
-进入网站首页。配置网站。
-
-Onedrive Directory Index
 
 ## 功能：
 
@@ -140,9 +136,9 @@ php one.php upload:file demo.zip /test/d.zip
 php one.php upload:file up/ /test/
 ```
 
-# 三：修改Nginx配置
+# 三：连接Aria2
 
-添加
+Nginx添加反向代理
 
 ```
 location /jsonrpc {

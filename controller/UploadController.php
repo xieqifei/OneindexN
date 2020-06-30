@@ -196,9 +196,9 @@ class UploadController{
 		if($this->is_tobig($_FILES["onlinefile"]) ){
 		    $filename = $_FILES["onlinefile"]['name'];
 			$content = file_get_contents( $_FILES["onlinefile"]['tmp_name']);
-			$remotepath =  'upload/';
+			$remotepath =  config('offline')['upload_path'];
 			$remotefile = $remotepath.$filename;
-			$result = onedrive::upload(config('onedrive_root').$remotefile, $content);
+			$result = onedrive::upload(str_replace('//','/',config('onedrive_root').$remotefile), $content);
 			
 			if($result){
 				$root = get_absolute_path(dirname($_SERVER['SCRIPT_NAME'])).config('root_path');

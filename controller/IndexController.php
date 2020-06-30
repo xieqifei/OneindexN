@@ -87,11 +87,14 @@ class IndexController{
 	function dir(){
 		$root = get_absolute_path(dirname($_SERVER['SCRIPT_NAME'])).config('root_path');
 		$navs = $this->navs();
-		$paths_buffer = explode('/', config('except_path'));
-		$except_path_buffer = get_absolute_path(join('/', $paths_buffer));
+		//以'/'拆分路径，并重新连接
+		$except_paths_buffer = explode('/', config('except_path'));
+		$except_path_buffer = get_absolute_path(join('/', $except_paths_buffer));
+		$upload_paths_buffer = explode('/', config('offline')['upload_path']);
+		$upload_path_buffer = get_absolute_path(join('/', $upload_paths_buffer));
 		$online = config('offline')['online'];
-		//以下情况不渲染index.html
-		if((strcmp(config('except_path'),'all')!=0&&(get_absolute_path($this->path)!=get_absolute_path(config('onedrive_root').$except_path_buffer)))||empty(config('except_path')))
+		//（排除路径不是全部，并且，当前路径不等于排除路径，并且，当前路径不等于上传路径）或者（排除路径为空且上传路径为空）
+		if((strcmp(config('except_path'),'all')!=0&&(get_absolute_path($this->path)!=get_absolute_path(config('onedrive_root').$except_path_buffer))&&(get_absolute_path($this->path)!=get_absolute_path(config('onedrive_root').$upload_path_buffer)))||(empty(config('except_path'))&&empty(config('offline')['upload_path'])))
 		{
 			if($this->items['index.html']){
 				$this->items['index.html']['path'] = get_absolute_path($this->path).'index.html';

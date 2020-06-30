@@ -2,8 +2,8 @@
 define('VIEW_PATH', ROOT.'view/admin/');
 class AdminController{
 	static $default_config = array(
-	  'site_name' =>'OneIndex',
-	  'password' => 'oneindex',
+	  'site_name' =>'OneIndexN',
+	  'password' => 'oneindexn',
 	  'style'=>'nexmoe',
 	  'onedrive_root' =>'',
 	  'except_path' =>'',
@@ -24,7 +24,8 @@ class AdminController{
 	  'images'=>['home'=>false,'public'=>false, 'exts'=>['jpg','png','gif','bmp']],
 	  'offline'=>array(
 		  'offline'=>false,
-		  'online'=>false
+		  'online'=>false,
+		  'upload_path'=>''
 		)
 	);
 	
@@ -81,8 +82,8 @@ class AdminController{
 	function offline(){
 		$config['offline'] = empty($_POST['offline'])?false:true;
 		$config['online'] = empty($_POST['online'])?false:true;
+		$config['upload_path'] = empty($_POST['upload_path']) ? '' : get_absolute_path($_POST['upload_path']);
 		config('offline@base',$config);
-
 		$config = config('offline@base');
 		return view::load('offline')->with('config',$config);
 	}
@@ -192,11 +193,20 @@ class AdminController{
 	}
 
 	function install_1(){
-		if(!empty($_POST['client_secret']) && !empty($_POST['client_id']) && !empty($_POST['redirect_uri']) ){
+		if(!empty($_POST['client_secret']) && !empty($_POST['client_id']) && !empty($_POST['redirect_uri']) && !empty($_POST['area'])){
 			config('@base', self::$default_config);
 			config('client_secret',$_POST['client_secret']);
 			config('client_id',$_POST['client_id']);
 			config('redirect_uri',$_POST['redirect_uri']);
+			config('area',$_POST['area']);
+			//选择OD国际版?世纪互联版。
+			if (strcmp($_POST['area'],'cn')==0){
+				onedrive::$api_url = "https://microsoftgraph.chinacloudapi.cn/v1.0";
+				onedrive::$oauth_url = "https://login.partner.microsoftonline.cn/common/oauth2/v2.0";
+			}else{
+				onedrive::$api_url = 'https://graph.microsoft.com/v1.0';
+				onedrive::$oauth_url = 'https://login.microsoftonline.com/common/oauth2/v2.0';
+			}
 			return view::direct('?step=2');
 		}
 		if($_SERVER['HTTP_HOST'] == 'localhost'){

@@ -25,6 +25,11 @@
 		  </label>
 		</div>
 		<br>
+		<div class="mdui-textfield">
+		  <h4>前台在线上传默认目录</h4>
+		  <input class="mdui-textfield-input" type="text" name="upload_path" value="<?php echo $config['upload_path'];?>"/>
+		  <small>此目录下的readme index head文件无法被渲染</small>
+		</div>
 	   <button type="submit" class="mdui-btn mdui-color-theme-accent mdui-ripple mdui-float-right">
 	   	<i class="mdui-icon material-icons">&#xe161;</i> 保存
      </button>
