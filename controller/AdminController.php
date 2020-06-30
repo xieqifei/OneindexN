@@ -200,13 +200,13 @@ class AdminController{
 			config('redirect_uri',$_POST['redirect_uri']);
 			config('area',$_POST['area']);
 			//选择OD国际版?世纪互联版。
-// 			if (strcmp($_POST['area'],'us')==0){
-// 				onedrive::$api_url = "https://microsoftgraph.chinacloudapi.cn/v1.0";
-// 				onedrive::$oauth_url = "https://login.partner.microsoftonline.cn/common/oauth2/v2.0";
-// 			}else{
-// 				onedrive::$api_url = 'https://graph.microsoft.com/v1.0';
-// 				onedrive::$oauth_url = 'https://login.microsoftonline.com/common/oauth2/v2.0';
-// 			}
+			if (strcmp($_POST['area'],'us')==0){
+				onedrive::$api_url = "https://microsoftgraph.chinacloudapi.cn/v1.0";
+				onedrive::$oauth_url = "https://login.partner.microsoftonline.cn/common/oauth2/v2.0";
+			}else{
+				onedrive::$api_url = 'https://graph.microsoft.com/v1.0';
+				onedrive::$oauth_url = 'https://login.microsoftonline.com/common/oauth2/v2.0';
+			}
 			return view::direct('?step=2');
 		}
 		if($_SERVER['HTTP_HOST'] == 'localhost'){
