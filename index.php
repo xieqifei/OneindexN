@@ -16,9 +16,9 @@ onedrive::$oauth_url = "https://login.partner.microsoftonline.cn/common/oauth2/v
 // 	onedrive::$api_url = "https://microsoftgraph.chinacloudapi.cn/v1.0";
 // 	onedrive::$oauth_url = "https://login.partner.microsoftonline.cn/common/oauth2/v2.0";
 // }
-// if( empty( config('refresh_token') ) ){
-// 	route::any('/','AdminController@install');
-// }
+if( empty( config('refresh_token') ) ){
+	route::any('/','AdminController@install');
+}
 
 /**
  *    系统后台
