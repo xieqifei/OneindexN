@@ -200,7 +200,7 @@ class AdminController{
 			config('redirect_uri',$_POST['redirect_uri']);
 			config('area',$_POST['area']);
 			//选择OD国际版?世纪互联版。
-			if (strcmp($_POST['area'],'us')==0){
+			if (strcmp($_POST['area'],'cn')==0){
 				onedrive::$api_url = "https://microsoftgraph.chinacloudapi.cn/v1.0";
 				onedrive::$oauth_url = "https://login.partner.microsoftonline.cn/common/oauth2/v2.0";
 			}else{
