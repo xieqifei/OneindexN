@@ -5,7 +5,7 @@ require  __DIR__.'/init.php';
  *    程序安装
  */
 //选择OD国际版?世纪互联版。
-if (strcmp(config('area'),'us')==0){
+if (strcmp(config('area'),'cn')==0){
 	onedrive::$api_url = 'https://us.com';
 	onedrive::$oauth_url = 'https://us.com';
 	// onedrive::$api_url = 'https://graph.microsoft.com/v1.0';
