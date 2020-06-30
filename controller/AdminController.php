@@ -207,8 +207,7 @@ class AdminController{
 				onedrive::$api_url = 'https://graph.microsoft.com/v1.0';
 				onedrive::$oauth_url = 'https://login.microsoftonline.com/common/oauth2/v2.0';
 			}
-			return onedrive::$api_url.'和'.onedrive::$oauth_url;
-			//return view::direct('?step=2');
+			return view::direct('?step=2');
 		}
 		if($_SERVER['HTTP_HOST'] == 'localhost'){
 			$redirect_uri = 'http://'.$_SERVER['HTTP_HOST'].get_absolute_path(dirname($_SERVER['PHP_SELF']));
