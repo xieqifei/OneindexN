@@ -1,3 +1,0 @@
-# oneindex
-OneDrive Directory Index
-

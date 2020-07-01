@@ -25,7 +25,7 @@ class AdminController{
 	  'offline'=>array(
 		  'offline'=>false,
 		  'online'=>false,
-		  'upload_path'=>''
+		  'upload_path'=>'/upload'
 		)
 	);
 	
@@ -80,10 +80,12 @@ class AdminController{
 	}
 	
 	function offline(){
-		$config['offline'] = empty($_POST['offline'])?false:true;
-		$config['online'] = empty($_POST['online'])?false:true;
-		$config['upload_path'] = empty($_POST['upload_path']) ? '' : get_absolute_path($_POST['upload_path']);
-		config('offline@base',$config);
+		if($_POST){
+			$config['offline'] = empty($_POST['offline'])?false:true;
+			$config['online'] = empty($_POST['online'])?false:true;
+			$config['upload_path'] = empty($_POST['upload_path']) ? '/' : get_absolute_path($_POST['upload_path']);
+			config('offline@base',$config);
+		}
 		$config = config('offline@base');
 		return view::load('offline')->with('config',$config);
 	}
