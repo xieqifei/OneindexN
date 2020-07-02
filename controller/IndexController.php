@@ -48,7 +48,7 @@ class IndexController{
 		list($password) = explode("\n",$password);
 		$password = trim($password);
 		unset($this->items['.password']);
-		if(!empty($password) && strcmp($password, $_COOKIE[md5($this->path)]) === 0){
+		if(!empty($password) && strcmp($password, $_COOKIE[md5($this->path)]) === 0||$_COOKIE['admin'] == md5(config('password').config('refresh_token'))){
 			return true;
 		}
 
