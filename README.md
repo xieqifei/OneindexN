@@ -6,11 +6,13 @@
 
 Demo：https://pan.sci.ci
 
-如果安装出现问题，可以将你原来oneindex网站的`/config`目录下的`base.php`和`token.php`拷贝到新网站的`/config`中，我自己在heroku安装时，遇到重复进入安装程序的问题。在vps中，也会重复进入安装程序，但在一段时间后就会正常。
+似乎安装程序存在一些小bug。当我在vps上进行安装时，安装结束仍然会重新进入安装程序。但是过一会儿，就能正常访问主页了。这似乎是安装程序进程过于缓慢导致的，但具体原因我没有找到。我尝试在heroku上面部署项目，但是始终无法退出安装程序。我能想到的最好办法就是，当你在vps上部署好项目之后，直接将配置文件夹`/config`拷贝到你的项目中去，再部署到heroku。这样就不用进入安装程序了。
+
+如果你能找到原因，请你发送issue。
 
 ## 修改功能：
 
-- 、选择安装世纪互联/国际版（如需修改版本，需要删除config文件夹里的文件后重新进入安装程序）
+- 选择安装世纪互联/国际版（如需修改版本，需要删除config文件夹里的文件后重新进入安装程序）
 - 前台游客/管理员在线上传（后台可关闭游客上传、指定上传路径）
 - 前台游客/管理员离线上传（需安装aria2+rclone，后台可关闭游客上传，上传路径在rclone中设置）
 - 后台可指定文件夹/全部文件夹，关闭Readme.md、index.html、head.md渲染（如果离线上传路径和在线上传路径不同，可在这里设置离线上传路径为不渲染）
@@ -151,13 +153,13 @@ location /jsonrpc {
 	}
 ```
 
-这样RPC可以配置为`http://yoursite/jsonrpc`。网站后台默认的RPC就是`http://yoursite/jsonrpc`
+nginx会监听发送给`http://yoursite/jsonrpc`的消息，然后将他转发给`http:localhost:6800/jsonrpc`，相当于你在yaaw中设置rpc时，只需要将其设置为`http://yoursite/jsonrpc`或者`https://yoursite/jsonrpc`,省略的端口信息为http对应80,https对应443，这些端口浏览器会自动转发，不用在设置中指定。如果你设置了反向代理，那么使用前台yaaw时，就不用在做rpc设置了。否则你需要去重新设置。
 
 ![](https://i.loli.net/2020/06/25/9cY2PiBr6usqXen.png)
 
 **关闭aria2远程RPC**
 
-仅本地也就是443转发的请求能到达6800。
+仅vps本地也就是nginx转发的请求能到达6800。其他主机不能访问6800端口。
 
 ```shell
 vim /root/.aria2c/aria2.conf
@@ -176,7 +178,7 @@ rpc-listen-all=false
 rpc-listen-port=6800
 ```
 
-> 如果不配置nginx，需要自己修改RPC设置。并且aria2配置需要开放远程RPC
+> 请注意，关闭远程请求并不能阻止其他主机向aria2发送请求，在不设置token时，任何人都可以通过直接向`http://yoursite/jsonrpc`这个地址发送请求连接aria2。如果你开启游客离线下载可以这么设置。如果你不希望有人通过其他aria2前端连接你的aria2，请你务必设置token，但是这样做，你也必须在使用的时候修改rpc设置，好在，第一次修改设置后，之后浏览器都会记住这个设置。
 
 # 五：参考资料
 
