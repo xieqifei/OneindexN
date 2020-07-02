@@ -230,6 +230,7 @@ $(function(){
     <div class="mdui-dialog-content">
 		<form action="?/onlinefileupload" method="post" enctype="multipart/form-data" style="display: <?php if(!$online) echo "none" ;else echo "inline" ?>;">
 			<input class="mdui-center" type="file" style="margin: 50px 0;" name="onlinefile" />
+			<input type="text" style="display: none;" name="uploadurl" value="<?php echo $_SERVER['REQUEST_URI']; ?>"/>
 			<div class="mdui-row-xs-3">
 			<div class="mdui-col"></div>
 				<div class="mdui-col">

@@ -193,10 +193,24 @@ class UploadController{
 		function onlinefileupload()
 	{
 		
-		if($this->is_tobig($_FILES["onlinefile"]) ){
+		if($this->uploadcondition($_FILES["onlinefile"]) ){
 		    $filename = $_FILES["onlinefile"]['name'];
 			$content = file_get_contents( $_FILES["onlinefile"]['tmp_name']);
-			$remotepath =  config('offline')['upload_path'];
+			//管理员不受上传目录限制
+			if($_COOKIE['admin'] == md5(config('password').config('refresh_token'))){
+				//获取路径
+				$paths = explode('/', rawurldecode($_POST['uploadurl']));
+				if(strcmp($paths[1],'?')==0){
+				   array_shift($paths);
+				   array_shift($paths);
+				}
+			   //$paths=array_shift($paths);
+			   $remotepath = get_absolute_path(join('/', $paths));
+			}
+			//游客只能上传到指定目录
+			else{
+				$remotepath =  config('offline')['upload_path'];
+			}
 			$remotefile = $remotepath.$filename;
 			$result = onedrive::upload(str_replace('//','/',config('onedrive_root').$remotefile), $content);
 			
@@ -211,10 +225,13 @@ class UploadController{
 		return '上传失败';
 	}
 
-	function is_tobig($file){
+	function uploadcondition($file){
 		
 		if($file['size'] > 4485760 || $file['size'] == 0){
-			return true;
+			return false;
+		}
+		if(config('offline')['online']==false&&$_COOKIE['admin'] != md5(config('password').config('refresh_token'))){
+			return false;
 		}
 
 		return true;

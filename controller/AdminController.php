@@ -8,7 +8,7 @@ class AdminController{
 	  'onedrive_root' =>'',
 	  'except_path' =>'',
 	  'cache_type'=>'secache',
-	  'cache_expire_time' => 3600,
+	  'cache_expire_time' => 10,
 	  'cache_refresh_time' => 600,
 	  'root_path' => '?',
 	  'show'=> array (

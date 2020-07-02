@@ -8,7 +8,7 @@
   </div>
   <form action="" method="post">
 		<div class="mdui-textfield">
-		  <h4>允许游客前台离线上传<small>（需安装aria2和rclone，输入远程url即可上传）</small></h4>
+		  <h4>允许游客离线上传<small>（需安装aria2和rclone，输入远程url即可上传）</small></h4>
 		  <label class="mdui-textfield-label"></label>
 		  <label class="mdui-switch">
 			  <input type="checkbox" name="offline" value="1" <?php echo ($config['offline']==false)?'':'checked';?>/>
@@ -17,7 +17,7 @@
 		</div>
 	   <Br>
 	   <div class="mdui-textfield">
-		  <h4>允许游客前台在线上传<small> （上传游客计算机里的文件）</small></h4>
+		  <h4>允许游客在线上传<small> （上传游客计算机里的文件）</small></h4>
 		  <label class="mdui-textfield-label"></label>
 		  <label class="mdui-switch">
 			  <input type="checkbox" name="online" value="1" <?php echo ($config['online']==false)?'':'checked';?>/>
@@ -26,7 +26,7 @@
 		</div>
 		<br>
 		<div class="mdui-textfield">
-		  <h4>前台在线上传默认目录</h4>
+		  <h4>游客上传在线目录<small>（管理员无路径限制）</small></h4>
 		  <input class="mdui-textfield-input" type="text" name="upload_path" value="<?php echo $config['upload_path'];?>"/>
 		  <small>此目录下的readme index head文件无法被渲染</small>
 		</div>
