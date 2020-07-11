@@ -250,8 +250,9 @@ $(function(){
     <div class="mdui-dialog-title">新建文件夹</div>
     <div class="mdui-dialog-content">
 		<form action="?/create_folder" method="post" >
-			<div class="mdui-textfield">
-				<input class="mdui-center" type="text" class="mdui-textfield-input" style="margin: 50px 0;" name="foldername" placeholder="请输入文件夹名称"/>
+			<div class="mdui-textfield mdui-textfield-floating-label">
+				<label class="mdui-textfield-label">文件夹名称</label>
+				<input name="foldername" style="margin: 50px 0;" type="text" class="mdui-textfield-input">
 			</div>
 			<input type="text" style="display: none;" name="uploadurl" value="<?php echo $_SERVER['REQUEST_URI']; ?>"/>
 			<div class="mdui-row-xs-3">
