@@ -271,19 +271,19 @@ $(function(){
 </div>
 		
 <script>
-    var inst = new mdui.Fab('#myFab');
+    var inst1 = new mdui.Fab('#myFab');
 
 
-	var inst = new mdui.Dialog('#fileupload-dialog');
+	var inst2 = new mdui.Dialog('#fileupload-dialog');
 	// method
 	document.getElementById('file_upload').addEventListener('click', function () {
-	inst.open();
+	inst2.open();
 	});
 
 	
-	var inst = new mdui.Dialog('#newfolder-dialog');
+	var inst3 = new mdui.Dialog('#newfolder-dialog');
 	document.getElementById('newfolder').addEventListener('click', function () {
-	inst.open();
+	inst3.open();
 	});
 
 </script>
