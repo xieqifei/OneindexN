@@ -222,7 +222,8 @@ class IndexController{
 	//新建文件夹
 	function create_folder(){
 		$data = onedrive::create_folder($this->path,$_POST['foldername']);
-		return $data;
+
+		return '新建成功';
 	}
 
 	//时候404
