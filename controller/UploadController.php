@@ -250,7 +250,7 @@ class UploadController{
 
 		$data = onedrive::create_folder(str_replace('//','/',config('onedrive_root').$remotepath),$_POST['foldername']);
 
-		return $remotepath;
+		return $$_POST['uploadurl'];
 	}
 	
 }
