@@ -1,9 +1,9 @@
 <?php view::layout('themes/'.(config('style')?config('style'):'material').'/layout')?>
 
 <?php view::begin('content');?>
-  <link rel="stylesheet" href="https://qn.xieqifei.com/bootstrap.min.css">
-  <link href="https://qn.xieqifei.com/bootstrap-responsive.min.css" rel="stylesheet" type="text/css"/>
-  <link href="https://qn.xieqifei.com/main.css" rel="stylesheet" type="text/css"/>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/xieqifei/OneindexN@v1.1/statics/css/bootstrap.min.css">
+  <link href="https://cdn.jsdelivr.net/gh/xieqifei/OneindexN@v1.1/statics/css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css"/>
+  <link href="https://cdn.jsdelivr.net/gh/xieqifei/OneindexN@v1.1/statics/css/main.css" rel="stylesheet" type="text/css"/>
   <body>
       <header class="main-head page-header">
         <h1>Aria2前端工具</h1>
@@ -467,14 +467,14 @@
       </form>
     </script>
 
-   <script src="https://qn.xieqifei.com/js/jquery-1.7.2.min.js"></script>
-    <script src="https://qn.xieqifei.com/js/bootstrap.min.js"></script>
-    <script src="https://qn.xieqifei.com/js/jquery.jsonrpc.js"></script>
-    <script src="https://qn.xieqifei.com/js/jquery.Storage.js"></script>
-    <script src="https://qn.xieqifei.com/js/jquery.base64.min.js"></script>
-    <script src="https://qn.xieqifei.com/js/mustache.js"></script>
-    <script src="https://qn.xieqifei.com/js/peerid.js"></script>
-    <script src="https://qn.xieqifei.com/js/aria2.js"></script>
-    <script src="https://qn.xieqifei.com/js/yaaw-1.1.js"></script>
+   <script src="https://cdn.jsdelivr.net/gh/xieqifei/OneindexN@v1.1/statics/js/jquery-1.7.2.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/xieqifei/OneindexN@v1.1/statics/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/xieqifei/OneindexN@v1.1/statics/js/jquery.jsonrpc.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/xieqifei/OneindexN@v1.1/statics/js/jquery.Storage.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/xieqifei/OneindexN@v1.1/statics/js/jquery.base64.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/xieqifei/OneindexN@v1.1/statics/js/mustache.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/xieqifei/OneindexN@v1.1/statics/js/peerid.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/xieqifei/OneindexN@v1.1/statics/js/aria2.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/xieqifei/OneindexN@v1.1/statics/js/yaaw-1.1.js"></script>
   </body>
 <?php view::end('content');?>
