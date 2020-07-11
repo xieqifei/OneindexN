@@ -246,7 +246,7 @@ $(function(){
     </div>
   </div>
 
-  <div class="mdui-dialog" id="newfolder-dialog">
+  <!-- <div class="mdui-dialog" id="newfolder-dialog">
     <div class="mdui-dialog-title">新建文件夹</div>
     <div class="mdui-dialog-content">
 		<form action="?/create_folder" method="post" >
@@ -254,7 +254,7 @@ $(function(){
 				<label class="mdui-textfield-label">文件夹名称</label>
 				<input name="foldername" style="margin: 50px 0;" type="text" class="mdui-textfield-input" required>
 			</div>
-			<input type="text" style="display: none;" name="uploadurl" value="<?php echo $_SERVER['REQUEST_URI']; ?>"/>
+			<input type="text" style="display: none;" name="uploadurl" value=""/>
 			<div class="mdui-row-xs-3">
 			<div class="mdui-col"></div>
 				<div class="mdui-col">
@@ -266,7 +266,7 @@ $(function(){
     <div class="mdui-dialog-actions">
       <button class="mdui-btn mdui-ripple" mdui-dialog-cancel>取消</button>
     </div>
-  </div>
+  </div> -->
 
 </div>
 		
@@ -280,11 +280,32 @@ $(function(){
 	inst2.open();
 	});
 
-	
-	var inst3 = new mdui.Dialog('#newfolder-dialog');
-	document.getElementById('newfolder').addEventListener('click', function () {
-	inst3.open();
+	mdui.JQ('#newfolder').on('click', function () {
+		mdui.prompt('输入文件夹名称',
+			function (value) {
+				var httpRequest = new XMLHttpRequest();//第一步：创建需要的对象
+				httpRequest.open('POST', '?/create_folder', true); //第二步：打开连接
+				httpRequest.setRequestHeader("Content-type","application/x-www-form-urlencoded");//设置请求头 注：post方式必须设置请求头（在建立连接后设置请求头）
+				httpRequest.send('foldername='.value.'&uploadurl=<?php echo $_SERVER['REQUEST_URI']; ?>');//发送请求 将情头体写在send中
+				/**
+				* 获取数据后的处理程序
+				*/
+				httpRequest.onreadystatechange = function () {//请求后的回调接口，可将请求成功后要执行的程序写在其中
+					if (httpRequest.readyState == 4 && httpRequest.status == 200) {//验证请求是否发送成功
+						var json = httpRequest.responseText;//获取到服务端返回的数据
+						console.log(json);
+					}
+				};
+			},
+			function (value) {
+			}
+		);
 	});
+
+	// var inst3 = new mdui.Dialog('#newfolder-dialog');
+	// document.getElementById('newfolder').addEventListener('click', function () {
+	// inst3.open();
+	// });
 
 </script>
 <?php view::end('content');?>
