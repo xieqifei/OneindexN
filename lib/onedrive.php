@@ -283,9 +283,9 @@
 
 		//新建文件夹
 		static function create_folder($path = '/', $name = '新建文件夹'){
-        $request = self::request($path,'children');
+        $request = self::request(get_absolute_path(dirname($path)),'children');
         $post_data['name'] = $name;
-		$post_data['folder'] ='';
+		$post_data['folder'] =json_decode("{}");
 		$post_data['@microsoft.graph.conflictBehavior'] = 'rename';
         $resp = fetch::post($request, json_encode($post_data));
         $data = json_decode($resp->content, true);
