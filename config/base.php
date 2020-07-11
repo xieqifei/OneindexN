@@ -102,7 +102,7 @@
   array (
     'offline' => false,
     'online' => false,
-    'upload_path' => '/upload',
+    'upload_path' => '/upload/',
   ),
   'client_secret' => 'pcbEMJP96:!idfjJVH591:#',
   'client_id' => '1f52cc9f-ccdb-4325-b870-db1859ba2713',
