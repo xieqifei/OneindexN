@@ -250,7 +250,7 @@ class UploadController{
 
 		$data = onedrive::create_folder(str_replace('//','/',config('onedrive_root').$remotepath),$_POST['foldername']);
 
-		return $remotepath.'新建文件夹为'.$_POST['foldername'];
+		return str_replace('//','/',config('onedrive_root').$remotepath).'新建文件夹为'.$_POST['foldername'];
 	}
 	
 }
