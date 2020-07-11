@@ -26,7 +26,7 @@
 		</div>
 		<br>
 		<div class="mdui-textfield">
-		  <h4>游客上传在线目录<small>（管理员无路径限制）</small></h4>
+		  <h4>游客在线上传目录限制<small>（注意：管理员不受此限制）</small></h4>
 		  <input class="mdui-textfield-input" type="text" name="upload_path" value="<?php echo $config['upload_path'];?>"/>
 		  <small>此目录下的readme index head文件无法被渲染</small>
 		</div>
