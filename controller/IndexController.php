@@ -221,7 +221,7 @@ class IndexController{
 	}
 	//新建文件夹
 	function create_folder(){
-		$data = onedrive::create_folder($this->path,$_GET['foldername']);
+		$data = onedrive::create_folder($this->path,$_POST['foldername']);
 		return $data;
 	}
 

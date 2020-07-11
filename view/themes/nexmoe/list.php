@@ -179,29 +179,7 @@ function thumb(){
 
 }	
 
-mdui.JQ('newfolder').on('click', function () {
-		mdui.prompt('新建文件夹名称',
-			function (value) {
-				var httpRequest = new XMLHttpRequest();//第一步：创建需要的对象
-				httpRequest.open('POST', '?/createfolder?foldername='.value, true); //第二步：打开连接
-				httpRequest.setRequestHeader("Content-type","application/x-www-form-urlencoded");//设置请求头 注：post方式必须设置请求头（在建立连接后设置请求头）
-				httpRequest.send();//发送请求 将情头体写在send中
-				/**
-				* 获取数据后的处理程序
-				*/
-				httpRequest.onreadystatechange = function () {//请求后的回调接口，可将请求成功后要执行的程序写在其中
-					if (httpRequest.readyState == 4 && httpRequest.status == 200) {//验证请求是否发送成功
-						var json = httpRequest.responseText;//获取到服务端返回的数据
-						console.log(json);
-					}
-				};
-				mdui.alert('新建文件夹' + value );
-			},
-			function (value) {
-			mdui.alert('你输入了：' + value + '，点击了取消按钮');
-			}
-		);
-	});
+
 
 $(function(){
 	$('.file a').each(function(){
@@ -240,7 +218,7 @@ $(function(){
       </button>
       <button class="mdui-fab mdui-fab-mini mdui-ripple mdui-color-pink" onclick="location.href='/?/offline'"><i class="mdui-icon material-icons">cloud_upload</i>
       </button>
-      <button class="mdui-fab mdui-fab-mini mdui-ripple mdui-color-red" id="open"><i class="mdui-icon material-icons">file_upload</i>
+      <button class="mdui-fab mdui-fab-mini mdui-ripple mdui-color-red" id="file_upload"><i class="mdui-icon material-icons">file_upload</i>
       </button>
       <button class="mdui-fab mdui-fab-mini mdui-ripple mdui-color-orange" onclick="location.href='/?/admin'"><i class="mdui-icon material-icons">account_circle</i>
       </button>
@@ -271,46 +249,42 @@ $(function(){
     </div>
   </div>
 
+  <div class="mdui-dialog" id="newfolder-dialog">
+    <div class="mdui-dialog-title">新建文件夹</div>
+    <div class="mdui-dialog-content">
+		<form action="?/createfolder" method="post" >
+			<input class="mdui-center" type="text" style="margin: 50px 0;" name="foldername" />
+			<input type="text" style="display: none;" name="uploadurl" value="<?php echo $_SERVER['REQUEST_URI']; ?>"/>
+			<div class="mdui-row-xs-3">
+			<div class="mdui-col"></div>
+				<div class="mdui-col">
+					<button class="mdui-btn mdui-btn-block mdui-color-theme-accent mdui-ripple">提交</button>
+				</div>
+			</div>
+		</form>
+	</div>
+    <div class="mdui-dialog-actions">
+      <button class="mdui-btn mdui-ripple" mdui-dialog-cancel>取消</button>
+    </div>
+  </div>
+
 </div>
 		
 <script>
     var inst = new mdui.Fab('#myFab');
 
-	var inst = new mdui.Dialog('#fileupload-dialog');
 
+	var inst = new mdui.Dialog('#fileupload-dialog');
 	// method
-	document.getElementById('open').addEventListener('click', function () {
+	document.getElementById('file_upload').addEventListener('click', function () {
 	inst.open();
 	});
 
-
-	// event
-	var dialog = document.getElementById('dialog');
-
-	dialog.addEventListener('open.mdui.dialog', function () {
-	console.log('open');
+	
+	var inst = new mdui.Dialog('#newfolder-dialog');
+	document.getElementById('newfolder').addEventListener('click', function () {
+	inst.open();
 	});
-
-	dialog.addEventListener('opened.mdui.dialog', function () {
-	console.log('opened');
-	});
-
-	dialog.addEventListener('close.mdui.dialog', function () {
-	console.log('close');
-	});
-
-	dialog.addEventListener('closed.mdui.dialog', function () {
-	console.log('closed');
-	});
-
-	dialog.addEventListener('cancel.mdui.dialog', function () {
-	console.log('cancel');
-	});
-
-	dialog.addEventListener('confirm.mdui.dialog', function () {
-	console.log('confirm');
-	});
-
 
 </script>
 <?php view::end('content');?>
