@@ -25,7 +25,7 @@ class AdminController{
 	  'offline'=>array(
 		  'offline'=>false,
 		  'online'=>false,
-		  'upload_path'=>'/upload'
+		  'upload_path'=>'/upload/'
 		)
 	);
 	
