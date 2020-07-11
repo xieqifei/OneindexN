@@ -252,7 +252,7 @@ $(function(){
   <div class="mdui-dialog" id="newfolder-dialog">
     <div class="mdui-dialog-title">新建文件夹</div>
     <div class="mdui-dialog-content">
-		<form action="?/createfolder" method="post" >
+		<form action="?/create_folder" method="post" >
 			<input class="mdui-center" type="text" style="margin: 50px 0;" name="foldername" />
 			<input type="text" style="display: none;" name="uploadurl" value="<?php echo $_SERVER['REQUEST_URI']; ?>"/>
 			<div class="mdui-row-xs-3">

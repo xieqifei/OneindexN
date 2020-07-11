@@ -219,13 +219,7 @@ class IndexController{
 		}, config('cache_expire_time') );
 		return $content;
 	}
-	//新建文件夹
-	function create_folder(){
-		$data = onedrive::create_folder($this->path,$_POST['foldername']);
-
-		return $this->path;
-	}
-
+	
 	//时候404
 	function is404(){
 		if(!empty($this->items[$this->name]) || (empty($this->name) && is_array($this->items)) ){

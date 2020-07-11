@@ -189,6 +189,7 @@ class UploadController{
 		$resp = fetch::post($request);
 		//var_dump($resp);
 	}
+
 	//任意文件在线上传，从个人电脑上传
 		function onlinefileupload()
 	{
@@ -235,6 +236,21 @@ class UploadController{
 		}
 
 		return true;
+	}
+
+	//新建文件夹
+	function create_folder(){
+		$paths = explode('/', rawurldecode($_POST['uploadurl']));
+		if(strcmp($paths[1],'?')==0){
+			array_shift($paths);
+			array_shift($paths);
+		}
+		//$paths=array_shift($paths);
+		$remotepath = get_absolute_path(join('/', $paths));
+
+		$data = onedrive::create_folder(str_replace('//','/',config('onedrive_root').$remotepath),$_POST['foldername']);
+
+		return $remotepath;
 	}
 	
 }

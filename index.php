@@ -41,12 +41,10 @@ route::group(function(){
 //登陆
 route::any('/login','AdminController@login');
 
-//上传
+//onedrive操作
 route::any('/offline','OfflineController@offline');
 route::any('/onlinefileupload','UploadController@onlinefileupload');
-
-//onedrive操作
-route::any('/createfolder','IndexController@create_folder');
+route::any('/create_folder','UploadController@create_folder');
 
 //跳转到登陆
 route::any('/admin/',function(){
