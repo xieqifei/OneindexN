@@ -179,6 +179,29 @@ function thumb(){
 
 }	
 
+mdui.JQ('newfolder').on('click', function () {
+		mdui.prompt('新建文件夹名称',
+			function (value) {
+				var httpRequest = new XMLHttpRequest();//第一步：创建需要的对象
+				httpRequest.open('POST', '?/createfolder?foldername='.value, true); //第二步：打开连接
+				httpRequest.setRequestHeader("Content-type","application/x-www-form-urlencoded");//设置请求头 注：post方式必须设置请求头（在建立连接后设置请求头）
+				httpRequest.send();//发送请求 将情头体写在send中
+				/**
+				* 获取数据后的处理程序
+				*/
+				httpRequest.onreadystatechange = function () {//请求后的回调接口，可将请求成功后要执行的程序写在其中
+					if (httpRequest.readyState == 4 && httpRequest.status == 200) {//验证请求是否发送成功
+						var json = httpRequest.responseText;//获取到服务端返回的数据
+						console.log(json);
+					}
+				};
+				mdui.alert('新建文件夹' + value );
+			},
+			function (value) {
+			mdui.alert('你输入了：' + value + '，点击了取消按钮');
+			}
+		);
+	});
 
 $(function(){
 	$('.file a').each(function(){
@@ -213,7 +236,7 @@ $(function(){
       <i class="mdui-icon mdui-fab-opened material-icons">mode_edit</i>
     </button>
     <div class="mdui-fab-dial">
-	<button class="mdui-fab mdui-fab-mini mdui-ripple mdui-color-red" id="newfolder"><i class="mdui-icon material-icons">create_folder</i>
+	  <button class="mdui-fab mdui-fab-mini mdui-ripple mdui-color-red" id="newfolder"><i class="mdui-icon material-icons">create_folder</i>
       </button>
       <button class="mdui-fab mdui-fab-mini mdui-ripple mdui-color-pink" onclick="location.href='/?/offline'"><i class="mdui-icon material-icons">cloud_upload</i>
       </button>
@@ -288,28 +311,6 @@ $(function(){
 	console.log('confirm');
 	});
 
-	mdui.JQ('newfolder').on('click', function () {
-		mdui.prompt('新建文件夹名称',
-			function (value) {
-				var httpRequest = new XMLHttpRequest();//第一步：创建需要的对象
-				httpRequest.open('POST', '?/createfolder?foldername='.value, true); //第二步：打开连接
-				httpRequest.setRequestHeader("Content-type","application/x-www-form-urlencoded");//设置请求头 注：post方式必须设置请求头（在建立连接后设置请求头）
-				httpRequest.send();//发送请求 将情头体写在send中
-				/**
-				* 获取数据后的处理程序
-				*/
-				httpRequest.onreadystatechange = function () {//请求后的回调接口，可将请求成功后要执行的程序写在其中
-					if (httpRequest.readyState == 4 && httpRequest.status == 200) {//验证请求是否发送成功
-						var json = httpRequest.responseText;//获取到服务端返回的数据
-						console.log(json);
-					}
-				};
-				mdui.alert('新建文件夹' + value );
-			},
-			function (value) {
-			mdui.alert('你输入了：' + value + '，点击了取消按钮');
-			}
-		);
-	});
+
 </script>
 <?php view::end('content');?>
