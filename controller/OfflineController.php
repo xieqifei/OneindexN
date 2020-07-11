@@ -4,8 +4,6 @@ class OfflineController{
 	
 	function __construct(){
 	}
-
-
 	
 	function offline(){
 		if(config('offline')['offline']||$_COOKIE['admin'] == md5(config('password').config('refresh_token'))){

@@ -21,6 +21,8 @@ Demo：https://pan.sci.ci
 
 heroku上安装：需要你在vps上或其他允许在网站目录新建文件的虚拟主机上安装好后，将网站目录下的config文件夹下的文件，复制到你的仓库config文件夹里。然后向heroku提交。`因为heroku里php没有新建文件的权限，所以安装程序会无限循环。`
 
+> 如果你选择使用heroku安装，那么后台无法修改你的网站配置。必须手动修改github仓库的config文件。
+
 # 二：部署网站
 
 网站环境尽量使用nginx。后面会用nginx做反代，可以避免修改yaaw的rpc参数。

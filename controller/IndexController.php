@@ -219,6 +219,11 @@ class IndexController{
 		}, config('cache_expire_time') );
 		return $content;
 	}
+	//新建文件夹
+	function create_folder(){
+		$data = onedrive::create_folder($this->path,$_GET['foldername']);
+		return $data;
+	}
 
 	//时候404
 	function is404(){
