@@ -252,7 +252,7 @@ $(function(){
 		<form action="?/create_folder" method="post" >
 			<div class="mdui-textfield mdui-textfield-floating-label">
 				<label class="mdui-textfield-label">文件夹名称</label>
-				<input name="foldername" style="margin: 50px 0;" type="text" class="mdui-textfield-input">
+				<input name="foldername" style="margin: 50px 0;" type="text" class="mdui-textfield-input" required>
 			</div>
 			<input type="text" style="display: none;" name="uploadurl" value="<?php echo $_SERVER['REQUEST_URI']; ?>"/>
 			<div class="mdui-row-xs-3">
