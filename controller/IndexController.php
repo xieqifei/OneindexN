@@ -134,12 +134,26 @@ class IndexController{
 				unset($this->items['HEAD.md']);
 			}
 		}
+		
 		//在线上传条件，后台开启或者登陆为管理员
-		if(config('offline')['online']||$_COOKIE['admin'] == md5(config('password').config('refresh_token'))){
-			$online=true;
+		if(config('offline')['online']||is_login()){
+			$manager['online']=true;
 		}
-		else
-			$online=false;
+		else{
+			$manager['online']=false;
+		}
+
+		if(config('offline')['offline']||is_login()){
+			$manager['offline']=true;
+		}else{
+			$manager['offline']=false;
+		}
+
+		if(is_login()){
+			$manager['create_folder']=true;
+		}else{
+			$manager['create_folder']=false;
+		}
 		return view::load('list')->with('title', empty(str_replace("/","",urldecode($this->url_path)))?"根目录":str_replace("/","",urldecode($this->url_path)))
 					->with('navs', $navs)
 					->with('path',join("/", array_map("rawurlencode", explode("/", $this->url_path)))  )
@@ -147,7 +161,7 @@ class IndexController{
 					->with('items', $this->items)
 					->with('head',$head)
 					->with('readme',$readme)
-					->with('online',$online);
+					->with('manager',$manager);
 	}
 
 	function show($item){

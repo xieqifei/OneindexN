@@ -211,11 +211,11 @@ $(function(){
       <i class="mdui-icon mdui-fab-opened material-icons">mode_edit</i>
     </button>
     <div class="mdui-fab-dial">
-	  <button class="mdui-fab mdui-fab-mini mdui-ripple mdui-color-red" id="newfolder"><i class="mdui-icon material-icons">create_new_folder</i>
+	  <button class="mdui-fab mdui-fab-mini mdui-ripple mdui-color-red" id="newfolder" style="display: <?php if(!$manager['create_folder']) echo "none" ;else echo "inline" ?>;"><i class="mdui-icon material-icons">create_new_folder</i>
       </button>
-      <button class="mdui-fab mdui-fab-mini mdui-ripple mdui-color-pink" onclick="location.href='/?/offline'"><i class="mdui-icon material-icons">cloud_upload</i>
+      <button class="mdui-fab mdui-fab-mini mdui-ripple mdui-color-pink" onclick="location.href='/?/offline'" style="display: <?php if(!$manager['offline']) echo "none" ;else echo "inline" ?>;"><i class="mdui-icon material-icons">cloud_upload</i>
       </button>
-      <button class="mdui-fab mdui-fab-mini mdui-ripple mdui-color-red" id="file_upload"><i class="mdui-icon material-icons">file_upload</i>
+      <button class="mdui-fab mdui-fab-mini mdui-ripple mdui-color-red" id="file_upload" style="display: <?php if(!$manager['online']) echo "none" ;else echo "inline" ?>;"><i class="mdui-icon material-icons">file_upload</i>
       </button>
       <button class="mdui-fab mdui-fab-mini mdui-ripple mdui-color-orange" onclick="location.href='/?/admin'"><i class="mdui-icon material-icons">account_circle</i>
       </button>
@@ -229,7 +229,7 @@ $(function(){
   <div class="mdui-dialog" id="fileupload-dialog">
     <div class="mdui-dialog-title">文件上传</div>
     <div class="mdui-dialog-content">
-		<form action="?/onlinefileupload" method="post" enctype="multipart/form-data" style="display: <?php if(!$online) echo "none" ;else echo "inline" ?>;">
+		<form action="?/onlinefileupload" method="post" enctype="multipart/form-data" style="display: <?php if(!$manager['online']) echo "none" ;else echo "inline" ?>;">
 			<input class="mdui-center" type="file" style="margin: 50px 0;" name="onlinefile" />
 			<input type="text" style="display: none;" name="uploadurl" value="<?php echo $_SERVER['REQUEST_URI']; ?>"/>
 			<div class="mdui-row-xs-3">
@@ -239,7 +239,7 @@ $(function(){
 				</div>
 			</div>
 		</form>
-		<h4 style="display: <?php if($online) echo "none" ;else echo "inline" ?>;">管理员未允许游客上传</h4>
+		<h4 style="display: <?php if($manager['online']) echo "none" ;else echo "inline" ?>;">管理员未允许游客上传</h4>
 	</div>
     <div class="mdui-dialog-actions">
       <button class="mdui-btn mdui-ripple" mdui-dialog-cancel>取消</button>
@@ -288,12 +288,13 @@ $(function(){
 				httpRequest.setRequestHeader("Content-type","application/x-www-form-urlencoded");//设置请求头 注：post方式必须设置请求头（在建立连接后设置请求头）
 				var query='foldername='+value+'&uploadurl=<?php echo $_SERVER['REQUEST_URI']; ?>';
 				httpRequest.send(query);//发送请求 将情头体写在send中
+				mdui.alert('创建成功自动刷新！');
 				/**
 				* 获取数据后的处理程序
 				*/
 				httpRequest.onreadystatechange = function () {//请求后的回调接口，可将请求成功后要执行的程序写在其中
 					if (httpRequest.readyState == 4 && httpRequest.status == 200) {//验证请求是否发送成功
-						mdui.alert('创建成功');
+						
 						location.reload();
 					}
 				};

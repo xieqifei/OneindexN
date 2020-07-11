@@ -131,9 +131,7 @@ class UploadController{
 		}
 	}
 
-	function upload_large_file($task){
-
-		
+	function upload_large_file($task){		
 		//创建上传会话
 		if(empty($task['url'])){
 			$data = onedrive::create_upload_session($task['remotepath']);
@@ -198,7 +196,7 @@ class UploadController{
 		    $filename = $_FILES["onlinefile"]['name'];
 			$content = file_get_contents( $_FILES["onlinefile"]['tmp_name']);
 			//管理员不受上传目录限制
-			if($_COOKIE['admin'] == md5(config('password').config('refresh_token'))){
+			if(is_login()){
 				//获取路径
 				$paths = explode('/', rawurldecode($_POST['uploadurl']));
 				if(strcmp($paths[1],'?')==0){
@@ -240,17 +238,22 @@ class UploadController{
 
 	//新建文件夹
 	function create_folder(){
-		$paths = explode('/', rawurldecode($_POST['uploadurl']));
-		if(strcmp($paths[1],'?')==0){
-			array_shift($paths);
-			array_shift($paths);
-		}
-		//$paths=array_shift($paths);
-		$remotepath = get_absolute_path(join('/', $paths));
+		if(is_login()){
+			$paths = explode('/', rawurldecode($_POST['uploadurl']));
+			if(strcmp($paths[1],'?')==0){
+				array_shift($paths);
+				array_shift($paths);
+			}
+			//$paths=array_shift($paths);
+			$remotepath = get_absolute_path(join('/', $paths));
 
-		$data = onedrive::create_folder(str_replace('//','/',config('onedrive_root').$remotepath),$_POST['foldername']);
-		
-		return $data;
+			$data = onedrive::create_folder(str_replace('//','/',config('onedrive_root').$remotepath),$_POST['foldername']);
+			
+			return $data;
+		}
+		else{
+			return '未登录无法新建文件夹';
+		}
 	}
 	
 }

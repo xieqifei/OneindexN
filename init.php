@@ -144,6 +144,14 @@ function get_absolute_path($path) {
     return str_replace('//','/','/'.implode('/', $absolutes).'/');
 }
 
+function is_login(){
+	if($_COOKIE['admin'] == md5(config('password').config('refresh_token'))){
+		return true;
+	}else{
+		return false;
+	}
+}
+
 !defined('CONTROLLER_PATH') && define('CONTROLLER_PATH', ROOT.'controller/');
 onedrive::$client_id = config('client_id');
 onedrive::$client_secret = config('client_secret');
