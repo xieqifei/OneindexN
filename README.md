@@ -1,12 +1,10 @@
 # 一：简介
 
-本项目是Oneindex的继承版本。主要针对后台和nexmoe主题进行优化修改。
+本项目是Oneindex的继承版本。主要针对后台和nexmoe主题进行优化修改。aria2的入口在nexmoe主题的前台右下角。
 
 项目地址：https://github.com/xieqifei/OneindexN
 
 Demo：https://pan.sci.ci
-
-选择世纪互联版/国际版，可能存在问题，如果安装时无法切换版本，可以自行修改`/lib/onedrive.php`中的`api_url`和`oauth_url`参数。
 
 ## 修改功能：
 
@@ -18,6 +16,12 @@ Demo：https://pan.sci.ci
 - 管理员不受文件夹密码限制
 
 > 默认在线上传
+
+## 版本问题：
+
+选择世纪互联版/国际版，可能存在问题，如果安装时无法切换版本，可以自行修改`/lib/onedrive.php`中的`api_url`和`oauth_url`参数。
+
+heroku上安装：需要你在vps上或其他允许在网站目录新建文件的虚拟主机上安装好后，将网站目录下的config文件夹下的文件，复制到你的仓库config文件夹里。然后向heroku提交。`因为heroku里php没有新建文件的权限，所以安装程序会无限循环。`
 
 # 二：部署网站
 
@@ -42,10 +46,6 @@ Demo：https://pan.sci.ci
 1、PHP空间，PHP 5.6+ 需打开curl支持  
 2、OneDrive 账号 (个人、企业版或教育版/工作或学校帐户)  
 3、OneIndex 程序   
-
-## 配置：
-
-<img width="658" alt="image" src="https://raw.githubusercontent.com/donwa/oneindex/files/images/install.gif">  
 
 ### 计划任务  
 
@@ -137,7 +137,7 @@ php one.php upload:file demo.zip /test/d.zip
 php one.php upload:file up/ /test/
 ```
 
-# 三：连接Aria2
+# 三：使用Aria2
 
 Nginx添加反向代理
 
