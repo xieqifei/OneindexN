@@ -4,7 +4,13 @@
 
 项目地址：https://github.com/xieqifei/OneindexN
 
-Demo：https://onepandrive.herokuapp.com/
+前台Demo：https://onepandrive.herokuapp.com/
+
+后台Demo：https://onepandrive.herokuapp.com/?/admin
+
+后台密码：oneindexn
+
+> Demo项目部署在heroku上，配置文件为手动导入。heroku上的项目，后台是无法修改配置功能的。前台的全部功能，建议后台登陆为管理员后测试使用。离线下载需要配合aria2使用。需要你在本地电脑，或vps上安装aria2。关于离线下载的使用建议了解aria2。
 
 ## 修改功能：
 
@@ -26,9 +32,9 @@ Demo：https://onepandrive.herokuapp.com/
 
 ## 版本问题：
 
-选择世纪互联版/国际版，可能存在问题，如果安装时无法切换版本，可以自行修改`/lib/onedrive.php`中的`api_url`和`oauth_url`参数。
+如果安装时无法切换世纪互联/国际版本，可以自行修改`/lib/onedrive.php`中的`api_url`和`oauth_url`参数。
 
-heroku上安装：需要你在vps上或其他允许在网站目录新建文件的虚拟主机上安装好后，将网站目录下的config文件夹下的文件，复制到你的仓库config文件夹里。然后向heroku提交。`因为heroku里php没有新建文件的权限，所以安装程序会无限循环。`
+heroku上安装：你需要在vps上或其他允许在网站目录新建文件的虚拟主机上安装好后，将网站目录下的config文件夹下的文件，复制到你的仓库config文件夹里。然后向heroku提交。`因为heroku里php没有新建文件的权限，所以安装程序会无限循环。`
 
 > 如果你选择使用heroku安装，那么后台无法修改你的网站配置。必须手动修改github仓库的config文件。
 
