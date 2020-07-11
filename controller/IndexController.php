@@ -93,8 +93,20 @@ class IndexController{
 		$upload_paths_buffer = explode('/', config('offline')['upload_path']);
 		$upload_path_buffer = get_absolute_path(join('/', $upload_paths_buffer));
 		$online = config('offline')['online'];
-		//（排除路径不是全部，并且，当前路径不等于排除路径，并且，当前路径不等于上传路径）或者（排除路径为空且上传路径为空）
-		if((strcmp(config('except_path'),'all')!=0&&(get_absolute_path($this->path)!=get_absolute_path(config('onedrive_root').$except_path_buffer))&&(get_absolute_path($this->path)!=get_absolute_path(config('onedrive_root').$upload_path_buffer)))||(empty(config('except_path'))))
+		//定义变脸，表示是否渲染此目录下的文件
+		$iscolorbar = true;
+		//不渲染设置为all，或者当前路径与指定不渲染路径相同，则不渲染。如果设置为空，则渲染
+		if(strcmp(config('except_path'),'all')==0||strcmp(get_absolute_path($this->path), get_absolute_path(config('onedrive_root').$except_path_buffer))==0){
+			$iscolorbar = false;
+		}else if(empty(config('except_path'))){
+			$iscolorbar = true;
+		}
+		//指定的游客在线上传路径是否和当前路径一致，相同则不渲染。
+		if(strcmp(get_absolute_path($this->path),get_absolute_path(config('onedrive_root').$upload_path_buffer))==0){
+			$iscolorbar = false;
+		}
+		
+		if($iscolorbar)
 		{
 			if($this->items['index.html']){
 				$this->items['index.html']['path'] = get_absolute_path($this->path).'index.html';
