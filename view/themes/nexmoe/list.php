@@ -195,16 +195,13 @@ $(function(){
 	$('.icon-sort').on('click', function () {
         let sort_type = $(this).attr("data-sort"), sort_order = $(this).attr("data-order");
         let sort_order_to = (sort_order === "less") ? "more" : "less";
-
         $('li[data-sort]').sortElements(function (a, b) {
             let data_a = $(a).attr("data-sort-" + sort_type), data_b = $(b).attr("data-sort-" + sort_type);
             let rt = data_a.localeCompare(data_b, undefined, {numeric: true});
             return (sort_order === "more") ? 0-rt : rt;
         });
-
         $(this).attr("data-order", sort_order_to).text("expand_" + sort_order_to);
     });
-
 });
 </script>
 
@@ -253,7 +250,9 @@ $(function(){
     <div class="mdui-dialog-title">新建文件夹</div>
     <div class="mdui-dialog-content">
 		<form action="?/create_folder" method="post" >
-			<input class="mdui-center" type="text" class="mdui-textfield-input" style="margin: 50px 0;" name="foldername" placeholder="请输入文件夹名称"/>
+			<div class="mdui-textfield">
+				<input class="mdui-center" type="text" class="mdui-textfield-input" style="margin: 50px 0;" name="foldername" placeholder="请输入文件夹名称"/>
+			</div>
 			<input type="text" style="display: none;" name="uploadurl" value="<?php echo $_SERVER['REQUEST_URI']; ?>"/>
 			<div class="mdui-row-xs-3">
 			<div class="mdui-col"></div>
