@@ -4,7 +4,7 @@
 
 项目地址：https://github.com/xieqifei/OneindexN
 
-Demo：https://pan.sci.ci
+Demo：https://onepandrive.herokuapp.com/
 
 ## 修改功能：
 
