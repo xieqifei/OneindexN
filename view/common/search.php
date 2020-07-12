@@ -125,15 +125,19 @@
 	</div>
 </div>
 
+
 <div class="mdui-container">
  <div class="mdui-dialog" id="search_form">
     <div class="mdui-dialog-content">
 		<form action="?/search" method="post">
-			<input class="mdui-center" type="text" style="margin: 50px 0;" name="keyword" />
-			<div class="mdui-row-xs-3">
-			<div class="mdui-col"></div>
-				<div class="mdui-col">
-					<button class="mdui-btn mdui-btn-block mdui-color-theme-accent mdui-ripple">提交</button>
+			<div class="mdui-textfield mdui-textfield-floating-label">
+				<label class="mdui-textfield-label">输入关键词</label>
+				<input class="mdui-textfield-inputr" type="text" style="margin: 20px 0;" name="keyword" />
+				<div class="mdui-row-xs-3">
+				<div class="mdui-col"></div>
+					<div class="mdui-col">
+						<button class="mdui-btn mdui-btn-block mdui-color-theme-accent mdui-ripple">提交</button>
+					</div>
 				</div>
 			</div>
 		</form>
