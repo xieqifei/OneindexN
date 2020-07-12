@@ -20,7 +20,7 @@ function file_ico($item){
 <?php if(is_login()):?>
 <div class="mdui-container-fluid" >
 	<div class="nexmoe-item">
-	<button class="mdui-btn mdui-ripple" id="newfolder"><i class="mdui-icon material-icons">create_new_folder</i>新建文件夹</button>
+	<button class="mdui-btn mdui-ripple" id="newfolder">新建文件夹</button>
 	<button class="mdui-btn mdui-ripple" id="example-confirm-1">上传文件</button>
 	<button class="mdui-btn mdui-ripple" id="example-confirm-1">Aria2</button>
 	<button class="mdui-btn mdui-ripple multiopt" id="example-confirm-2">批量删除</button>
@@ -360,8 +360,8 @@ $(function(){
 	function onClickHander(){
 		checkitems = document.getElementsByName("itemid");
 		check_val = [];
-		for (k in obj) {
-			if (obj[k].checked) check_val.push(obj[k].value);
+		for (k in checkitems) {
+			if (checkitems[k].checked) check_val.push(checkitems[k].value);
 		}
 		//alert(check_val);
 		console.log(check_val);
