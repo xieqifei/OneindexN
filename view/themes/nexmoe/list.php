@@ -220,7 +220,7 @@ function file_ico($item){
 	mdui.JQ('#pagesearch').on('click', function () {
     mdui.prompt('输入搜索的关键词或后缀',
         function (value) {
-			var dom_items = document.getElementsByTagName('li');
+			var dom_items = document.getElementsByName('data-sort');
 			for(var i=0;i<dom_items.length;i++){
 				if(dom_items[i].getAttribute('data-sort-name').indexOf(value)==-1){
 					dom_items[i].style.display = "none";
