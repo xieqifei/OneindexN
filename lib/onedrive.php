@@ -134,7 +134,7 @@
 	
 		//关键字搜索
 		static function search($keyword){
-			$api = self::$api_url."/me/drive/root/search?q=".$keyword;
+			$api = self::$api_url."/me/drive/root/search(q=".$keyword.")";
 			$token = self::access_token();
 			$curl = curl_init();
 			curl_setopt_array($curl, array(
