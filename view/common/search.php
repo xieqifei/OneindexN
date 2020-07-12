@@ -18,6 +18,7 @@
 <?php if(is_login()):?>
 	<div class="mdui-container-fluid" >
 		<div class="nexmoe-item">
+		<button class="mdui-btn mdui-ripple" id="pagesearch">搜索</button>
 		<button class="mdui-btn mdui-ripple" id="example-confirm-1">Aria2</button>
 		<button class="mdui-btn mdui-ripple multiopt" id="deleteall" style="display: none;">删除</button>
 		<button class="mdui-btn mdui-ripple multiopt" id="shareall" style="display: none;">分享</button>
@@ -149,6 +150,6 @@
   </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/gh/xieqifei/OneindexN@v1.31/statics/js/nexmoe.js"></script>
-
+<!-- <script src="https://cdn.jsdelivr.net/gh/xieqifei/OneindexN@v1.31/statics/js/nexmoe.js"></script> -->
+<script src="statics\common\search\js\search.js"></script>
 <?php view::end('content');?>
