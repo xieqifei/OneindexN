@@ -243,8 +243,8 @@ class IndexController{
 		$searchinfo['count']=count($items);
 		// print_r($items);
 		// print_r($searchinfo);
-		view::load('search')->with('title', '123')
-		->with('navs', $navs)->with('items', $items)->with('searchinfo',$searchinfo);
+		view::load('404')->show();
+		
 	}
 
 	//时候404
