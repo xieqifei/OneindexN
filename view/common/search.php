@@ -133,7 +133,7 @@
 		<form action="?/search" method="post">
 			<div class="mdui-textfield mdui-textfield-floating-label">
 				<label class="mdui-textfield-label">输入关键词</label>
-				<input class="mdui-textfield-inputr" type="text" style="margin: 20px 0;" name="keyword" />
+				<input class="mdui-textfield-input" type="text" style="margin: 50px 0;" name="keyword" />
 				<div class="mdui-row-xs-3">
 				<div class="mdui-col"></div>
 					<div class="mdui-col">
