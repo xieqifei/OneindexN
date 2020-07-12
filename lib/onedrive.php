@@ -117,6 +117,7 @@
 				//var_dump($item);
 				$items[$item['name']] = array(
 					'name'=>$item['name'],
+					'id' => $item['id'],
 					'size'=>$item['size'],
 					'lastModifiedDateTime'=>strtotime($item['lastModifiedDateTime']),
 					'downloadUrl'=>$item['@microsoft.graph.downloadUrl'],
