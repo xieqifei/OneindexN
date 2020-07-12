@@ -246,6 +246,7 @@ class IndexController{
 			// print_r($searchinfo);
 			return view::load('404');
 		}else{
+			http_response_code(404);
 			view::load('404')->show();
 			die();
 		}
