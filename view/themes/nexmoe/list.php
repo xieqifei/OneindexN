@@ -14,7 +14,7 @@ function file_ico($item){
   return "insert_drive_file";
 }
 ?>
-<script src="https://cdn.jsdelivr.net/gh/xieqifei/OneindexN@v1.2/statics/js/nexmoe.js"></script>
+
 <?php view::begin('content');?>
 
 <?php if(is_login()):?>
@@ -213,6 +213,6 @@ function file_ico($item){
     </div>
   </div>
 </div>
-
+<script src="https://cdn.jsdelivr.net/gh/xieqifei/OneindexN@v1.2/statics/js/nexmoe.js"></script>
 
 <?php view::end('content');?>
