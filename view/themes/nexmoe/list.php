@@ -283,15 +283,40 @@ $(function(){
   </div>
 </div>
 
+<div class="mdui-dialog" id="search_form">
+    <div class="mdui-dialog-content">
+		<form action="?/search" method="post">
+			<input class="mdui-center" type="text" style="margin: 50px 0;" name="keyword" />
+			<input type="text" style="display: none;" name="uploadurl" value="<?php echo $_SERVER['REQUEST_URI']; ?>"/>
+			<div class="mdui-row-xs-3">
+			<div class="mdui-col"></div>
+				<div class="mdui-col">
+					<button class="mdui-btn mdui-btn-block mdui-color-theme-accent mdui-ripple">提交</button>
+				</div>
+			</div>
+		</form>
+	</div>
+    <div class="mdui-dialog-actions">
+      <button class="mdui-btn mdui-ripple" mdui-dialog-cancel>取消</button>
+    </div>
+  </div>
+</div>
+
 
 <script>
     var inst1 = new mdui.Fab('#myFab');
 
-
+	//文件上传
 	var inst2 = new mdui.Dialog('#fileupload-dialog');
 	// method
 	document.getElementById('file_upload').addEventListener('click', function () {
 	inst2.open();
+	});
+
+	var inst3 = new mdui.Dialog('#search_form');
+	// method
+	document.getElementById('search').addEventListener('click', function () {
+	inst3.open();
 	});
 	//新建文件夹
 	mdui.JQ('#newfolder').on('click', function () {
@@ -312,40 +337,6 @@ $(function(){
 						
 					}
 				};
-			},
-			function (value) {
-			}
-		);
-	});
-	//搜索
-	mdui.JQ('#search').on('click', function () {
-		mdui.prompt('输入搜索关键词',
-			function (value) {
-				// 创建一个 form
-				var form1 = document.createElement("form");
-				form1.id = "form1";
-				form1.name = "form1";
-				// 添加到 body 中
-				document.body.appendChild(form1);
-				// 创建一个输入
-				var input = document.createElement("input");
-				// 设置相应参数
-				input.type = "text";
-				input.name = "keyword";
-				input.value = value;
-			
-				// 将该输入框插入到 form 中
-				form1.appendChild(input);
-			
-				// form 的提交方式
-				form1.method = "POST";
-				// form 提交路径
-				form1.action = "?/search";
-			
-				// 对该 form 执行提交
-				form1.submit();
-				// 删除该 form
-				document.body.removeChild(form1);
 			},
 			function (value) {
 			}
