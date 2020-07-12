@@ -21,32 +21,15 @@ function file_ico($item){
 <div class="mdui-container-fluid" >
 	<div class="nexmoe-item">
 	<button class="mdui-btn mdui-ripple" id="newfolder">新建文件夹</button>
-	<button class="mdui-btn mdui-ripple" id="example-confirm-1">上传文件</button>
+	<button class="mdui-btn mdui-ripple" id="upload111">上传文件</button>
 	<button class="mdui-btn mdui-ripple" id="example-confirm-1">Aria2</button>
-	<button class="mdui-btn mdui-ripple multiopt" id="example-confirm-2" style="display: none;">批量删除</button>
-	<button class="mdui-btn mdui-ripple multiopt" id="example-confirm-3" style="display: none;">批量分享</button>
-	<button class="mdui-btn mdui-ripple" id="singlefile" style="display: none;">单文件操作</button>
+	<button class="mdui-btn mdui-ripple multiopt" id="deleteall" style="display: none;">批量删除</button>
+	<button class="mdui-btn mdui-ripple multiopt" id="shareall" style="display: none;">批量分享</button>
+	<button class="mdui-btn mdui-ripple singleopt" id="rename" style="display: none;">重命名</button>
 	</div>
 </div>
 <?endif;?> 
-<!-- 单文件操作 -->
-<ul class="mdui-menu" id="sinopt">
-	<li class="mdui-menu-item">
-		<a href="javascript:;" class="mdui-ripple">
-		<i class="mdui-menu-item-icon mdui-icon material-icons">复制链接</i>Preview
-		</a>
-	</li>
-	<li class="mdui-menu-item">
-		<a href="javascript:;" class="mdui-ripple">
-		<i class="mdui-menu-item-icon mdui-icon material-icons">重命名</i>Download
-		</a>
-	</li>
-	<li class="mdui-menu-item">
-		<a href="javascript:;" class="mdui-ripple">
-		<i class="mdui-menu-item-icon mdui-icon material-icons">删除</i>Remove
-		</a>
-	</li>
-</ul>
+
 
 <div class="mdui-container-fluid">
 <?php if($head):?>
@@ -309,8 +292,6 @@ $(function(){
 	document.getElementById('file_upload').addEventListener('click', function () {
 	inst2.open();
 	});
-	//	单文件操作菜单
-	var inst3 = new mdui.Menu('#singlefile','#sinopt');
 
 	mdui.JQ('#newfolder').on('click', function () {
 		mdui.prompt('输入文件夹名称',
@@ -336,6 +317,30 @@ $(function(){
 		);
 	});
 
+	mdui.JQ('#rename').on('click', function () {
+		mdui.prompt('输入新名称',
+			function (value) {
+				var httpRequest = new XMLHttpRequest();//第一步：创建需要的对象
+				httpRequest.open('POST', '?/rename', true); //第二步：打开连接
+				httpRequest.setRequestHeader("Content-type","application/x-www-form-urlencoded");//设置请求头 注：post方式必须设置请求头（在建立连接后设置请求头）
+				var query='name='+value+'&itemid='+check_val[0];
+				httpRequest.send(query);//发送请求 将情头体写在send中
+				mdui.alert('重命名成功自动刷新！');
+				/**
+				* 获取数据后的处理程序
+				*/
+				httpRequest.onreadystatechange = function () {//请求后的回调接口，可将请求成功后要执行的程序写在其中
+					if (httpRequest.readyState == 4 && httpRequest.status == 200) {//验证请求是否发送成功
+						
+						location.reload();
+					}
+				};
+			},
+			function (value) {
+			}
+		);
+	});
+
 	function onClickHander(){
 		checkitems = document.getElementsByName("itemid");
 		check_val = [];
@@ -344,14 +349,18 @@ $(function(){
 		}
 		//alert(check_val);
 		console.log(check_val);
-		var singlefile = document.getElementById("singlefile");
+		var singleopt = document.getElementsByClassName("singleopt");
 		var multiopt = document.getElementsByClassName("multiopt");
 		//单文件操作
 		if(check_val.length==1){
-			singlefile.style.display = "inline";
+			for(var i=0;i<singleopt.length;i++){
+				singleopt[i].style.display = "inline";
+			}
 		}
 		else{
-			singlefile.style.display = "none";
+			for(var i=0;i<singleopt.length;i++){
+				singleopt[i].style.display = "none";
+			}
 		}
 		//多文件操作
 		if(check_val.length>=1){

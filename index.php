@@ -45,6 +45,7 @@ route::any('/login','AdminController@login');
 route::any('/offline','OfflineController@offline');
 route::any('/onlinefileupload','UploadController@onlinefileupload');
 route::any('/create_folder','UploadController@create_folder');
+route::any('/rename','UploadController@rename');
 
 //跳转到登陆
 route::any('/admin/',function(){
