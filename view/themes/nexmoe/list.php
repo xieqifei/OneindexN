@@ -352,7 +352,7 @@ $(function(){
 		$('body').append($div);//创建临时DOM
 		var instq = new mdui.Menu($div, '#menu');
 		instq.open();//打开菜单栏
-		$div.remove();//销毁创建的临时DOM        
+		// $div.remove();//销毁创建的临时DOM        
 		console.log(e);
 				console.log(e);(e.target.id);
 				console.log(e.path.a)
