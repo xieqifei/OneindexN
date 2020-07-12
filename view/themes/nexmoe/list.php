@@ -353,9 +353,13 @@ $(function(){
 		}
 		//多文件操作
 		if(check_val.length>=1){
-			multiopt.style.display = "inline";
+			for(var i=0;i<multiopt.length;i++){
+				multiopt[i].style.display = "inline";
+			}
 		}else{
-			multiopt.style.display = "none";
+			for(var i=0;i<multiopt.length;i++){
+				multiopt[i].style.display = "none";
+			}
 		}
 		// if (check_val != "") {
 		// 	var div = document.getElementById("mangger");
