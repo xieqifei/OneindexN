@@ -1,16 +1,16 @@
 <?php 
-define('VIEW_PATH', ROOT.'view/');
+define('VIEW_PATH', ROOT.'view/common');
 class CommonController{
 	
 	function __construct(){
 	}
 	//离线下载
 	function offline(){
-		if(config('offline')['offline']||$_COOKIE['admin'] == md5(config('password').config('refresh_token'))){
-			return view::load('offline/offline');
+		if(config('offline')['offline']||is_login()){
+			return view::load('offline');
 		}
 		else{
-			return view::load('offline/tips');
+			return view::load('tips');
 		}
 	}
 
@@ -22,7 +22,7 @@ class CommonController{
 			$navs=array();
 			$searchinfo['keyword']=$keyword;
 			$searchinfo['count']=count($items);
-			return view::load('offline/search')->with('items',$items);
+			return view::load('search')->with('items',$items);
 			// return view::load('themes/nexmoe/search')->with('title', '123')
 			// ->with('navs', $navs)
 			// ->with('items', $items);
