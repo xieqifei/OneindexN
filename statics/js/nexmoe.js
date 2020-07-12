@@ -103,7 +103,7 @@ mdui.JQ('#newfolder').on('click', function () {
             var httpRequest = new XMLHttpRequest();//第一步：创建需要的对象
             httpRequest.open('POST', '?/create_folder', true); //第二步：打开连接
             httpRequest.setRequestHeader("Content-type","application/x-www-form-urlencoded");//设置请求头 注：post方式必须设置请求头（在建立连接后设置请求头）
-            var query='foldername='+value+'&uploadurl=<?php echo $_SERVER['REQUEST_URI']; ?>';
+            var query='foldername='+value+'&uploadurl='+window.location.pathname;
             httpRequest.send(query);//发送请求 将情头体写在send中
             mdui.alert('创建成功2秒后\n自动刷新列表！');
             setInterval(function(){location.reload();},3000);
