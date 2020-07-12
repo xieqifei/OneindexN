@@ -244,7 +244,7 @@ class IndexController{
 		// print_r($items);
 		// print_r($searchinfo);
 		return view::load('search')->with('title', '123')
-		->with('navs', $navs)->with('items', $items)->with('searchinfo',$searchinfo);
+		->with('navs', $navs)->with('items', $items)->with('searchinfo',$searchinfo)->show();
 	}
 
 	//时候404
