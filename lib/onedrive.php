@@ -87,7 +87,7 @@
 		
 		//返回目录信息
 		static function dir($path="/"){
-			$request = self::request($path, "children?select=name,size,folder,@microsoft.graph.downloadUrl,lastModifiedDateTime");
+			$request = self::request($path, 'children?select=name,size,folder,lastModifiedDateTime,id,@microsoft.graph.downloadUrl');
 			$items = array();
 			self::dir_next_page($request, $items);
 			//不在列表显示的文件夹
@@ -117,6 +117,7 @@
 				//var_dump($item);
 				$items[$item['name']] = array(
 					'name'=>$item['name'],
+					'id' => $item['id'],
 					'size'=>$item['size'],
 					'lastModifiedDateTime'=>strtotime($item['lastModifiedDateTime']),
 					'downloadUrl'=>$item['@microsoft.graph.downloadUrl'],
@@ -130,16 +131,7 @@
 				return self::dir_next_page($request, $items);
 			}
 		}
-
-		
-		//static function content($path){
-		//	$token = self::access_token();
-		//	fetch::$headers = "Authorization: bearer {$token}";
-		//	$url = self::$api_url."/me/drive/root:".self::urlencode($path).":/content";
-		//	$resp = fetch::get($url);
-		//	return $resp->content;
-		//}
-
+	
 		//文件缩略图链接
 		static function thumbnail($path,$size='large'){
 			$request = self::request($path,"thumbnails/0?select={$size}");
@@ -281,16 +273,7 @@
 		    return $size;
 		}
 
-		// //新建文件夹
-		// static function create_folder($path = '/', $name = '新建文件夹'){
-        // $request = self::request(get_absolute_path(dirname($path)),'children');
-        // $post_data['name'] = $name;
-		// $post_data['folder'] =json_decode("{}");
-		// $post_data['@microsoft.graph.conflictBehavior'] = 'rename';
-        // $resp = fetch::post($request, json_encode($post_data));
-        // $data = json_decode($resp->content, true);
-        // return $data;
-		  // }
+		//新建文件夹
 		public static function create_folder($path = '/', $name = '新建文件夹')
 		{
 			$path = self::urlencode($path);
@@ -319,5 +302,99 @@
 			curl_close($curl);
 			return $response;
 		}
+
+		//文件重命名
+		public static function rename($itemid, $name)
+		{
+			$token = self::access_token();
+			$api = str_replace('root', 'items/'.$itemid, self::$api_url."/me/drive/root");
+			$curl = curl_init();
+			curl_setopt_array($curl, array(
+				CURLOPT_URL => $api,
+				CURLOPT_RETURNTRANSFER => true,
+				CURLOPT_ENCODING => '',
+				CURLOPT_MAXREDIRS => 10,
+				CURLOPT_TIMEOUT => 0,
+				CURLOPT_FOLLOWLOCATION => true,
+				CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+				CURLOPT_CUSTOMREQUEST => 'PATCH',
+				CURLOPT_POSTFIELDS => "{\n  \"name\": \"".$name."\"\n}",
+				CURLOPT_HTTPHEADER => array(
+					'Authorization: Bearer '.$token,
+					'Content-Type: application/json',
+				),
+			));
+			$response = curl_exec($curl);
+			curl_close($curl);
+			var_dump($response);
+		}
 		
+		  //文件删除
+		  public static function delete($itemid = array())
+		  {
+			  $access_token = self::access_token();
+			  $apie = str_replace('root', 'items/', self::$api_url."/me/drive/root");
+			  $apis = array();
+			  for ($i = 0; $i < count($itemid); ++$i) {
+				  $apis[$i] = $apie.$itemid[$i];
+			  }
+			  $result = $res = $ch = array();
+			  $nch = 0;
+			  $mh = curl_multi_init();
+			  foreach ($apis as $nk => $url) {
+				  $timeout = 20;
+				  $ch[$nch] = curl_init();
+				  curl_setopt_array($ch[$nch], array(
+					  CURLOPT_URL => $url,
+					  CURLOPT_TIMEOUT => $timeout,
+					  CURLOPT_RETURNTRANSFER => true,
+					  CURLOPT_MAXREDIRS => 10,
+					  CURLOPT_FOLLOWLOCATION => true,
+					  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+					  CURLOPT_CUSTOMREQUEST => 'DELETE',
+					  CURLOPT_HTTPHEADER => array(
+						  'Authorization: Bearer '.$access_token,
+						  'Content-Type: application/json',
+					  ),
+				  ));
+	  
+				  curl_multi_add_handle($mh, $ch[$nch]);
+				  ++$nch;
+			  }
+	  
+			  /* wait for performing request */
+	  
+			  do {
+				  $mrc = curl_multi_exec($mh, $running);
+			  } while (CURLM_CALL_MULTI_PERFORM == $mrc);
+	  
+			  while ($running && $mrc == CURLM_OK) {
+				  // wait for network
+				  if (curl_multi_select($mh, 0.5) > -1) {
+					  // pull in new data;
+					  do {
+						  $mrc = curl_multi_exec($mh, $running);
+					  } while (CURLM_CALL_MULTI_PERFORM == $mrc);
+				  }
+			  }
+	  
+			  if ($mrc != CURLM_OK) {
+				  error_log('CURL Data Error');
+			  }
+			  /* get data */
+			  $nch = 0;
+			  foreach ($apis as $moudle => $node) {
+				  if (($err = curl_error($ch[$nch])) == '') {
+					  $res[$nch] = curl_multi_getcontent($ch[$nch]);
+					  $result[$moudle] = $res[$nch];
+				  } else {
+					  error_log('curl error');
+				  }
+				  curl_multi_remove_handle($mh, $ch[$nch]);
+				  curl_close($ch[$nch]);
+				  ++$nch;
+			  }
+			  curl_multi_close($mh);
+			  return '批量处理完成';
+		  }
 	}

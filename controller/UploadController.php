@@ -246,13 +246,38 @@ class UploadController{
 			}
 			//$paths=array_shift($paths);
 			$remotepath = get_absolute_path(join('/', $paths));
-
 			$data = onedrive::create_folder(str_replace('//','/',config('onedrive_root').$remotepath),$_POST['foldername']);
-			
+			oneindex::refresh_cache(get_absolute_path(config('onedrive_root')));
 			return $data;
 		}
 		else{
 			return '未登录无法新建文件夹';
+		}
+	}
+	//重命名
+	function rename(){
+		if(is_login()){
+			$newname=$_POST['name'];
+			$itemid=$_POST['itemid'];
+			$resp=onedrive::rename($itemid,$newname);
+			oneindex::refresh_cache(get_absolute_path(config('onedrive_root')));
+			return $resp;
+		}
+		else{
+			return '未登录无法重命名';
+		}
+	}
+	//删除
+	function deleteitems(){
+		if(is_login()){
+			$data = file_get_contents( "php://input" );
+			$items = json_decode( $data );
+			$resp=onedrive::delete($items);
+			oneindex::refresh_cache(get_absolute_path(config('onedrive_root')));
+			return $data;
+		}
+		else{
+			return '未登录无法重命名';
 		}
 	}
 	
