@@ -61,6 +61,10 @@ function file_ico($item){
 <div class="mdui-row">
 	<ul class="mdui-list">
 		<li class="mdui-list-item th">
+		<?php if(is_login()):?>
+			<label class="mdui-checkbox"><input type="checkbox" value="" id="checkall" onclick="checkall()"><i
+					class="mdui-checkbox-icon"></i></label>
+			<?endif;?> 
 		  <div class="mdui-col-xs-12 mdui-col-sm-7">文件 <i class="mdui-icon material-icons icon-sort" data-sort="name" data-order="downward">expand_more</i></div>
 		  <div class="mdui-col-sm-3 mdui-text-right">修改时间 <i class="mdui-icon material-icons icon-sort" data-sort="date" data-order="downward">expand_more</i></div>
 		  <div class="mdui-col-sm-2 mdui-text-right">大小 <i class="mdui-icon material-icons icon-sort" data-sort="size" data-order="downward">expand_more</i></div>
@@ -81,9 +85,16 @@ function file_ico($item){
 		<?php foreach((array)$items as $item):?>
 			<?php if(!empty($item['folder'])):?>
 
-		<li class="mdui-list-item mdui-ripple" data-sort data-sort-name="<?php e($item['name']);?>"
+		<li class="mdui-list-item mdui-ripple" data-sort 
+					data-sort-name="<?php e($item['name']);?>"
                     data-sort-date="<?php echo $item['lastModifiedDateTime'];?>"
-                    data-sort-size="<?php echo $item['size'];?>" >
+					data-sort-size="<?php echo $item['size'];?>" 
+					id="<?php echo$item["id"] ?>">
+			<?php if(is_login()):?>
+			<label class="mdui-checkbox">
+				<input type="checkbox" value="<?php echo$item["id"] ?>" name="itemid" onclick="onClickHander()">
+				<i class="mdui-checkbox-icon"></i></label>
+			<?endif;?> 		
 			<a href="<?php echo get_absolute_path($root.$path.rawurlencode($item['name']));?>">
 			  <div class="mdui-col-xs-12 mdui-col-sm-7 mdui-text-truncate">
 				<i class="mdui-icon material-icons">folder_open</i>
@@ -97,7 +108,13 @@ function file_ico($item){
 		<li class="mdui-list-item file mdui-ripple" data-sort
                     data-sort-name="<?php e($item['name']);?>"
                     data-sort-date="<?php echo $item['lastModifiedDateTime'];?>"
-                    data-sort-size="<?php echo $item['size'];?>">
+					data-sort-size="<?php echo $item['size'];?>" 
+					id="<?php echo$item["id"] ?>">
+					<?php if(is_login()):?>
+			<label class="mdui-checkbox">
+				<input type="checkbox" value="<?php echo$item["id"] ?>" name="itemid" onclick="onClickHander()">
+				<i class="mdui-checkbox-icon"></i></label>
+			<?endif;?> 	
 			<a href="<?php echo get_absolute_path($root.$path).rawurlencode($item['name']);?>" target="_blank">
 			  <div class="mdui-col-xs-12 mdui-col-sm-7 mdui-text-truncate">
 				<i class="mdui-icon material-icons"><?php echo file_ico($item);?></i>
@@ -275,31 +292,31 @@ $(function(){
 
 </div>
 
-// <div class="mdui-container mdui-p-t-5">
-//   <ul class="mdui-menu" id="menu">
-//     <li class="mdui-menu-item">
-//       <a href="javascript:;" class="mdui-ripple">
-//         <i class="mdui-menu-item-icon mdui-icon material-icons">remove_red_eye</i>Preview
-//       </a>
-//     </li>
-//     <li class="mdui-menu-item">
-//       <a href="javascript:;" class="mdui-ripple">
-//         <i class="mdui-menu-item-icon mdui-icon material-icons">file_download</i>Download
-//       </a>
-//     </li>
-//     <li class="mdui-divider"></li>
-//     <li class="mdui-menu-item">
-//       <a href="javascript:;" class="mdui-ripple">
-//         <i class="mdui-menu-item-icon mdui-icon material-icons">delete</i>Remove
-//       </a>
-//     </li>
-//     <li class="mdui-menu-item">
-//       <a href="javascript:;" class="mdui-ripple">
-//         <i class="mdui-menu-item-icon"></i>Empty
-//       </a>
-//     </li>
-//   </ul>
-// </div>	
+<div class="mdui-container mdui-p-t-5">
+  <ul class="mdui-menu" id="menu">
+    <li class="mdui-menu-item">
+      <a href="javascript:;" class="mdui-ripple">
+        <i class="mdui-menu-item-icon mdui-icon material-icons">remove_red_eye</i>Preview
+      </a>
+    </li>
+    <li class="mdui-menu-item">
+      <a href="javascript:;" class="mdui-ripple">
+        <i class="mdui-menu-item-icon mdui-icon material-icons">file_download</i>Download
+      </a>
+    </li>
+    <li class="mdui-divider"></li>
+    <li class="mdui-menu-item">
+      <a href="javascript:;" class="mdui-ripple">
+        <i class="mdui-menu-item-icon mdui-icon material-icons">delete</i>Remove
+      </a>
+    </li>
+    <li class="mdui-menu-item">
+      <a href="javascript:;" class="mdui-ripple">
+        <i class="mdui-menu-item-icon"></i>Empty
+      </a>
+    </li>
+  </ul>
+</div>	
 
 <script>
     var inst1 = new mdui.Fab('#myFab');
@@ -335,6 +352,8 @@ $(function(){
 		);
 	});
 
+
+
 	// var inst3 = new mdui.Dialog('#newfolder-dialog');
 	// document.getElementById('newfolder').addEventListener('click', function () {
 	// inst3.open();
@@ -365,5 +384,11 @@ $(function(){
 	// 		instq.close();
 	// 	}
 	// });
+	function onClickHander(){
+		;
+	}
+	function checkall(){
+		;
+	}
 </script>
 <?php view::end('content');?>
