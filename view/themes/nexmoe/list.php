@@ -29,6 +29,25 @@ function file_ico($item){
 	</div>
 </div>
 <?endif;?> 
+<!-- 单文件操作 -->
+<ul class="mdui-menu" id="sinopt">
+	<li class="mdui-menu-item">
+		<a href="javascript:;" class="mdui-ripple">
+		<i class="mdui-menu-item-icon mdui-icon material-icons">复制链接</i>Preview
+		</a>
+	</li>
+	<li class="mdui-menu-item">
+		<a href="javascript:;" class="mdui-ripple">
+		<i class="mdui-menu-item-icon mdui-icon material-icons">重命名</i>Download
+		</a>
+	</li>
+	<li class="mdui-menu-item">
+		<a href="javascript:;" class="mdui-ripple">
+		<i class="mdui-menu-item-icon mdui-icon material-icons">删除</i>Remove
+		</a>
+	</li>
+</ul>
+
 <div class="mdui-container-fluid">
 <?php if($head):?>
 <div class="mdui-typo" style="padding: 20px;">
@@ -278,50 +297,8 @@ $(function(){
       <button class="mdui-btn mdui-ripple" mdui-dialog-cancel>取消</button>
     </div>
   </div>
-
-  <!-- <div class="mdui-dialog" id="newfolder-dialog">
-    <div class="mdui-dialog-title">新建文件夹</div>
-    <div class="mdui-dialog-content">
-		<form action="?/create_folder" method="post" >
-			<div class="mdui-textfield mdui-textfield-floating-label">
-				<label class="mdui-textfield-label">文件夹名称</label>
-				<input name="foldername" style="margin: 50px 0;" type="text" class="mdui-textfield-input" required>
-			</div>
-			<input type="text" style="display: none;" name="uploadurl" value=""/>
-			<div class="mdui-row-xs-3">
-			<div class="mdui-col"></div>
-				<div class="mdui-col">
-					<button class="mdui-btn mdui-btn-block mdui-color-theme-accent mdui-ripple">提交</button>
-				</div>
-			</div>
-		</form>
-	</div>
-    <div class="mdui-dialog-actions">
-      <button class="mdui-btn mdui-ripple" mdui-dialog-cancel>取消</button>
-    </div>
-  </div> -->
-
 </div>
 
-<div class="mdui-container mdui-p-t-5">
-  <ul class="mdui-menu" id="sinopt">
-    <li class="mdui-menu-item">
-      <a href="javascript:;" class="mdui-ripple">
-        <i class="mdui-menu-item-icon mdui-icon material-icons">复制链接</i>Preview
-      </a>
-    </li>
-    <li class="mdui-menu-item">
-      <a href="javascript:;" class="mdui-ripple">
-        <i class="mdui-menu-item-icon mdui-icon material-icons">重命名</i>Download
-      </a>
-    </li>
-    <li class="mdui-menu-item">
-      <a href="javascript:;" class="mdui-ripple">
-        <i class="mdui-menu-item-icon mdui-icon material-icons">删除</i>Remove
-      </a>
-    </li>
-  </ul>
-</div>	
 
 <script>
     var inst1 = new mdui.Fab('#myFab');
