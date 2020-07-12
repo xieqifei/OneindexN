@@ -57,6 +57,7 @@ function file_ico($item){
     top: 180px;
 }
 </style>
+<script src="http://libs.baidu.com/jquery/2.0.0/jquery.js"></script>
 <div class="nexmoe-item">
 <div class="mdui-row">
 	<ul class="mdui-list">
