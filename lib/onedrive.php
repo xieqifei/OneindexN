@@ -87,7 +87,7 @@
 		
 		//返回目录信息
 		static function dir($path="/"){
-			$request = self::request($path, "children?select=name,size,folder,@microsoft.graph.downloadUrl,lastModifiedDateTime");
+			$request = self::request($path, 'children?select=name,size,folder,lastModifiedDateTime,id,@microsoft.graph.downloadUrl');
 			$items = array();
 			self::dir_next_page($request, $items);
 			//不在列表显示的文件夹
@@ -385,6 +385,7 @@
 					  } while (CURLM_CALL_MULTI_PERFORM == $mrc);
 				  }
 			  }
+	  
 			  if ($mrc != CURLM_OK) {
 				  error_log('CURL Data Error');
 			  }
