@@ -101,7 +101,7 @@ function file_ico($item){
 		<?php foreach((array)$items as $item):?>
 			<?php if(!empty($item['folder'])):?>
 
-		<li class="mdui-list-item mdui-ripple" data-sort 
+		<li class="mdui-list-item mdui-ripple filter" data-sort 
 					data-sort-name="<?php echo $item['name'] ;?>"
                     data-sort-date="<?php echo $item['lastModifiedDateTime'];?>"
 					data-sort-size="<?php echo $item['size'];?>" 
@@ -121,7 +121,7 @@ function file_ico($item){
 		  	</a>
 		</li>
 			<?php else:?>
-		<li class="mdui-list-item file mdui-ripple" data-sort
+		<li class="mdui-list-item file mdui-ripple filter" data-sort
                     data-sort-name="<?php echo $item['name'];?>"
                     data-sort-date="<?php echo $item['lastModifiedDateTime'];?>"
 					data-sort-size="<?php echo $item['size'];?>" 
@@ -220,7 +220,7 @@ function file_ico($item){
 	mdui.JQ('#pagesearch').on('click', function () {
     mdui.prompt('输入搜索的关键词或后缀',
         function (value) {
-			var dom_items = document.getElementsByName('data-sort');
+			var dom_items = document.getElementsByClassName('filter');
 			for(var i=0;i<dom_items.length;i++){
 				if(dom_items[i].getAttribute('data-sort-name').indexOf(value)==-1){
 					dom_items[i].style.display = "none";
