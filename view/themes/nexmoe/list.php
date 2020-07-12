@@ -225,7 +225,7 @@ function file_ico($item){
 				if(dom_items[i].getAttribute('data-sort-name').indexOf(value)==-1){
 					dom_items[i].style.display = "none";
 				}else{
-					dom_items[i].style.display = "inline";
+					dom_items[i].style.display = "";
 				}
 			}
         },
