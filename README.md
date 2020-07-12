@@ -1,6 +1,6 @@
 # 一：简介
 
-本项目是Oneindex的继承版本。主要针对后台和nexmoe主题进行优化修改。aria2的入口在nexmoe主题的前台右下角。
+本项目是Oneindex的继承版本。主要针对后台和nexmoe主题进行优化修改。
 
 项目地址：https://github.com/xieqifei/OneindexN
 
@@ -8,7 +8,7 @@
 
 后台Demo：https://onepandrive.herokuapp.com/?/admin
 
-后台密码：oneindexn
+管理员密码：oneindexn
 
 > Demo项目部署在heroku上，配置文件为手动导入。heroku上的项目，后台是无法修改配置功能的。前台的全部功能，建议后台登陆为管理员后测试使用。离线下载需要配合aria2使用。需要你在本地电脑，或vps上安装aria2。关于离线下载的使用建议了解aria2。
 
@@ -23,14 +23,15 @@
 
 ### 前台
 
-- 游客/管理员在线上传
-- 游客/管理员离线上传
+以下功能仅支持nexmoe主题
 
-- 外部视频播放器播放。需要安装对应播放器。
+- 删除/新建文件夹/上传/重命名等，基本的onedrive文件操作。仅管理员可用
+- 游客小文件在线上传
+- 游客aria2离线上传
+- 外部视频播放器播放接口。需要安装对应播放器。
 - 管理员登陆后，查看加密文件夹无需密码。
-- 新建文件夹，仅管理员操作
 
-## 版本问题：
+## 温馨提示：
 
 如果安装时无法切换世纪互联/国际版本，可以自行修改`/lib/onedrive.php`中的`api_url`和`oauth_url`参数。
 
@@ -128,7 +129,6 @@ php one.php token:refresh
 ```
 php one.php upload:file 本地文件 [OneDrive文件]
 ```
-
 
 **上传文件夹:**  
 

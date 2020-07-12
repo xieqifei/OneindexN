@@ -131,16 +131,7 @@
 				return self::dir_next_page($request, $items);
 			}
 		}
-
-		
-		//static function content($path){
-		//	$token = self::access_token();
-		//	fetch::$headers = "Authorization: bearer {$token}";
-		//	$url = self::$api_url."/me/drive/root:".self::urlencode($path).":/content";
-		//	$resp = fetch::get($url);
-		//	return $resp->content;
-		//}
-
+	
 		//文件缩略图链接
 		static function thumbnail($path,$size='large'){
 			$request = self::request($path,"thumbnails/0?select={$size}");
