@@ -344,12 +344,12 @@ $(function(){
 		var _x = e.pageX,
 			_y = e.pageY;
 
-		let $div = $$("<div></div>").css({
+		let $div = $("<div></div>").css({
 			position: 'absolute',
 			top: _y+'px',
 			left: _x+'px',
 		});
-		$$('body').append($div);//创建临时DOM
+		$('body').append($div);//创建临时DOM
 		var instq = new mdui.Menu($div, '#menu');
 		instq.open();//打开菜单栏
 		$div.remove();//销毁创建的临时DOM        
