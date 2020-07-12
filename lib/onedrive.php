@@ -135,6 +135,7 @@
 		//关键字搜索
 		static function search($keyword){
 			$token = self::access_token();
+			$keyword=self::urlencode($keyword);
 			$request['headers'] = "Authorization: bearer {$token}".PHP_EOL."Content-Type: application/json".PHP_EOL;
 			$request['url'] = self::$api_url."/me/drive/root/search(q='".$keyword."')";
 			$resp=fetch::get($request);
