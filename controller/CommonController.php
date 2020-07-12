@@ -16,21 +16,25 @@ class CommonController{
 
 	//搜索
 	function search(){
-		if($_POST['keyword']){
-			$keyword=$_POST['keyword'];
-			$items = onedrive::search($keyword);
-			$navs=array();
-			$searchinfo['keyword']=$keyword;
-			$searchinfo['count']=count($items);
-			return view::load('common/search')->with('items',$items);
-			// return view::load('themes/nexmoe/search')->with('title', '123')
-			// ->with('navs', $navs)
-			// ->with('items', $items);
-		}else{
-			return '参数错误';
+		if(is_login()){
+			if($_POST['keyword']){
+				$keyword=$_POST['keyword'];
+				$items = onedrive::search($keyword);
+				$navs=array();
+				$searchinfo['keyword']=$keyword;
+				$searchinfo['count']=count($items);
+				return view::load('common/search')->with('items',$items);
+			}else{
+				return '参数错误';
+			}
 		}
+		else{
+			return '请登陆后尝试';
+		}
+		
 	}
 	//新建文件夹
+	//post参数：uploadurl，当前url的路径
 	function create_folder(){
 		if(is_login()){
 			$paths = explode('/', rawurldecode($_POST['uploadurl']));
@@ -49,6 +53,7 @@ class CommonController{
 		}
 	}
 	//重命名
+	//post参数：name：新名称；itemid：itemid
 	function rename(){
 		if(is_login()){
 			$newname=$_POST['name'];
@@ -62,6 +67,7 @@ class CommonController{
 		}
 	}
 	//删除
+	//传入一个stringfy后的itemid的数组
 	function deleteitems(){
 		if(is_login()){
 			$data = file_get_contents( "php://input" );
@@ -76,6 +82,7 @@ class CommonController{
 	}
 
 	//任意文件在线上传，从个人电脑上传
+	//post参数：onlinefile：一个文件；uploadurl：当前url路径
 	function onlinefileupload()
 	{
 		

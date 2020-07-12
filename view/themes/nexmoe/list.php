@@ -20,13 +20,14 @@ function file_ico($item){
 <?php if(is_login()):?>
 <div class="mdui-container-fluid" >
 	<div class="nexmoe-item">
+	<button class="mdui-btn mdui-ripple" id="pagesearch">搜索</button>
 	<button class="mdui-btn mdui-ripple" id="newfolder">新建文件夹</button>
 	<button class="mdui-btn mdui-ripple" id="upload111">上传文件</button>
 	<button class="mdui-btn mdui-ripple" id="example-confirm-1">Aria2</button>
 	<button class="mdui-btn mdui-ripple multiopt" id="deleteall" style="display: none;">删除</button>
 	<button class="mdui-btn mdui-ripple multiopt" id="shareall" style="display: none;">分享</button>
 	<button class="mdui-btn mdui-ripple singleopt" id="rename" style="display: none;">重命名</button>
-	<button class="mdui-btn mdui-ripple" id="search">搜索</button>
+	<button class="mdui-btn mdui-ripple" id="search">全局搜索</button>
 	</div>
 </div>
 <?endif;?> 
@@ -214,5 +215,21 @@ function file_ico($item){
   </div>
 </div>
 <script src="https://cdn.jsdelivr.net/gh/xieqifei/OneindexN@v1.31/statics/js/nexmoe.js"></script>
-
+<script>
+	//关键词过滤
+	mdui.JQ('#pagesearch').on('click', function () {
+    mdui.prompt('输入搜索的关键词或后缀',
+        function (value) {
+			var dom_items = document.getElementsByTagName('li');
+			for(var i=0;i<dom_items.length;i++){
+				if(dom_items[i].getAttribute('data-sort-name').indexOf(value)==-1){
+					dom_items[i].style.display = "none";
+				}
+			}
+        },
+        function (value) {
+        }
+    );
+});
+</script>
 <?php view::end('content');?>
