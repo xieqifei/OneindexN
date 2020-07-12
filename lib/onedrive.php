@@ -132,6 +132,13 @@
 			}
 		}
 	
+		//关键字搜索
+		static function search($keyword){
+			$request = self::request('/search', '?q='.$keyword);
+			$resp=fetch::get($request);
+			return $resp;
+		}
+
 		//文件缩略图链接
 		static function thumbnail($path,$size='large'){
 			$request = self::request($path,"thumbnails/0?select={$size}");
