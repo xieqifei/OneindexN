@@ -247,7 +247,7 @@ class UploadController{
 			//$paths=array_shift($paths);
 			$remotepath = get_absolute_path(join('/', $paths));
 			$data = onedrive::create_folder(str_replace('//','/',config('onedrive_root').$remotepath),$_POST['foldername']);
-			
+			oneindex::refresh_cache(get_absolute_path(config('onedrive_root')));
 			return $data;
 		}
 		else{
@@ -260,6 +260,7 @@ class UploadController{
 			$newname=$_POST['name'];
 			$itemid=$_POST['itemid'];
 			$resp=onedrive::rename($itemid,$newname);
+			oneindex::refresh_cache(get_absolute_path(config('onedrive_root')));
 			return $resp;
 		}
 		else{
@@ -272,6 +273,7 @@ class UploadController{
 			$data = file_get_contents( "php://input" );
 			$items = json_decode( $data );
 			$resp=onedrive::delete($items);
+			oneindex::refresh_cache(get_absolute_path(config('onedrive_root')));
 			return $data;
 		}
 		else{
