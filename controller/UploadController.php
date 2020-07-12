@@ -280,11 +280,6 @@ class UploadController{
 			return '未登录无法重命名';
 		}
 	}
-	//搜索
-	function search(){
-		$keyword=$_POST['keyword'];
-		$data = onedrive::search($keyword);
-		return print_r($data);
-	}
+	
 	
 }
