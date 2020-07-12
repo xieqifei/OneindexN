@@ -25,7 +25,7 @@ function file_ico($item){
 	<button class="mdui-btn mdui-ripple" id="example-confirm-1">Aria2</button>
 	<button class="mdui-btn mdui-ripple multiopt" id="example-confirm-2" style="display: none;">批量删除</button>
 	<button class="mdui-btn mdui-ripple multiopt" id="example-confirm-3" style="display: none;">批量分享</button>
-	<button class="mdui-btn mdui-ripple" id="singlefile" mdui-menu="{target: '#sinopt'}" style="display: none;">单文件操作</button>
+	<button class="mdui-btn mdui-ripple" id="singlefile" style="display: none;">单文件操作</button>
 	</div>
 </div>
 <?endif;?> 
@@ -309,6 +309,8 @@ $(function(){
 	document.getElementById('file_upload').addEventListener('click', function () {
 	inst2.open();
 	});
+	//	单文件操作菜单
+	var inst3 = new mdui.Menu('#singlefile','#sinopt');
 
 	mdui.JQ('#newfolder').on('click', function () {
 		mdui.prompt('输入文件夹名称',
@@ -397,5 +399,6 @@ $(function(){
 			}
 		);
 		});
+
 </script>
 <?php view::end('content');?>
