@@ -238,8 +238,7 @@ class IndexController{
 	function search(){
 		$keyword=$_POST['keyword'];
 		$items = onedrive::search($keyword);
-		return view::load('search')
-					->with('items', $items);
+		return view::load('search')->with('items', $items);
 	}
 
 	//时候404
