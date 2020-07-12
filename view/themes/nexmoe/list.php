@@ -224,6 +224,8 @@ function file_ico($item){
 			for(var i=0;i<dom_items.length;i++){
 				if(dom_items[i].getAttribute('data-sort-name').indexOf(value)==-1){
 					dom_items[i].style.display = "none";
+				}else{
+					dom_items[i].style.display = "inline";
 				}
 			}
         },
