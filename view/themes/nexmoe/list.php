@@ -23,8 +23,9 @@ function file_ico($item){
 	<button class="mdui-btn mdui-ripple" id="newfolder"><i class="mdui-icon material-icons">create_new_folder</i>新建文件夹</button>
 	<button class="mdui-btn mdui-ripple" id="example-confirm-1">上传文件</button>
 	<button class="mdui-btn mdui-ripple" id="example-confirm-1">Aria2</button>
-	<button class="mdui-btn mdui-ripple" id="example-confirm-2">批量删除</button>
-	<button class="mdui-btn mdui-ripple" id="example-confirm-3">批量分享</button>
+	<button class="mdui-btn mdui-ripple multiopt" id="example-confirm-2">批量删除</button>
+	<button class="mdui-btn mdui-ripple multiopt" id="example-confirm-3">批量分享</button>
+	<button class="mdui-btn mdui-ripple multiopt" id="singlefile" mdui-menu="{target: '#sinopt'}" style="display: none;">单文件操作</button>
 	</div>
 </div>
 <?endif;?> 
@@ -303,26 +304,20 @@ $(function(){
 </div>
 
 <div class="mdui-container mdui-p-t-5">
-  <ul class="mdui-menu" id="menu">
+  <ul class="mdui-menu" id="sinopt">
     <li class="mdui-menu-item">
       <a href="javascript:;" class="mdui-ripple">
-        <i class="mdui-menu-item-icon mdui-icon material-icons">remove_red_eye</i>Preview
+        <i class="mdui-menu-item-icon mdui-icon material-icons">复制链接</i>Preview
       </a>
     </li>
     <li class="mdui-menu-item">
       <a href="javascript:;" class="mdui-ripple">
-        <i class="mdui-menu-item-icon mdui-icon material-icons">file_download</i>Download
-      </a>
-    </li>
-    <li class="mdui-divider"></li>
-    <li class="mdui-menu-item">
-      <a href="javascript:;" class="mdui-ripple">
-        <i class="mdui-menu-item-icon mdui-icon material-icons">delete</i>Remove
+        <i class="mdui-menu-item-icon mdui-icon material-icons">重命名</i>Download
       </a>
     </li>
     <li class="mdui-menu-item">
       <a href="javascript:;" class="mdui-ripple">
-        <i class="mdui-menu-item-icon"></i>Empty
+        <i class="mdui-menu-item-icon mdui-icon material-icons">删除</i>Remove
       </a>
     </li>
   </ul>
@@ -370,18 +365,22 @@ $(function(){
 		}
 		//alert(check_val);
 		console.log(check_val);
-
-		if (check_val != "") {
-			var div = document.getElementById("mangger");
-			var div2= document.getElementById("navess");
-			div2.style.display = "none";
-			div.style.display = "block";
-		} else {
-			var div = document.getElementById("mangger");
-			var div2= document.getElementById("navess");
-			div.style.display = "none";
-			div2.style.display = "block";
-		}
+		var singlefile = document.getElementById("singlefile");
+		if(check_val.length==1)
+			singlefile.style.display = "inline";
+		else
+			singlefile.style.display = "none";
+		// if (check_val != "") {
+		// 	var div = document.getElementById("mangger");
+		// 	var div2= document.getElementById("navess");
+		// 	div2.style.display = "none";
+		// 	div.style.display = "block";
+		// } else {
+		// 	var div = document.getElementById("mangger");
+		// 	var div2= document.getElementById("navess");
+		// 	div.style.display = "none";
+		// 	div2.style.display = "block";
+		// }
 	}
 	function checkall(){
 		var checkall = document.getElementById("checkall");

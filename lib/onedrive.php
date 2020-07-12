@@ -281,16 +281,7 @@
 		    return $size;
 		}
 
-		// //新建文件夹
-		// static function create_folder($path = '/', $name = '新建文件夹'){
-        // $request = self::request(get_absolute_path(dirname($path)),'children');
-        // $post_data['name'] = $name;
-		// $post_data['folder'] =json_decode("{}");
-		// $post_data['@microsoft.graph.conflictBehavior'] = 'rename';
-        // $resp = fetch::post($request, json_encode($post_data));
-        // $data = json_decode($resp->content, true);
-        // return $data;
-		  // }
+		//新建文件夹
 		public static function create_folder($path = '/', $name = '新建文件夹')
 		{
 			$path = self::urlencode($path);
@@ -319,5 +310,33 @@
 			curl_close($curl);
 			return $response;
 		}
-		
+
+		//文件重命名
+		public static function rename($itemid, $name)
+		{
+			$token = self::access_token();
+			$api = str_replace('root', 'items/'.$itemid, self::$api_url."/me/drive/root");
+			$curl = curl_init();
+			curl_setopt_array($curl, array(
+				CURLOPT_URL => $api,
+				CURLOPT_RETURNTRANSFER => true,
+				CURLOPT_ENCODING => '',
+				CURLOPT_MAXREDIRS => 10,
+				CURLOPT_TIMEOUT => 0,
+				CURLOPT_FOLLOWLOCATION => true,
+				CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+				CURLOPT_CUSTOMREQUEST => 'PATCH',
+				CURLOPT_POSTFIELDS => "{\n  \"name\": \"".$name."\"\n}",
+				CURLOPT_HTTPHEADER => array(
+					'Authorization: Bearer '.$token,
+					'Content-Type: application/json',
+				),
+			));
+	
+			$response = curl_exec($curl);
+	
+			curl_close($curl);
+			var_dump($response);
+		}
+	
 	}
