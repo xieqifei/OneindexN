@@ -331,8 +331,8 @@ $(function(){
 				*/
 				httpRequest.onreadystatechange = function () {//请求后的回调接口，可将请求成功后要执行的程序写在其中
 					if (httpRequest.readyState == 4 && httpRequest.status == 200) {//验证请求是否发送成功
-						
-						location.reload();
+						var json = httpRequest.responseText;//获取到服务端返回的数据
+        				console.log(json);
 					}
 				};
 			},
