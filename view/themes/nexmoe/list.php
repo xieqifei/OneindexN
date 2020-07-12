@@ -388,7 +388,18 @@ $(function(){
 		;
 	}
 	function checkall(){
-		;
+		var checkall = document.getElementById("checkall");
+		var itemsbox = document.getElementsByName("itemid");
+		if (checkall.checked == false) {
+			for (var i = 0; i < itemsbox.length; i++) {
+			itemsbox[i].checked = false;
+			}
+		} else {
+			for (var i = 0; i < itemsbox.length; i++) {
+			itemsbox[i].checked = true;
+			}
+		}
+		onClickHander();
 	}
 </script>
 <?php view::end('content');?>
