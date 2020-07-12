@@ -284,7 +284,7 @@ class UploadController{
 	function search(){
 		$keyword=$_POST['keyword'];
 		$resp = onedrive::search($keyword);
-		return $resp;
+		return 'nihao';
 	}
 	
 }
