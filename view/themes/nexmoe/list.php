@@ -347,8 +347,8 @@ $(function(){
 			function(){
 				var httpRequest = new XMLHttpRequest();
 				httpRequest.open('POST', '?/deleteitems', true); 
-				httpRequest.setRequestHeader("Content-type","application/x-www-form-urlencoded");//设置请求头 注：post方式必须设置请求头（在建立连接后设置请求头）
-				var query='items='+check_val;
+				httpRequest.setRequestHeader("Content-type","application/json");//设置请求头 注：post方式必须设置请求头（在建立连接后设置请求头）
+				var query=JSON.stringify(check_val);
 				httpRequest.send(query);
 				mdui.alert('删除成功自动刷新！');
 				location.reload();

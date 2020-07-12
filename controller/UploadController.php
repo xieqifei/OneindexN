@@ -266,11 +266,13 @@ class UploadController{
 			return '未登录无法重命名';
 		}
 	}
+	//删除
 	function deleteitems(){
 		if(is_login()){
-			$items=$_POST['items'];
+			$data = file_get_contents( "php://input" );
+			$items = json_decode( $data );
 			$resp=onedrive::delete($items);
-			return $resp;
+			return $data;
 		}
 		else{
 			return '未登录无法重命名';
