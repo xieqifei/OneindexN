@@ -385,15 +385,11 @@
 					  } while (CURLM_CALL_MULTI_PERFORM == $mrc);
 				  }
 			  }
-	  
 			  if ($mrc != CURLM_OK) {
 				  error_log('CURL Data Error');
 			  }
-	  
 			  /* get data */
-	  
 			  $nch = 0;
-	  
 			  foreach ($apis as $moudle => $node) {
 				  if (($err = curl_error($ch[$nch])) == '') {
 					  $res[$nch] = curl_multi_getcontent($ch[$nch]);
@@ -401,12 +397,10 @@
 				  } else {
 					  error_log('curl error');
 				  }
-	  
 				  curl_multi_remove_handle($mh, $ch[$nch]);
 				  curl_close($ch[$nch]);
 				  ++$nch;
 			  }
-	  
 			  curl_multi_close($mh);
 			  return '批量处理完成';
 		  }

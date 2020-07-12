@@ -100,19 +100,19 @@ function file_ico($item){
 			<?php if(!empty($item['folder'])):?>
 
 		<li class="mdui-list-item mdui-ripple" data-sort 
-					data-sort-name="<?php e($item['name']);?>"
+					data-sort-name="<?php echo $item['name'] ;?>"
                     data-sort-date="<?php echo $item['lastModifiedDateTime'];?>"
 					data-sort-size="<?php echo $item['size'];?>" 
-					id="<?php echo$item["id"] ?>">
+					id="<?php echo $item["id"] ?>">
 			<?php if(is_login()):?>
 			<label class="mdui-checkbox">
-				<input type="checkbox" value="<?php echo$item["id"] ?>" name="itemid" onclick="onClickHander()">
+				<input type="checkbox" value="<?php echo $item["id"] ?>" name="itemid" onclick="onClickHander()">
 				<i class="mdui-checkbox-icon"></i></label>
 			<?endif;?> 		
 			<a href="<?php echo get_absolute_path($root.$path.rawurlencode($item['name']));?>">
 			  <div class="mdui-col-xs-12 mdui-col-sm-7 mdui-text-truncate">
 				<i class="mdui-icon material-icons">folder_open</i>
-		    	<span><?php e($item['name']);?></span>
+		    	<span><?php echo $item['name'];?></span>
 			  </div>
 			  <div class="mdui-col-sm-3 mdui-text-right"><?php echo date("Y-m-d H:i:s", $item['lastModifiedDateTime']);?></div>
 			  <div class="mdui-col-sm-2 mdui-text-right"><?php echo onedrive::human_filesize($item['size']);?></div>
@@ -120,13 +120,13 @@ function file_ico($item){
 		</li>
 			<?php else:?>
 		<li class="mdui-list-item file mdui-ripple" data-sort
-                    data-sort-name="<?php e($item['name']);?>"
+                    data-sort-name="<?php echo $item['name'];?>"
                     data-sort-date="<?php echo $item['lastModifiedDateTime'];?>"
 					data-sort-size="<?php echo $item['size'];?>" 
-					id="<?php echo$item["id"] ?>">
+					id="<?php echo $item["id"] ?>">
 					<?php if(is_login()):?>
 			<label class="mdui-checkbox">
-				<input type="checkbox" value="<?php echo$item["id"] ?>" name="itemid" onclick="onClickHander()">
+				<input type="checkbox" value="<?php echo $item["id"] ?>" name="itemid" onclick="onClickHander()">
 				<i class="mdui-checkbox-icon"></i></label>
 			<?endif;?> 	
 			<a href="<?php echo get_absolute_path($root.$path).rawurlencode($item['name']);?>" target="_blank">
@@ -342,14 +342,13 @@ $(function(){
 	});
 	//删除文件/文件夹
 	mdui.JQ('#deleteall').on('click', function(){
-		mdui.confirm('content',
+		mdui.confirm('请确认是否删除选中项目',
 			function(){
 				var httpRequest = new XMLHttpRequest();
 				httpRequest.open('POST', '?/deleteitems', true); 
 				httpRequest.setRequestHeader("Content-type","application/x-www-form-urlencoded");//设置请求头 注：post方式必须设置请求头（在建立连接后设置请求头）
 				var query='items='+check_val;
-				httpRequest.send(query);//发送请求 将情头体写在send中
-				mdui.alert('重命名成功自动刷新！');
+				httpRequest.send(query);
 				/**
 				* 获取数据后的处理程序
 				*/
@@ -361,7 +360,6 @@ $(function(){
 				};
 			},
 			function(){
-			mdui.alert('点击了取消按钮');
 			}
 		);
 		});
