@@ -96,6 +96,24 @@ var inst3 = new mdui.Dialog('#search_form');
 document.getElementById('search').addEventListener('click', function () {
     inst3.open();
 });
+
+//关键词过滤
+mdui.JQ('#pagesearch').on('click', function () {
+    mdui.prompt('输入搜索的关键词或后缀',
+        function (value) {
+			var dom_items = document.getElementsByClassName('filter');
+			for(var i=0;i<dom_items.length;i++){
+				if(dom_items[i].getAttribute('data-sort-name').indexOf(value)==-1){
+					dom_items[i].style.display = "none";
+				}else{
+					dom_items[i].style.display = "";
+				}
+			}
+        },
+        function (value) {
+        }
+    );
+});
 //新建文件夹
 mdui.JQ('#newfolder').on('click', function () {
     mdui.prompt('输入文件夹名称',

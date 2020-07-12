@@ -214,7 +214,8 @@ function file_ico($item){
     </div>
   </div>
 </div>
-<script src="https://cdn.jsdelivr.net/gh/xieqifei/OneindexN@v1.31/statics/js/nexmoe.js"></script>
+<!-- <script src="https://cdn.jsdelivr.net/gh/xieqifei/OneindexN@v1.31/statics/js/nexmoe.js"></script> -->
+<script src="statics\themes\nexmoe\js\nexmoe.js"></script>
 <script>
 	//关键词过滤
 	mdui.JQ('#pagesearch').on('click', function () {
