@@ -43,10 +43,10 @@ route::any('/login','AdminController@login');
 
 //onedrive操作
 route::any('/offline','CommonController@offline');
-route::any('/onlinefileupload','UploadController@onlinefileupload');
-route::any('/create_folder','UploadController@create_folder');
-route::any('/rename','UploadController@rename');
-route::any('/deleteitems','UploadController@deleteitems');
+route::any('/onlinefileupload','CommonController@onlinefileupload');
+route::any('/create_folder','CommonController@create_folder');
+route::any('/rename','CommonController@rename');
+route::any('/deleteitems','CommonController@deleteitems');
 route::any('/search','CommonController@search');
 
 //跳转到登陆
