@@ -1,4 +1,4 @@
-
+<?php view::layout('layout')?>
 <?php 
 function file_ico($item){
   $ext = strtolower(pathinfo($item['name'], PATHINFO_EXTENSION));
@@ -14,7 +14,7 @@ function file_ico($item){
   return "insert_drive_file";
 }
 ?>
-
+<?php view::begin('content');?>
 <?php if(is_login()):?>
 <div class="mdui-container-fluid" >
 	<div class="nexmoe-item">
@@ -144,3 +144,5 @@ function file_ico($item){
   </div>
 </div>
 <script src="https://cdn.jsdelivr.net/gh/xieqifei/OneindexN@v1.31/statics/js/nexmoe.js"></script>
+
+<?php view::end('content');?>
