@@ -47,7 +47,7 @@ route::any('/onlinefileupload','UploadController@onlinefileupload');
 route::any('/create_folder','UploadController@create_folder');
 route::any('/rename','UploadController@rename');
 route::any('/deleteitems','UploadController@deleteitems');
-route::any('/search','IndexController@search');
+route::any('/search','OfflineController@search');
 
 //跳转到登陆
 route::any('/admin/',function(){

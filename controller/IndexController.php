@@ -234,23 +234,7 @@ class IndexController{
 		return $content;
 	}
 
-	//搜索
-	function search(){
-		if($_POST['keyword']){
-			$keyword=$_POST['keyword'];
-			$items = onedrive::search($keyword);
-			$navs=array();
-			$searchinfo['keyword']=$keyword;
-			$searchinfo['count']=count($items);
-			echo view::load('search')->with('title', '123')
-			->with('navs', $navs)
-			->with('items', $this->items);
-		}else{
-			http_response_code(404);
-			view::load('404')->show();
-			die();
-		}
-	}
+
 
 	//时候404
 	function is404(){

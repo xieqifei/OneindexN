@@ -13,5 +13,20 @@ class OfflineController{
 			return view::load('offline/tips');
 		}
 	}
-   
+	//搜索
+	function search(){
+		if($_POST['keyword']){
+			$keyword=$_POST['keyword'];
+			$items = onedrive::search($keyword);
+			$navs=array();
+			$searchinfo['keyword']=$keyword;
+			$searchinfo['count']=count($items);
+			echo view::load('themes/nexmoe/search')->with('title', '123')
+			->with('navs', $navs)
+			->with('items', $this->items);
+		}else{
+			return '参数错误';
+		}
+	}
+
 }
