@@ -134,29 +134,29 @@
 	
 		//关键字搜索
 		static function search($keyword){
-			$api = self::$api_url."/me/drive/root/search(q='".$keyword."')";
-			$token = self::access_token();
-			$curl = curl_init();
-			curl_setopt_array($curl, array(
-				CURLOPT_URL => $api,
-				CURLOPT_RETURNTRANSFER => true,
-				CURLOPT_ENCODING => '',
-				CURLOPT_MAXREDIRS => 10,
-				CURLOPT_TIMEOUT => 500,
-				CURLOPT_CUSTOMREQUEST => 'GET',
-				CURLOPT_HTTPHEADER => array(
-					'Authorization: Bearer '.$token.'',
-					'Content-Type: application/json',
-				),
-			));
-	
-			$resp = curl_exec($curl);
-	
-			curl_close($curl);
+			// $api = self::$api_url."/me/drive/root/search(q='".$keyword."')";
 			// $token = self::access_token();
-			// $request['headers'] = "Authorization: bearer {$token}".PHP_EOL."Content-Type: application/json".PHP_EOL;
-			// $request['url'] = self::$api_url."/me/drive/root".'/search?q='.$keyword;
-			// // $resp=fetch::get($request);
+			// $curl = curl_init();
+			// curl_setopt_array($curl, array(
+			// 	CURLOPT_URL => $api,
+			// 	CURLOPT_RETURNTRANSFER => true,
+			// 	CURLOPT_ENCODING => '',
+			// 	CURLOPT_MAXREDIRS => 10,
+			// 	CURLOPT_TIMEOUT => 500,
+			// 	CURLOPT_CUSTOMREQUEST => 'GET',
+			// 	CURLOPT_HTTPHEADER => array(
+			// 		'Authorization: Bearer '.$token.'',
+			// 		'Content-Type: application/json',
+			// 	),
+			// ));
+	
+			// $resp = curl_exec($curl);
+	
+			// curl_close($curl);
+			$token = self::access_token();
+			$request['headers'] = "Authorization: bearer {$token}".PHP_EOL."Content-Type: application/json".PHP_EOL;
+			$request['url'] = self::$api_url."/me/drive/root/search(q='".$keyword."')";
+			$resp=fetch::get($request);
 			// $data = json_decode($resp->content, true);
 
 			// foreach((array)$data['value'] as $item){
