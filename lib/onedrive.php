@@ -139,7 +139,18 @@
 			$request['url'] = self::$api_url."/me/drive/root".'/search?q='.$keyword;
 			$resp=fetch::get($request);
 			$data = json_decode($resp->content, true);
-			return $data;
+
+			foreach((array)$data['value'] as $item){
+				//var_dump($item);
+				$items[$item['name']] = array(
+					'name'=>$item['name'],
+					'id' => $item['id'],
+					'size'=>$item['size'],
+					'folder'=>empty($item['folder'])?false:true
+				);
+				$temp =$item['name'];
+			}
+			return $temp;
 		}
 
 		//文件缩略图链接
