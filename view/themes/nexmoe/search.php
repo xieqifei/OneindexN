@@ -31,11 +31,6 @@ function file_ico($item){
 
 
 <div class="mdui-container-fluid">
-<?php if($head):?>
-<div class="mdui-typo" style="padding: 20px;">
-	<?php e($head);?>
-</div>
-<?php endif;?>
 <style>
 .thumb .th{
 	display: none;
@@ -82,17 +77,6 @@ function file_ico($item){
 		  <div class="mdui-col-sm-3 mdui-text-right">修改时间 <i class="mdui-icon material-icons icon-sort" data-sort="date" data-order="downward">expand_more</i></div>
 		  <div class="mdui-col-sm-2 mdui-text-right">大小 <i class="mdui-icon material-icons icon-sort" data-sort="size" data-order="downward">expand_more</i></div>
 		</li>
-		<?php if($path != '/'):?>
-		<li class="mdui-list-item mdui-ripple">
-			  <div class="mdui-col-xs-12 mdui-col-sm-7">
-				<i class="mdui-icon material-icons">arrow_upward</i>
-		    	..
-			  </div>
-			  <div class="mdui-col-sm-3 mdui-text-right"></div>
-			  <div class="mdui-col-sm-2 mdui-text-right"></div>
-		  	</a>
-		</li>
-		<?php endif;?>
 		
 		<?php foreach((array)$items as $item):?>
 			<?php if(!empty($item['folder'])):?>
@@ -148,7 +132,6 @@ function file_ico($item){
     <div class="mdui-dialog-content">
 		<form action="?/search" method="post">
 			<input class="mdui-center" type="text" style="margin: 50px 0;" name="keyword" />
-			<input type="text" style="display: none;" name="uploadurl" value="<?php echo $_SERVER['REQUEST_URI']; ?>"/>
 			<div class="mdui-row-xs-3">
 			<div class="mdui-col"></div>
 				<div class="mdui-col">
