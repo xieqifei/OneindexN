@@ -16,7 +16,14 @@ function file_ico($item){
 ?>
 
 <?php view::begin('content');?>
-	
+<div class="mdui-container-fluid">
+	<div class="mdui-container">
+	<button class="mdui-btn mdui-color-theme-accent mdui-ripple" id="example-confirm-1">demo1</button>
+	<button class="mdui-btn mdui-color-theme-accent mdui-ripple" id="example-confirm-2">demo2</button>
+	<button class="mdui-btn mdui-color-theme-accent mdui-ripple" id="example-confirm-3">demo3</button>
+	<button class="mdui-btn mdui-color-theme-accent mdui-ripple" id="example-confirm-4">demo4</button>
+	</div>
+</div>
 <div class="mdui-container-fluid">
 <?php if($head):?>
 <div class="mdui-typo" style="padding: 20px;">
@@ -352,40 +359,26 @@ $(function(){
 		);
 	});
 
-
-
-	// var inst3 = new mdui.Dialog('#newfolder-dialog');
-	// document.getElementById('newfolder').addEventListener('click', function () {
-	// inst3.open();
-	// });
-
-	// //监听鼠标右击事件 / 移动端长按事件
-	// $(document).on('contextmenu', function (e) {
-	// 	//0：移动端长按（iOS 测试未通过）
-	// 	//2：电脑端右键
-	// 	e.preventDefault();//阻止冒泡，阻止默认的浏览器菜单
-	// 	//鼠标点击位置，相对于浏览器
-	// 	var _x = e.pageX,
-	// 		_y = e.pageY;
-
-	// 	let $div = $("<div></div>").css({
-	// 		position: 'absolute',
-	// 		top: _y+'px',
-	// 		left: _x+'px',
-	// 	});
-	// 	$('body').append($div);//创建临时DOM
-	// 	var instq = new mdui.Menu($div, '#menu');
-	// 	instq.open();//打开菜单栏
-	// 	$div.remove();//销毁创建的临时DOM        
-	// 	console.log(e);
-	// 			console.log(e);(e.target.id);
-	// 			console.log(e.path.a)
-	// 	if(e.target.id=="" | e.target.id <999999999999999){
-	// 		instq.close();
-	// 	}
-	// });
 	function onClickHander(){
-		;
+		checkitems = document.getElementsByName("itemid");
+		check_val = [];
+		for (k in obj) {
+			if (obj[k].checked) check_val.push(obj[k].value);
+		}
+		//alert(check_val);
+		console.log(check_val);
+
+		if (check_val != "") {
+			var div = document.getElementById("mangger");
+			var div2= document.getElementById("navess");
+			div2.style.display = "none";
+			div.style.display = "block";
+		} else {
+			var div = document.getElementById("mangger");
+			var div2= document.getElementById("navess");
+			div.style.display = "none";
+			div2.style.display = "block";
+		}
 	}
 	function checkall(){
 		var checkall = document.getElementById("checkall");
@@ -401,5 +394,15 @@ $(function(){
 		}
 		onClickHander();
 	}
+	mdui.JQ('#example-confirm-2').on('click', function(){
+		mdui.confirm('content',
+			function(){
+			mdui.alert('点击了确认按钮');
+			},
+			function(){
+			mdui.alert('点击了取消按钮');
+			}
+		);
+		});
 </script>
 <?php view::end('content');?>
