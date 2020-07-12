@@ -236,15 +236,19 @@ class IndexController{
 
 	//搜索
 	function search(){
-		$keyword=$_POST['keyword'];
-		$items = onedrive::search($keyword);
-		$navs=array();
-		$searchinfo['keyword']=$keyword;
-		$searchinfo['count']=count($items);
-		// print_r($items);
-		// print_r($searchinfo);
-		view::load('404')->show();
-		
+		if($_POST['keyword']){
+			$keyword=$_POST['keyword'];
+			$items = onedrive::search($keyword);
+			$navs=array();
+			$searchinfo['keyword']=$keyword;
+			$searchinfo['count']=count($items);
+			// print_r($items);
+			// print_r($searchinfo);
+			return view::load('404');
+		}else{
+			view::load('404')->show();
+			die();
+		}
 	}
 
 	//时候404
