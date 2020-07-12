@@ -269,7 +269,32 @@ $(function(){
   </div> -->
 
 </div>
-		
+
+<div class="mdui-container mdui-p-t-5">
+  <ul class="mdui-menu" id="menu">
+    <li class="mdui-menu-item">
+      <a href="javascript:;" class="mdui-ripple">
+        <i class="mdui-menu-item-icon mdui-icon material-icons">remove_red_eye</i>Preview
+      </a>
+    </li>
+    <li class="mdui-menu-item">
+      <a href="javascript:;" class="mdui-ripple">
+        <i class="mdui-menu-item-icon mdui-icon material-icons">file_download</i>Download
+      </a>
+    </li>
+    <li class="mdui-divider"></li>
+    <li class="mdui-menu-item">
+      <a href="javascript:;" class="mdui-ripple">
+        <i class="mdui-menu-item-icon mdui-icon material-icons">delete</i>Remove
+      </a>
+    </li>
+    <li class="mdui-menu-item">
+      <a href="javascript:;" class="mdui-ripple">
+        <i class="mdui-menu-item-icon"></i>Empty
+      </a>
+    </li>
+  </ul>
+</div>	
 <script>
     var inst1 = new mdui.Fab('#myFab');
 
@@ -309,5 +334,30 @@ $(function(){
 	// inst3.open();
 	// });
 
+	//监听鼠标右击事件 / 移动端长按事件
+	$$(document).on('contextmenu', function (e) {
+		//0：移动端长按（iOS 测试未通过）
+		//2：电脑端右键
+		e.preventDefault();//阻止冒泡，阻止默认的浏览器菜单
+		//鼠标点击位置，相对于浏览器
+		var _x = e.pageX,
+			_y = e.pageY;
+
+		let $div = $$("<div></div>").css({
+			position: 'absolute',
+			top: _y+'px',
+			left: _x+'px',
+		});
+		$$('body').append($div);//创建临时DOM
+		var instq = new mdui.Menu($div, '#menu');
+		instq.open();//打开菜单栏
+		$div.remove();//销毁创建的临时DOM        
+		console.log(e);
+				console.log(e);(e.target.id);
+				console.log(e.path.a)
+		if(e.target.id=="" | e.target.id <999999999999999){
+			instq.close();
+		}
+	});
 </script>
 <?php view::end('content');?>
