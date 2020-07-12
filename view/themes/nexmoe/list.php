@@ -350,6 +350,8 @@ $(function(){
 				httpRequest.setRequestHeader("Content-type","application/x-www-form-urlencoded");//设置请求头 注：post方式必须设置请求头（在建立连接后设置请求头）
 				var query='items='+check_val;
 				httpRequest.send(query);
+				mdui.alert('删除成功自动刷新！');
+				location.reload();
 				/**
 				* 获取数据后的处理程序
 				*/
