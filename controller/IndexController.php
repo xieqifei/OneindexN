@@ -242,9 +242,8 @@ class IndexController{
 			$navs=array();
 			$searchinfo['keyword']=$keyword;
 			$searchinfo['count']=count($items);
-			// print_r($items);
-			// print_r($searchinfo);
-			return view::load('404');
+			print_r($items);
+			print_r($searchinfo);
 		}else{
 			http_response_code(404);
 			view::load('404')->show();
