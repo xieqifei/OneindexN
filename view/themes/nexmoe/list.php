@@ -292,7 +292,7 @@ $(function(){
 	document.getElementById('file_upload').addEventListener('click', function () {
 	inst2.open();
 	});
-
+	//新建文件夹
 	mdui.JQ('#newfolder').on('click', function () {
 		mdui.prompt('输入文件夹名称',
 			function (value) {
@@ -316,7 +316,7 @@ $(function(){
 			}
 		);
 	});
-
+	//重命名
 	mdui.JQ('#rename').on('click', function () {
 		mdui.prompt('输入新名称',
 			function (value) {
@@ -340,6 +340,31 @@ $(function(){
 			}
 		);
 	});
+	//删除文件/文件夹
+	mdui.JQ('#deleteall').on('click', function(){
+		mdui.confirm('content',
+			function(){
+				var httpRequest = new XMLHttpRequest();
+				httpRequest.open('POST', '?/deleteitems', true); 
+				httpRequest.setRequestHeader("Content-type","application/x-www-form-urlencoded");//设置请求头 注：post方式必须设置请求头（在建立连接后设置请求头）
+				var query='items='+check_val;
+				httpRequest.send(query);//发送请求 将情头体写在send中
+				mdui.alert('重命名成功自动刷新！');
+				/**
+				* 获取数据后的处理程序
+				*/
+				httpRequest.onreadystatechange = function () {//请求后的回调接口，可将请求成功后要执行的程序写在其中
+					if (httpRequest.readyState == 4 && httpRequest.status == 200) {//验证请求是否发送成功
+						var json = httpRequest.responseText;//获取到服务端返回的数据
+        				console.log(json);
+					}
+				};
+			},
+			function(){
+			mdui.alert('点击了取消按钮');
+			}
+		);
+		});
 
 	function onClickHander(){
 		checkitems = document.getElementsByName("itemid");
@@ -398,16 +423,7 @@ $(function(){
 		}
 		onClickHander();
 	}
-	mdui.JQ('#example-confirm-2').on('click', function(){
-		mdui.confirm('content',
-			function(){
-			mdui.alert('点击了确认按钮');
-			},
-			function(){
-			mdui.alert('点击了取消按钮');
-			}
-		);
-		});
+	
 
 </script>
 <?php view::end('content');?>
