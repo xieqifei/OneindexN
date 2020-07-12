@@ -42,12 +42,12 @@ route::group(function(){
 route::any('/login','AdminController@login');
 
 //onedrive操作
-route::any('/offline','OfflineController@offline');
+route::any('/offline','CommonController@offline');
 route::any('/onlinefileupload','UploadController@onlinefileupload');
 route::any('/create_folder','UploadController@create_folder');
 route::any('/rename','UploadController@rename');
 route::any('/deleteitems','UploadController@deleteitems');
-route::any('/search','OfflineController@search');
+route::any('/search','CommonController@search');
 
 //跳转到登陆
 route::any('/admin/',function(){

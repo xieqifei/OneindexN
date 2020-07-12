@@ -1,6 +1,6 @@
 <?php 
 define('VIEW_PATH', ROOT.'view/');
-class OfflineController{
+class CommonController{
 	
 	function __construct(){
 	}
