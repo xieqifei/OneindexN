@@ -336,7 +336,7 @@ $(function(){
 	// });
 
 	//监听鼠标右击事件 / 移动端长按事件
-	$$(document).on('contextmenu', function (e) {
+	$(document).on('contextmenu', function (e) {
 		//0：移动端长按（iOS 测试未通过）
 		//2：电脑端右键
 		e.preventDefault();//阻止冒泡，阻止默认的浏览器菜单
