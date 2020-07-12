@@ -138,7 +138,8 @@
 			$request['headers'] = "Authorization: bearer {$token}".PHP_EOL."Content-Type: application/json".PHP_EOL;
 			$request['url'] = self::$api_url."/me/drive/root".'/search?q='.$keyword;
 			$resp=fetch::get($request);
-			return $resp;
+			$data = json_decode($resp->content, true);
+			return $data;
 		}
 
 		//文件缩略图链接
