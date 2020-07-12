@@ -21,7 +21,7 @@ class OfflineController{
 			$navs=array();
 			$searchinfo['keyword']=$keyword;
 			$searchinfo['count']=count($items);
-			return view::load('offline/tips');
+			return view::load('offline/search')->with('items',$items);
 			// return view::load('themes/nexmoe/search')->with('title', '123')
 			// ->with('navs', $navs)
 			// ->with('items', $items);
