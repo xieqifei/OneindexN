@@ -23,8 +23,8 @@ function file_ico($item){
 	<button class="mdui-btn mdui-ripple" id="newfolder">新建文件夹</button>
 	<button class="mdui-btn mdui-ripple" id="upload111">上传文件</button>
 	<button class="mdui-btn mdui-ripple" id="example-confirm-1">Aria2</button>
-	<button class="mdui-btn mdui-ripple multiopt" id="deleteall" style="display: none;">批量删除</button>
-	<button class="mdui-btn mdui-ripple multiopt" id="shareall" style="display: none;">批量分享</button>
+	<button class="mdui-btn mdui-ripple multiopt" id="deleteall" style="display: none;">删除</button>
+	<button class="mdui-btn mdui-ripple multiopt" id="shareall" style="display: none;">分享</button>
 	<button class="mdui-btn mdui-ripple singleopt" id="rename" style="display: none;">重命名</button>
 	</div>
 </div>
@@ -305,10 +305,10 @@ $(function(){
 				/**
 				* 获取数据后的处理程序
 				*/
+				location.reload();
 				httpRequest.onreadystatechange = function () {//请求后的回调接口，可将请求成功后要执行的程序写在其中
 					if (httpRequest.readyState == 4 && httpRequest.status == 200) {//验证请求是否发送成功
 						
-						location.reload();
 					}
 				};
 			},
@@ -329,6 +329,7 @@ $(function(){
 				/**
 				* 获取数据后的处理程序
 				*/
+				location.reload();
 				httpRequest.onreadystatechange = function () {//请求后的回调接口，可将请求成功后要执行的程序写在其中
 					if (httpRequest.readyState == 4 && httpRequest.status == 200) {//验证请求是否发送成功
 						var json = httpRequest.responseText;//获取到服务端返回的数据
