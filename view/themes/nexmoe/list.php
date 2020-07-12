@@ -23,9 +23,9 @@ function file_ico($item){
 	<button class="mdui-btn mdui-ripple" id="newfolder">新建文件夹</button>
 	<button class="mdui-btn mdui-ripple" id="example-confirm-1">上传文件</button>
 	<button class="mdui-btn mdui-ripple" id="example-confirm-1">Aria2</button>
-	<button class="mdui-btn mdui-ripple multiopt" id="example-confirm-2">批量删除</button>
-	<button class="mdui-btn mdui-ripple multiopt" id="example-confirm-3">批量分享</button>
-	<button class="mdui-btn mdui-ripple multiopt" id="singlefile" mdui-menu="{target: '#sinopt'}" style="display: none;">单文件操作</button>
+	<button class="mdui-btn mdui-ripple multiopt" id="example-confirm-2" style="display: none;">批量删除</button>
+	<button class="mdui-btn mdui-ripple multiopt" id="example-confirm-3" style="display: none;">批量分享</button>
+	<button class="mdui-btn mdui-ripple" id="singlefile" mdui-menu="{target: '#sinopt'}" style="display: none;">单文件操作</button>
 	</div>
 </div>
 <?endif;?> 
@@ -343,10 +343,20 @@ $(function(){
 		//alert(check_val);
 		console.log(check_val);
 		var singlefile = document.getElementById("singlefile");
-		if(check_val.length==1)
+		var multiopt = document.getElementsByClassName("multiopt");
+		//单文件操作
+		if(check_val.length==1){
 			singlefile.style.display = "inline";
-		else
+		}
+		else{
 			singlefile.style.display = "none";
+		}
+		//多文件操作
+		if(check_val.length>=1){
+			multiopt.style.display = "inline";
+		}else{
+			multiopt.style.display = "none";
+		}
 		// if (check_val != "") {
 		// 	var div = document.getElementById("mangger");
 		// 	var div2= document.getElementById("navess");
