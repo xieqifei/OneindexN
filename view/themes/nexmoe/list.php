@@ -16,14 +16,18 @@ function file_ico($item){
 ?>
 
 <?php view::begin('content');?>
-<div class="mdui-container-fluid">
-	<div class="mdui-container">
-	<button class="mdui-btn mdui-color-theme-accent mdui-ripple" id="example-confirm-1">demo1</button>
-	<button class="mdui-btn mdui-color-theme-accent mdui-ripple" id="example-confirm-2">demo2</button>
-	<button class="mdui-btn mdui-color-theme-accent mdui-ripple" id="example-confirm-3">demo3</button>
-	<button class="mdui-btn mdui-color-theme-accent mdui-ripple" id="example-confirm-4">demo4</button>
+
+<?php if(is_login()):?>
+<div class="mdui-container-fluid" >
+	<div class="nexmoe-item">
+	<button class="mdui-btn mdui-ripple" id="newfolder"><i class="mdui-icon material-icons">create_new_folder</i>新建文件夹</button>
+	<button class="mdui-btn mdui-ripple" id="example-confirm-1">上传文件</button>
+	<button class="mdui-btn mdui-ripple" id="example-confirm-1">Aria2</button>
+	<button class="mdui-btn mdui-ripple" id="example-confirm-2">批量删除</button>
+	<button class="mdui-btn mdui-ripple" id="example-confirm-3">批量分享</button>
 	</div>
 </div>
+<?endif;?> 
 <div class="mdui-container-fluid">
 <?php if($head):?>
 <div class="mdui-typo" style="padding: 20px;">
@@ -240,8 +244,7 @@ $(function(){
       <i class="mdui-icon mdui-fab-opened material-icons">mode_edit</i>
     </button>
     <div class="mdui-fab-dial">
-	  <button class="mdui-fab mdui-fab-mini mdui-ripple mdui-color-red" id="newfolder" style="display: <?php if(!$manager['create_folder']) echo "none" ;else echo "inline" ?>;"><i class="mdui-icon material-icons">create_new_folder</i>
-      </button>
+	  
       <button class="mdui-fab mdui-fab-mini mdui-ripple mdui-color-pink" onclick="location.href='/?/offline'" style="display: <?php if(!$manager['offline']) echo "none" ;else echo "inline" ?>;"><i class="mdui-icon material-icons">cloud_upload</i>
       </button>
       <button class="mdui-fab mdui-fab-mini mdui-ripple mdui-color-red" id="file_upload" style="display: <?php if(!$manager['online']) echo "none" ;else echo "inline" ?>;"><i class="mdui-icon material-icons">file_upload</i>
