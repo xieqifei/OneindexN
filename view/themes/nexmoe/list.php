@@ -26,6 +26,7 @@ function file_ico($item){
 	<button class="mdui-btn mdui-ripple multiopt" id="deleteall" style="display: none;">删除</button>
 	<button class="mdui-btn mdui-ripple multiopt" id="shareall" style="display: none;">分享</button>
 	<button class="mdui-btn mdui-ripple singleopt" id="rename" style="display: none;">重命名</button>
+	<button class="mdui-btn mdui-ripple" id="search">搜索</button>
 	</div>
 </div>
 <?endif;?> 
@@ -316,6 +317,40 @@ $(function(){
 			}
 		);
 	});
+	//搜索
+	mdui.JQ('#search').on('click', function () {
+		mdui.prompt('输入搜索关键词',
+			function (value) {
+				// 创建一个 form
+				var form1 = document.createElement("form");
+				form1.id = "form1";
+				form1.name = "form1";
+				// 添加到 body 中
+				document.body.appendChild(form1);
+				// 创建一个输入
+				var input = document.createElement("input");
+				// 设置相应参数
+				input.type = "text";
+				input.name = "keyword";
+				input.value = value;
+			
+				// 将该输入框插入到 form 中
+				form1.appendChild(input);
+			
+				// form 的提交方式
+				form1.method = "POST";
+				// form 提交路径
+				form1.action = "?/search";
+			
+				// 对该 form 执行提交
+				form1.submit();
+				// 删除该 form
+				document.body.removeChild(form1);
+			},
+			function (value) {
+			}
+		);
+	});
 	//重命名
 	mdui.JQ('#rename').on('click', function () {
 		mdui.prompt('输入新名称',
@@ -397,17 +432,6 @@ $(function(){
 				multiopt[i].style.display = "none";
 			}
 		}
-		// if (check_val != "") {
-		// 	var div = document.getElementById("mangger");
-		// 	var div2= document.getElementById("navess");
-		// 	div2.style.display = "none";
-		// 	div.style.display = "block";
-		// } else {
-		// 	var div = document.getElementById("mangger");
-		// 	var div2= document.getElementById("navess");
-		// 	div.style.display = "none";
-		// 	div2.style.display = "block";
-		// }
 	}
 	function checkall(){
 		var checkall = document.getElementById("checkall");

@@ -233,7 +233,15 @@ class IndexController{
 		}, config('cache_expire_time') );
 		return $content;
 	}
-	
+
+	//搜索
+	function search(){
+		$keyword=$_POST['keyword'];
+		$items = onedrive::search($keyword);
+		return view::load('search')
+					->with('items', $items);
+	}
+
 	//时候404
 	function is404(){
 		if(!empty($this->items[$this->name]) || (empty($this->name) && is_array($this->items)) ){
