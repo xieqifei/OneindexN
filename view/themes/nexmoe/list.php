@@ -178,13 +178,13 @@ function file_ico($item){
   <div class="mdui-dialog" id="fileupload-dialog">
     <div class="mdui-dialog-title">文件上传</div>
     <div class="mdui-dialog-content">
-		<form action="?/onlinefileupload" method="post" enctype="multipart/form-data" style="display: <?php if(!$manager['online']) echo "none" ;else echo "inline" ?>;">
+		<form id="filesubmit" action="?/onlinefileupload" method="post" enctype="multipart/form-data" style="display: <?php if(!$manager['online']) echo "none" ;else echo "inline" ?>;">
 			<input class="mdui-center" type="file" style="margin: 50px 0;" name="onlinefile" />
 			<input type="text" style="display: none;" name="uploadurl" value="<?php echo $_SERVER['REQUEST_URI']; ?>"/>
 			<div class="mdui-row-xs-3">
 			<div class="mdui-col"></div>
 				<div class="mdui-col">
-					<button class="mdui-btn mdui-btn-block mdui-color-theme-accent mdui-ripple">上传</button>
+					<button class="mdui-btn mdui-btn-block mdui-color-theme-accent mdui-ripple" onclick="submitForm()">上传</button>
 				</div>
 			</div>
 		</form>

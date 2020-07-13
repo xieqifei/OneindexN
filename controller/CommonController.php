@@ -114,6 +114,7 @@ class CommonController{
 				$url = $_SERVER['HTTP_HOST'].$root.'/'.$remotepath.rawurldecode($filename).((config('root_path') == '?')?'&s':'?s');
 				$url = $http_type.str_replace('//','/', $url);
 				// view::direct($url);
+				return '上传成功';
 			}
 		}
 		return '上传失败';

@@ -84,7 +84,7 @@ $(function(){
 });
 var inst1 = new mdui.Fab('#myFab');
 
-//文件上传
+//文件上传对话框
 var inst2 = new mdui.Dialog('#fileupload-dialog');
 // method
 document.getElementById('file_upload').addEventListener('click', function () {
@@ -234,5 +234,17 @@ function checkall(){
         }
     }
     onClickHander();
+}
+function submitForm() {
+    // jquery 表单提交
+    $("#filesubmit").ajaxSubmit(function(result) {
+        // 对于表单提交成功后处理，result为表单正常提交后返回的内容
+    	if (result.status === true) {        		 
+    		alert(result.msg);   		
+    	}else{
+    		alert(result.msg);
+    	}
+    });
+    return false; // 必须返回false，否则表单会自己再做一次提交操作，并且页面跳转
 }
 
