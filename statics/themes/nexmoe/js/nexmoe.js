@@ -107,7 +107,7 @@ var sharedialog = document.getElementById('share');
 sharedialog.addEventListener('open.mdui.dialog', function () {
     var textarea_value=new Array()
     for(var i=0;i<check_val.length;i++){
-        textarea_value[i] = window.location.host+document.getElementById(check_val[i]).getElementsByTagName('a')[0].getAttribute('href');
+        textarea_value[i] = window.location.protocol+'//'+window.location.host+document.getElementById(check_val[i]).getElementsByTagName('a')[0].getAttribute('href');
     }
     document.getElementById('sharelinks').setAttribute('value',textarea_value.join(' \r\n '));
 });
