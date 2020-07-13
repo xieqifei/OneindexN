@@ -317,14 +317,15 @@ if(!getCookie('cutitems')&&!getCookie('copyitems')){
     pastebtn.style.display="none";
 }else{
     pastebtn.style.display="";
-}
-//点击粘贴
+}//点击粘贴
 function paste(){
+    var cutdata = '{"cutitems":'+getCookie('cutitems')+',"url":'+'"'+window.location.href+'"}';
+    console.log(cutdata);
     if(getCookie('cutitems')){
         $.ajax({
             type: 'POST',
             url: '?/paste',
-            data: {'cutitems':getCookie('cutitems'),'url':window.location.href},
+            data: cutdata,
             success: function(data) {
                 if(data){
                     console.log(data);
@@ -336,7 +337,7 @@ function paste(){
         $.ajax({
             type: 'POST',
             url: '?/paste',
-            data: {'copyitems':getCookie('copyitems'),'url':window.location.href},
+            data: {"copyitems":getCookie('copyitems'),"url":window.location.href},
             success: function(data) {
                 if(data){
                     console.log(data);

@@ -78,7 +78,7 @@ class CommonController{
 			return $data;
 		}
 		else{
-			return '未登录无法重命名';
+			return '未登录无法删除';
 		}
 	}
 
@@ -137,18 +137,18 @@ class CommonController{
 		// if(is_login()){
 			$data = file_get_contents( "php://input" );
 			$jsondata = json_decode($data);
-			if($jsondata['cutitems']){
-				$cutitems=$jsondata['cutitems'];
-				return json_encode($cutitems);
-				// $url=$jsondata['url'];
-				// $itemid=$this->url2id($url);
-				// $resp=onedrive::move($cutitems,$itemid);
+			if($jsondata->cutitems){
+				$cutitems=$jsondata->cutitems;
+				$url=$jsondata->url;
+				$itemid=$this->url2id($url);
+				$resp=onedrive::move($cutitems,$itemid);
+				oneindex::refresh_cache(get_absolute_path(config('onedrive_root')));
+				return $resp;
 			}
-			if($jsondata('copyitems')){
+			if($jsondata->copyitems){
 				return "function not open";
 			}
-			oneindex::refresh_cache(get_absolute_path(config('onedrive_root')));
-			return 'no pipeixiang';
+			return '操作失误，请重新尝试！';
 		// }
 		// else{
 		// 	return '未登录无法重命名';
