@@ -216,7 +216,7 @@ function file_ico($item){
     <div class="mdui-dialog-content">
 			<div class="mdui-textfield mdui-textfield-floating-label">
 				<label class="mdui-textfield-label">选中的项目链接</label>
-				<input class="mdui-textfield-input" type="textarea" style="margin: 20px 0;" readonly id="sharelinks"/>
+				<textarea class="mdui-textfield-input" style="margin: 20px 0;" readonly id="sharelinks"></textarea>
 			</div>
 	</div>
   </div>
