@@ -38,7 +38,12 @@ class CommonController{
 	function create_folder(){
 		if(is_login()){
 			$urlinfo=parse_url($_POST['uploadurl']);
-			$paths = explode('/', rawurldecode($urlinfo['path']));
+			if(stristr($_POST['uploadurl'],'?')){
+				$paths = explode('/', rawurldecode($urlinfo['query']));
+			}else{
+				$paths = explode('/', rawurldecode($urlinfo['path']));
+			}
+			
 			//判断路径中是否包含/?/
 			// if(strcmp($paths[1],'?')==0){
 			// 	array_shift($paths);
@@ -53,7 +58,7 @@ class CommonController{
 			// $remotepath = get_absolute_path(join('/', $paths));
 			// $data = onedrive::create_folder(str_replace('//','/',config('onedrive_root').$remotepath),$_POST['foldername']);
 			// oneindex::refresh_cache(get_absolute_path(config('onedrive_root')));
-			print_r($urlinfo);
+			print_r($paths);
 		}
 		else{
 			return '未登录无法新建文件夹';
