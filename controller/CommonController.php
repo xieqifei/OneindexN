@@ -119,7 +119,7 @@ class CommonController{
 		}
 		return '上传失败';
 	}
-
+	//上传文件的条件判断
 	function uploadcondition($file){
 		
 		if($file['size'] > 4485760 || $file['size'] == 0){
@@ -130,5 +130,40 @@ class CommonController{
 		}
 
 		return true;
+	}
+
+	//批量移动和批量复制
+	function paste(){
+		if(is_login()){
+			$data = file_get_contents( "php://input" );
+			$jsondata = json_decode($data);
+			if($jsondata['cutitems']){
+				$cutitems=$jsondata['cutitems'];
+				$url=$jsondata['url'];
+				$itemid=$this->url2id($url);
+				$resp=onedrive::move($cutitems,$itemid);
+			}
+			if($jsondata('copyitems')){
+				return "功能完善中";
+			}
+			oneindex::refresh_cache(get_absolute_path(config('onedrive_root')));
+			return '复制/移动处理完毕';
+		}
+		else{
+			return '未登录无法重命名';
+		}
+	}
+	//url转id
+	function url2id($url){
+		$urlinfo=parse_url($url);
+		if(stristr($url,'?')){
+			$paths = explode('/', rawurldecode($urlinfo['query']));
+		}else{
+			$paths = explode('/', rawurldecode($urlinfo['path']));
+		}
+		$paths=array_values($paths);
+		$totalpath = str_replace('//','/',config('onedrive_root').get_absolute_path(join('/', $paths)));
+		$itemid=onedrive::path2id($totalpath);
+		return $itemid;
 	}
 }

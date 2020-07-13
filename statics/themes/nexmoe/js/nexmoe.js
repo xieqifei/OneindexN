@@ -231,6 +231,7 @@ mdui.JQ('#deleteall').on('click', function(){
     );
 });
 
+//文件选中
 function onClickHander(){
     checkitems = document.getElementsByName("itemid");
     check_val = [];
@@ -261,6 +262,7 @@ function onClickHander(){
         }
     }
 }
+//选中所有文件
 function checkall(){
     var checkall = document.getElementById("checkall");
     var itemsbox = document.getElementsByName("itemid");
@@ -275,6 +277,7 @@ function checkall(){
     }
     onClickHander();
 }
+//在线上传小文件
 function submitForm() {
     var formData = new FormData($("#filesubmit")[0]);  //重点：要用这种方法接收表单的参数
     $.ajax({
@@ -293,4 +296,66 @@ function submitForm() {
     });
     alert("上传成功，两秒后刷新页面");
     setInterval(function(){location.reload();},3000);
+}
+//点击复制
+function copy(){
+    document.cookie="copyitems="+JSON.stringify(check_val);
+    document.getElementById('pastebtn').style.display="";
+    document.getElementById('cutbtn').style.display="none";
+}
+//点击剪切
+function cut(){
+    document.cookie="cutitems="+JSON.stringify(check_val);
+    document.getElementById('pastebtn').style.display="";
+    document.getElementById('copybtn').style.display="none";
+}
+//判断cookie是否有复制和粘贴
+var pastebtn = document.getElementById('pastebtn');
+if(!getCookie('cutitems')&&!getCookie('copyitems')){
+    pastebtn.style.display="none";
+}else{
+    pastebtn.style.display="";
+}
+//点击粘贴
+function paste(){
+    if(getCookie('cutitems')){
+        $.ajax({
+            type: 'POST',
+            url: '?/paste',
+            data: {'cutitems':getCookie('cutitems')},
+            success: function(data) {
+                if(data){
+                    console.log(data);
+                }
+            },
+            dataType: 'json'
+        });
+    }
+    if(getCookie('copyitems')){
+        $.ajax({
+            type: 'POST',
+            url: '?/paste',
+            data: {'copyitems':getCookie('copyitems')},
+            success: function(data) {
+                if(data){
+                    console.log(data);
+                }
+            },
+            dataType: 'json'
+        });
+    }
+    alert("粘贴成功，两秒后刷新页面");
+    setInterval(function(){location.reload();},3000);
+}
+//获取cookie
+function getCookie(cname){
+    var name = cname + "=";
+    var ca = document.cookie.split(';');
+    for(var i=0; i<ca.length; i++) {
+        var c = ca[i].trim();
+        if (c.indexOf(name)==0) { 
+            return c.substring(name.length,c.length); 
+        }
+    }
+    return false;
 }

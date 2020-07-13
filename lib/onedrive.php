@@ -419,4 +419,93 @@
 			  curl_multi_close($mh);
 			  return '批量处理完成';
 		  }
+		  
+		//文件批量移动
+		public static function move($itemid = array(), $newitemid)
+		{		
+			var_dump($itemid);
+			$apis = array();
+			$api = str_replace('root', 'items/', self::$api_url."/me/drive/root");
+			for ($i = 0; $i < count($itemid); ++$i) {
+				$apis[$i] = $api.$itemid[$i];
+			}
+
+		
+			$result = $res = $ch = array();
+			$nch = 0;
+			$mh = curl_multi_init();
+			foreach ($apis as $nk => $url) {
+				$timeout = 20;
+				$ch[$nch] = curl_init();
+				curl_setopt_array($ch[$nch], array(
+					CURLOPT_URL => $url,
+					CURLOPT_TIMEOUT => $timeout,
+					CURLOPT_RETURNTRANSFER => true,
+					CURLOPT_MAXREDIRS => 10,
+					CURLOPT_FOLLOWLOCATION => true,
+					CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+					CURLOPT_CUSTOMREQUEST => 'PATCH',
+					CURLOPT_POSTFIELDS => "{\n  \"parentReference\": {\n    \"id\": \"".$newitemid."\"\n  }\n  \n}",
+					CURLOPT_HTTPHEADER => array(
+						'Authorization: Bearer '.self::access_token(),
+						'Content-Type: application/json',
+					),
+				));
+
+				curl_multi_add_handle($mh, $ch[$nch]);
+				++$nch;
+			}
+
+			/* wait for performing request */
+
+			do {
+				$mrc = curl_multi_exec($mh, $running);
+			} while (CURLM_CALL_MULTI_PERFORM == $mrc);
+
+			while ($running && $mrc == CURLM_OK) {
+				// wait for network
+				if (curl_multi_select($mh, 0.5) > -1) {
+					// pull in new data;
+					do {
+						$mrc = curl_multi_exec($mh, $running);
+					} while (CURLM_CALL_MULTI_PERFORM == $mrc);
+				}
+			}
+
+			if ($mrc != CURLM_OK) {
+				error_log('CURL Data Error');
+			}
+
+			/* get data */
+
+			$nch = 0;
+
+			foreach ($apis as $moudle => $node) {
+				if (($err = curl_error($ch[$nch])) == '') {
+					$res[$nch] = curl_multi_getcontent($ch[$nch]);
+					$result[$moudle] = $res[$nch];
+				} else {
+					error_log('curl error');
+				}
+
+				curl_multi_remove_handle($mh, $ch[$nch]);
+				curl_close($ch[$nch]);
+				++$nch;
+			}
+
+			curl_multi_close($mh);
+			return '批量移动完成';
+			
+		}
+
+		 //文件路径转itemsid
+		 public static function path2id($path)
+		 {
+			 $request = self::request(urldecode($path));
+			 $access_token = self::access_token();
+			 $request['headers'] = "Authorization: bearer {$access_token}".PHP_EOL.'Content-Type: application/json'.PHP_EOL;
+			 $resp = fetch::get($request);
+			 $data = json_decode($resp->content, true);
+			 return $data['id'];
+		 }
 	}
