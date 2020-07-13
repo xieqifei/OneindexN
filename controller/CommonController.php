@@ -43,22 +43,11 @@ class CommonController{
 			}else{
 				$paths = explode('/', rawurldecode($urlinfo['path']));
 			}
-			
-			//判断路径中是否包含/?/
-			// if(strcmp($paths[1],'?')==0){
-			// 	array_shift($paths);
-			// 	array_shift($paths);
-			// }
-			// foreach($paths as $index=>$path){
-			// 	if(strcmp($path,'?')==0){
-			// 		unset($paths[$index]);
-			// 	}
-			// }
-			// $paths=array_values($paths);
-			// $remotepath = get_absolute_path(join('/', $paths));
-			// $data = onedrive::create_folder(str_replace('//','/',config('onedrive_root').$remotepath),$_POST['foldername']);
-			// oneindex::refresh_cache(get_absolute_path(config('onedrive_root')));
-			print_r($paths);
+			$paths=array_values($paths);
+			$remotepath = get_absolute_path(join('/', $paths));
+			$data = onedrive::create_folder(str_replace('//','/',config('onedrive_root').$remotepath),$_POST['foldername']);
+			oneindex::refresh_cache(get_absolute_path(config('onedrive_root')));
+			return $data;
 		}
 		else{
 			return '未登录无法新建文件夹';
