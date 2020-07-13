@@ -97,7 +97,7 @@ document.getElementById('search').addEventListener('click', function () {
     inst3.open();
 });
 
-//关键词过滤
+//当前页关键词搜索
 mdui.JQ('#pagesearch').on('click', function () {
     mdui.prompt('输入搜索的关键词或后缀',
         function (value) {
@@ -123,7 +123,7 @@ mdui.JQ('#newfolder').on('click', function () {
             httpRequest.setRequestHeader("Content-type","application/x-www-form-urlencoded");//设置请求头 注：post方式必须设置请求头（在建立连接后设置请求头）
             var query='foldername='+value+'&uploadurl='+window.location.href;
             httpRequest.send(query);//发送请求 将情头体写在send中
-            mdui.alert('创建成功2秒后\n自动刷新列表！');
+            alert('创建成功2秒后\n自动刷新列表！');
             setInterval(function(){location.reload();},3000);
             /**
              * 获取数据后的处理程序
@@ -148,7 +148,7 @@ mdui.JQ('#rename').on('click', function () {
             httpRequest.setRequestHeader("Content-type","application/x-www-form-urlencoded");//设置请求头 注：post方式必须设置请求头（在建立连接后设置请求头）
             var query='name='+value+'&itemid='+check_val[0];
             httpRequest.send(query);//发送请求 将情头体写在send中
-            mdui.alert('重命名成功2秒后\n自动刷新列表！');
+            alert('重命名成功2秒后\n自动刷新列表！');
             setInterval(function(){location.reload();},3000);
             /**
              * 获取数据后的处理程序
@@ -172,7 +172,7 @@ mdui.JQ('#deleteall').on('click', function(){
             httpRequest.setRequestHeader("Content-type","application/json");//设置请求头 注：post方式必须设置请求头（在建立连接后设置请求头）
             var query=JSON.stringify(check_val);
             httpRequest.send(query);
-            mdui.alert('删除成功2秒后\n自动刷新列表！');
+            alert('删除成功2秒后\n自动刷新列表！');
             setInterval(function(){location.reload();},3000);
 
             /**
@@ -252,5 +252,7 @@ function submitForm() {
             }
         }
     });
+    alert("上传成功，两秒后刷新页面");
+    setInterval(function(){location.reload();},3000);
 }
 

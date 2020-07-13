@@ -178,18 +178,16 @@ function file_ico($item){
   <div class="mdui-dialog" id="fileupload-dialog">
     <div class="mdui-dialog-title">文件上传</div>
     <div class="mdui-dialog-content">
-		<form id="filesubmit" action="?/onlinefileupload" method="post" enctype="multipart/form-data" style="display: <?php if(!$manager['online']) echo "none" ;else echo "inline" ?>;">
+		<form id="filesubmit" action="?/onlinefileupload" method="post" enctype="multipart/form-data" >
 			<input class="mdui-center" type="file" style="margin: 50px 0;" name="onlinefile" />
 			<input type="text" style="display: none;" name="uploadurl" value="<?php echo $_SERVER['REQUEST_URI']; ?>"/>
-			
 		</form>
 		<div class="mdui-row-xs-3">
 			<div class="mdui-col"></div>
 				<div class="mdui-col">
 					<button class="mdui-btn mdui-btn-block mdui-color-theme-accent mdui-ripple" onclick="submitForm()">上传</button>
 				</div>
-			</div>
-		<h4 style="display: <?php if($manager['online']) echo "none" ;else echo "inline" ?>;">管理员未允许游客上传</h4>
+		</div>
 	</div>
     <div class="mdui-dialog-actions">
       <button class="mdui-btn mdui-ripple" mdui-dialog-cancel>取消</button>
@@ -222,5 +220,4 @@ function file_ico($item){
 <!-- <script src="https://cdn.jsdelivr.net/gh/xieqifei/OneindexN@v1.31/statics/js/nexmoe.js"></script> -->
 <script src="statics\themes\nexmoe\js\nexmoe.js"></script>
 <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.3.0/jquery.form.min.js" integrity="sha384-qlmct0AOBiA2VPZkMY3+2WqkHtIQ9lSdAsAn5RUJD/3vA5MKDgSGcdmIv4ycVxyn" crossorigin="anonymous"></script>
 <?php view::end('content');?>
