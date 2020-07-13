@@ -132,6 +132,28 @@
 			}
 		}
 	
+		//关键字搜索
+		static function search($keyword){
+			$token = self::access_token();
+			$keyword=self::urlencode($keyword);
+			$request['headers'] = "Authorization: bearer {$token}".PHP_EOL."Content-Type: application/json".PHP_EOL;
+			$request['url'] = self::$api_url."/me/drive/root/search(q='".$keyword."')";
+			$resp=fetch::get($request);
+			$data = json_decode($resp->content, true);
+
+			foreach((array)$data['value'] as $item){
+				//var_dump($item);
+				$items[$item['name']] = array(
+					'name'=>$item['name'],
+					'id' => $item['id'],
+					'size'=>$item['size'],
+					'lastModifiedDateTime'=>strtotime($item['lastModifiedDateTime']),
+					'folder'=>empty($item['folder'])?false:true
+				);
+			}
+			return $items;
+		}
+
 		//文件缩略图链接
 		static function thumbnail($path,$size='large'){
 			$request = self::request($path,"thumbnails/0?select={$size}");

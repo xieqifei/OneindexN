@@ -20,11 +20,11 @@ function file_ico($item){
 <?php if(is_login()):?>
 <div class="mdui-container-fluid" >
 	<div class="nexmoe-item">
+	<button class="mdui-btn mdui-ripple" id="pagesearch">过滤</button>
 	<button class="mdui-btn mdui-ripple" id="newfolder">新建文件夹</button>
-	<button class="mdui-btn mdui-ripple" id="upload111">上传文件</button>
-	<button class="mdui-btn mdui-ripple" id="example-confirm-1">Aria2</button>
+	<button class="mdui-btn mdui-ripple" id="file_upload">上传文件</button>
 	<button class="mdui-btn mdui-ripple multiopt" id="deleteall" style="display: none;">删除</button>
-	<button class="mdui-btn mdui-ripple multiopt" id="shareall" style="display: none;">分享</button>
+	<button class="mdui-btn mdui-ripple multiopt" id="sharebtn" style="display: none;">分享</button>
 	<button class="mdui-btn mdui-ripple singleopt" id="rename" style="display: none;">重命名</button>
 	</div>
 </div>
@@ -99,7 +99,7 @@ function file_ico($item){
 		<?php foreach((array)$items as $item):?>
 			<?php if(!empty($item['folder'])):?>
 
-		<li class="mdui-list-item mdui-ripple" data-sort 
+		<li class="mdui-list-item mdui-ripple filter" data-sort 
 					data-sort-name="<?php echo $item['name'] ;?>"
                     data-sort-date="<?php echo $item['lastModifiedDateTime'];?>"
 					data-sort-size="<?php echo $item['size'];?>" 
@@ -119,7 +119,7 @@ function file_ico($item){
 		  	</a>
 		</li>
 			<?php else:?>
-		<li class="mdui-list-item file mdui-ripple" data-sort
+		<li class="mdui-list-item file mdui-ripple filter" data-sort
                     data-sort-name="<?php echo $item['name'];?>"
                     data-sort-date="<?php echo $item['lastModifiedDateTime'];?>"
 					data-sort-size="<?php echo $item['size'];?>" 
@@ -153,94 +153,6 @@ function file_ico($item){
 </div>
 <?php endif;?>
 </div>
-<script>
-$ = mdui.JQ;
-$.fn.extend({
-    sortElements: function (comparator, getSortable) {
-        getSortable = getSortable || function () { return this; };
-
-        var placements = this.map(function () {
-            var sortElement = getSortable.call(this),
-                parentNode = sortElement.parentNode,
-                nextSibling = parentNode.insertBefore(
-                    document.createTextNode(''),
-                    sortElement.nextSibling
-                );
-
-            return function () {
-                parentNode.insertBefore(this, nextSibling);
-                parentNode.removeChild(nextSibling);
-            };
-        });
-
-        return [].sort.call(this, comparator).each(function (i) {
-            placements[i].call(getSortable.call(this));
-        });
-    }
-});
-
-function downall() {
-     let dl_link_list = Array.from(document.querySelectorAll("li a"))
-         .map(x => x.href) // 所有list中的链接
-         .filter(x => x.slice(-1) != "/"); // 筛选出非文件夹的文件下载链接
-
-     let blob = new Blob([dl_link_list.join("\r\n")], {
-         type: 'text/plain'
-     }); // 构造Blog对象
-     let a = document.createElement('a'); // 伪造一个a对象
-     a.href = window.URL.createObjectURL(blob); // 构造href属性为Blob对象生成的链接
-     a.download = "folder_download_link.txt"; // 文件名称，你可以根据你的需要构造
-     a.click() // 模拟点击
-     a.remove();
-}
-
-function thumb(){
-	if($('#format_list').text() == "apps"){
-		$('#format_list').text("format_list_bulleted");
-		$('.nexmoe-item').removeClass('thumb');
-		$('.nexmoe-item .mdui-icon').show();
-		$('.nexmoe-item .mdui-list-item').css("background","");
-	}else{
-		$('#format_list').text("apps");
-		$('.nexmoe-item').addClass('thumb');
-		$('.mdui-col-xs-12 i.mdui-icon').each(function(){
-			if($(this).text() == "image" || $(this).text() == "ondemand_video"){
-				var href = $(this).parent().parent().attr('href');
-				var thumb =(href.indexOf('?') == -1)?'?t=220':'&t=220';
-				$(this).hide();
-				$(this).parent().parent().parent().css("background","url("+href+thumb+")  no-repeat center top");
-			}
-		});
-	}
-
-}	
-
-
-
-$(function(){
-	$('.file a').each(function(){
-		$(this).on('click', function () {
-			var form = $('<form target=_blank method=post></form>').attr('action', $(this).attr('href')).get(0);
-			$(document.body).append(form);
-			form.submit();
-			$(form).remove();
-			return false;
-		});
-	});
-
-	$('.icon-sort').on('click', function () {
-        let sort_type = $(this).attr("data-sort"), sort_order = $(this).attr("data-order");
-        let sort_order_to = (sort_order === "less") ? "more" : "less";
-        $('li[data-sort]').sortElements(function (a, b) {
-            let data_a = $(a).attr("data-sort-" + sort_type), data_b = $(b).attr("data-sort-" + sort_type);
-            let rt = data_a.localeCompare(data_b, undefined, {numeric: true});
-            return (sort_order === "more") ? 0-rt : rt;
-        });
-        $(this).attr("data-order", sort_order_to).text("expand_" + sort_order_to);
-    });
-});
-</script>
-
 <div class="mdui-fab-wrapper" id="myFab">
     <button class="mdui-fab mdui-ripple mdui-color-theme-accent">
       <i class="mdui-icon material-icons">add</i>
@@ -250,31 +162,29 @@ $(function(){
 	  
       <button class="mdui-fab mdui-fab-mini mdui-ripple mdui-color-pink" onclick="location.href='/?/offline'" style="display: <?php if(!$manager['offline']) echo "none" ;else echo "inline" ?>;"><i class="mdui-icon material-icons">cloud_upload</i>
       </button>
-      <button class="mdui-fab mdui-fab-mini mdui-ripple mdui-color-red" id="file_upload" style="display: <?php if(!$manager['online']) echo "none" ;else echo "inline" ?>;"><i class="mdui-icon material-icons">file_upload</i>
+      <button class="mdui-fab mdui-fab-mini mdui-ripple mdui-color-red" id="search" style="display: <?php if(!is_login()) echo "none" ;else echo "inline" ?>;"><i class="mdui-icon material-icons">&#xe8b6;</i>
       </button>
       <button class="mdui-fab mdui-fab-mini mdui-ripple mdui-color-orange" onclick="location.href='/?/admin'"><i class="mdui-icon material-icons">account_circle</i>
       </button>
       <button class="mdui-fab mdui-fab-mini mdui-ripple mdui-color-blue" onclick="thumb()"><i class="mdui-icon material-icons" id="format_list">format_list_bulleted</i>
       </button>
     </div>
-  </div>
+</div>
 
-  <div class="mdui-container">
-
+<div class="mdui-container">
   <div class="mdui-dialog" id="fileupload-dialog">
     <div class="mdui-dialog-title">文件上传</div>
     <div class="mdui-dialog-content">
-		<form action="?/onlinefileupload" method="post" enctype="multipart/form-data" style="display: <?php if(!$manager['online']) echo "none" ;else echo "inline" ?>;">
+		<form id="filesubmit" action="?/onlinefileupload" method="post" enctype="multipart/form-data" >
 			<input class="mdui-center" type="file" style="margin: 50px 0;" name="onlinefile" />
 			<input type="text" style="display: none;" name="uploadurl" value="<?php echo $_SERVER['REQUEST_URI']; ?>"/>
-			<div class="mdui-row-xs-3">
+		</form>
+		<div class="mdui-row-xs-3">
 			<div class="mdui-col"></div>
 				<div class="mdui-col">
-					<button class="mdui-btn mdui-btn-block mdui-color-theme-accent mdui-ripple">上传</button>
+					<button class="mdui-btn mdui-btn-block mdui-color-theme-accent mdui-ripple" onclick="submitForm()">上传</button>
 				</div>
-			</div>
-		</form>
-		<h4 style="display: <?php if($manager['online']) echo "none" ;else echo "inline" ?>;">管理员未允许游客上传</h4>
+		</div>
 	</div>
     <div class="mdui-dialog-actions">
       <button class="mdui-btn mdui-ripple" mdui-dialog-cancel>取消</button>
@@ -282,148 +192,38 @@ $(function(){
   </div>
 </div>
 
+<div class="mdui-container">
+ <div class="mdui-dialog" id="search_form">
+    <div class="mdui-dialog-content">
+		<form action="?/search" method="post">
+			<div class="mdui-textfield mdui-textfield-floating-label">
+				<label class="mdui-textfield-label">输入关键词</label>
+				<input class="mdui-textfield-input" type="text" style="margin: 20px 0;" name="keyword" />
+				<div class="mdui-row-xs-3">
+				<div class="mdui-col"></div>
+					<div class="mdui-col">
+						<button class="mdui-btn mdui-btn-block mdui-color-theme-accent mdui-ripple">提交</button>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+  </div>
+</div>
 
-<script>
-    var inst1 = new mdui.Fab('#myFab');
+<div class="mdui-container">
+ <div class="mdui-dialog" id="share">
+    <div class="mdui-dialog-content">
+			<div class="mdui-textfield mdui-textfield-floating-label">
+				<label class="mdui-textfield-label">选中的项目链接</label>
+				<textarea class="mdui-textfield-input" style="margin: 20px 0;" rows="5" readonly id="sharelinks"></textarea>
+			</div>
+	</div>
+  </div>
+</div>
+<!-- <script src="https://cdn.jsdelivr.net/gh/xieqifei/OneindexN@v1.31/statics/js/nexmoe.js"></script> -->
+<script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/clipboard.js/2.0.6/clipboard.min.js"></script>
+<script src="statics\themes\nexmoe\js\nexmoe.js"></script>
 
-
-	var inst2 = new mdui.Dialog('#fileupload-dialog');
-	// method
-	document.getElementById('file_upload').addEventListener('click', function () {
-	inst2.open();
-	});
-	//新建文件夹
-	mdui.JQ('#newfolder').on('click', function () {
-		mdui.prompt('输入文件夹名称',
-			function (value) {
-				var httpRequest = new XMLHttpRequest();//第一步：创建需要的对象
-				httpRequest.open('POST', '?/create_folder', true); //第二步：打开连接
-				httpRequest.setRequestHeader("Content-type","application/x-www-form-urlencoded");//设置请求头 注：post方式必须设置请求头（在建立连接后设置请求头）
-				var query='foldername='+value+'&uploadurl=<?php echo $_SERVER['REQUEST_URI']; ?>';
-				httpRequest.send(query);//发送请求 将情头体写在send中
-				mdui.alert('创建成功2秒后\n自动刷新列表！');
-				setInterval(function(){location.reload();},3000);
-				/**
-				* 获取数据后的处理程序
-				*/
-				httpRequest.onreadystatechange = function () {//请求后的回调接口，可将请求成功后要执行的程序写在其中
-					if (httpRequest.readyState == 4 && httpRequest.status == 200) {//验证请求是否发送成功
-						
-					}
-				};
-			},
-			function (value) {
-			}
-		);
-	});
-	//重命名
-	mdui.JQ('#rename').on('click', function () {
-		mdui.prompt('输入新名称',
-			function (value) {
-				var httpRequest = new XMLHttpRequest();//第一步：创建需要的对象
-				httpRequest.open('POST', '?/rename', true); //第二步：打开连接
-				httpRequest.setRequestHeader("Content-type","application/x-www-form-urlencoded");//设置请求头 注：post方式必须设置请求头（在建立连接后设置请求头）
-				var query='name='+value+'&itemid='+check_val[0];
-				httpRequest.send(query);//发送请求 将情头体写在send中
-				mdui.alert('重命名成功2秒后\n自动刷新列表！');
-				setInterval(function(){location.reload();},3000);
-				/**
-				* 获取数据后的处理程序
-				*/
-				httpRequest.onreadystatechange = function () {//请求后的回调接口，可将请求成功后要执行的程序写在其中
-					if (httpRequest.readyState == 4 && httpRequest.status == 200) {//验证请求是否发送成功
-						
-					}
-				};
-			},
-			function (value) {
-			}
-		);
-	});
-	//删除文件/文件夹
-	mdui.JQ('#deleteall').on('click', function(){
-		mdui.confirm('请确认是否删除选中项目',
-			function(){
-				var httpRequest = new XMLHttpRequest();
-				httpRequest.open('POST', '?/deleteitems', true); 
-				httpRequest.setRequestHeader("Content-type","application/json");//设置请求头 注：post方式必须设置请求头（在建立连接后设置请求头）
-				var query=JSON.stringify(check_val);
-				httpRequest.send(query);
-				mdui.alert('删除成功2秒后\n自动刷新列表！');
-				setInterval(function(){location.reload();},3000);
-				
-				/**
-				* 获取数据后的处理程序
-				*/
-				httpRequest.onreadystatechange = function () {//请求后的回调接口，可将请求成功后要执行的程序写在其中
-					if (httpRequest.readyState == 4 && httpRequest.status == 200) {//验证请求是否发送成功
-						
-					}
-				};
-			},
-			function(){
-			}
-		);
-		});
-
-	function onClickHander(){
-		checkitems = document.getElementsByName("itemid");
-		check_val = [];
-		for (k in checkitems) {
-			if (checkitems[k].checked) check_val.push(checkitems[k].value);
-		}
-		//alert(check_val);
-		console.log(check_val);
-		var singleopt = document.getElementsByClassName("singleopt");
-		var multiopt = document.getElementsByClassName("multiopt");
-		//单文件操作
-		if(check_val.length==1){
-			for(var i=0;i<singleopt.length;i++){
-				singleopt[i].style.display = "inline";
-			}
-		}
-		else{
-			for(var i=0;i<singleopt.length;i++){
-				singleopt[i].style.display = "none";
-			}
-		}
-		//多文件操作
-		if(check_val.length>=1){
-			for(var i=0;i<multiopt.length;i++){
-				multiopt[i].style.display = "inline";
-			}
-		}else{
-			for(var i=0;i<multiopt.length;i++){
-				multiopt[i].style.display = "none";
-			}
-		}
-		// if (check_val != "") {
-		// 	var div = document.getElementById("mangger");
-		// 	var div2= document.getElementById("navess");
-		// 	div2.style.display = "none";
-		// 	div.style.display = "block";
-		// } else {
-		// 	var div = document.getElementById("mangger");
-		// 	var div2= document.getElementById("navess");
-		// 	div.style.display = "none";
-		// 	div2.style.display = "block";
-		// }
-	}
-	function checkall(){
-		var checkall = document.getElementById("checkall");
-		var itemsbox = document.getElementsByName("itemid");
-		if (checkall.checked == false) {
-			for (var i = 0; i < itemsbox.length; i++) {
-			itemsbox[i].checked = false;
-			}
-		} else {
-			for (var i = 0; i < itemsbox.length; i++) {
-			itemsbox[i].checked = true;
-			}
-		}
-		onClickHander();
-	}
-	
-
-</script>
 <?php view::end('content');?>
