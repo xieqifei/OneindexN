@@ -186,9 +186,9 @@ mdui.JQ('#deleteall').on('click', function(){
             httpRequest.setRequestHeader("Content-type","application/json");//设置请求头 注：post方式必须设置请求头（在建立连接后设置请求头）
             var query=JSON.stringify(check_val);
             httpRequest.send(query);
-            alert('删除成功2秒后\n自动刷新列表！');
-            setInterval(function(){location.reload();},3000);
-
+            for(var i=0;i<check_val.length;i++){
+                document.getElementById(check_val[i]).style.display = 'none';
+            }
             /**
              * 获取数据后的处理程序
              */
