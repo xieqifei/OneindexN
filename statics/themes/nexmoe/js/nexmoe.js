@@ -160,9 +160,10 @@ mdui.JQ('#rename').on('click', function () {
             var item_dom=document.getElementById(check_val[0]);
             var a_dom = item_dom.getElementsByTagName('a')[0];
             var a_href = a_dom.getAttribute('href');
-            a_href = a_href.replace(item_dom.getElementsByTagName('span')[0].innerHTML,value);
+            a_href = a_href.replace(new RegExp('/(.*)'+item_dom.getElementsByTagName('span')[0].innerHTML+'/'),'$1'+value);
+           // a_href.replace(item_dom.getElementsByTagName('span')[0].innerHTML,value);
             console.log(item_dom.getElementsByTagName('span')[0].innerHTML+'替换物'+value+'替换后'+a_href);
-            //a_href.replace(new RegExp('/(.*)'+item_dom.getElementsByTagName('span')[0].innerHTML+'/'),'$1'+value);
+            
             item_dom.getElementsByTagName('span')[0].innerHTML=value;
             item_dom.getElementsByTagName('a')[0].setAttribute('href',a_href);
             item_dom.setAttribute('data-sort-name',value);
