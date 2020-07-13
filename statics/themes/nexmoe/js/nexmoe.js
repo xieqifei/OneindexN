@@ -109,7 +109,7 @@ sharedialog.addEventListener('open.mdui.dialog', function () {
     for(var i=0;i<check_val.length;i++){
         textarea_value[i] = window.location.host+document.getElementById(check_val[i]).getElementsByTagName('a')[0].getAttribute('href');
     }
-    document.getElementById('sharelinks').innerHTML=textarea_value.join(' &#13;&#10; ');
+    document.getElementById('sharelinks').setAttribute('value',textarea_value.join(' \r\n '));
 });
 
 //当前页关键词搜索
