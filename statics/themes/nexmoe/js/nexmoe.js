@@ -236,11 +236,12 @@ function checkall(){
     onClickHander();
 }
 function submitForm() {
-    // jquery 表单提交
-    $("#filesubmit").ajaxSubmit(function(result) {
-        // 对于表单提交成功后处理，result为表单正常提交后返回的内容
-    	alert(result);
-    });
-    return false; // 必须返回false，否则表单会自己再做一次提交操作，并且页面跳转
+       $('#filesubmit').submit(function() {
+        $(this).ajaxSubmit(function(result) {   
+          // 对于表单提交成功后处理，result为表单正常提交后返回的内容
+    	alert(result);   
+        });
+        return false; //阻止表单默认提交
+     });
 }
 
