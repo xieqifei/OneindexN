@@ -134,7 +134,7 @@ class CommonController{
 
 	//批量移动和批量复制
 	function paste(){
-		if(is_login()){
+		// if(is_login()){
 			$data = file_get_contents( "php://input" );
 			$jsondata = json_decode($data);
 			if($jsondata['cutitems']){
@@ -145,14 +145,14 @@ class CommonController{
 				// $resp=onedrive::move($cutitems,$itemid);
 			}
 			if($jsondata('copyitems')){
-				return "功能完善中";
+				return "function not open";
 			}
 			oneindex::refresh_cache(get_absolute_path(config('onedrive_root')));
-			return '复制/移动处理完毕';
-		}
-		else{
-			return '未登录无法重命名';
-		}
+			return 'no pipeixiang';
+		// }
+		// else{
+		// 	return '未登录无法重命名';
+		// }
 	}
 	//url转id
 	function url2id($url){
