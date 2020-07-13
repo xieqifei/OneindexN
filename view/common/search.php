@@ -23,7 +23,7 @@
 		<button class="mdui-btn mdui-ripple multiopt" id="deleteall" style="display: none;">删除</button>
 		<button class="mdui-btn mdui-ripple multiopt" id="shareall" style="display: none;">分享</button>
 		<button class="mdui-btn mdui-ripple singleopt" id="rename" style="display: none;">重命名</button>
-		<button class="mdui-btn mdui-ripple" id="search">搜索</button>
+		<button class="mdui-btn mdui-ripple" id="search">全局搜索</button>
 		</div>
 	</div>
 <?endif;?> 

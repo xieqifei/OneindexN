@@ -37,11 +37,19 @@ class CommonController{
 	//post参数：uploadurl，当前url的路径
 	function create_folder(){
 		if(is_login()){
-			$paths = explode('/', rawurldecode($_POST['uploadurl']));
-			if(strcmp($paths[1],'?')==0){
-				array_shift($paths);
-				array_shift($paths);
+			$urlinfo=parse_url($_POST['uploadurl']);
+			$paths = explode('/', rawurldecode($urlinfo['path']));
+			//判断路径中是否包含/?/
+			// if(strcmp($paths[1],'?')==0){
+			// 	array_shift($paths);
+			// 	array_shift($paths);
+			// }
+			foreach($paths as $index=>$path){
+				if(strcmp($path,'?')==0){
+					unset($paths[$index]);
+				}
 			}
+			$paths=array_values($paths);
 			//$paths=array_shift($paths);
 			$remotepath = get_absolute_path(join('/', $paths));
 			$data = onedrive::create_folder(str_replace('//','/',config('onedrive_root').$remotepath),$_POST['foldername']);
