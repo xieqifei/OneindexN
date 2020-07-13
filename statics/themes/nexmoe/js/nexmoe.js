@@ -99,7 +99,7 @@ document.getElementById('search').addEventListener('click', function () {
 
 //当前页关键词搜索
 mdui.JQ('#pagesearch').on('click', function () {
-    mdui.prompt('输入搜索的关键词或后缀',
+    mdui.prompt('输入过滤的关键词或后缀',
         function (value) {
 			var dom_items = document.getElementsByClassName('filter');
 			for(var i=0;i<dom_items.length;i++){
