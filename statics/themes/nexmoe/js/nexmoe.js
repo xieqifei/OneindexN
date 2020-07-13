@@ -109,7 +109,7 @@ sharedialog.addEventListener('open.mdui.dialog', function () {
     for(var i=0;i<check_val.length;i++){
         textarea_value[i] = window.location.protocol+'//'+window.location.host+document.getElementById(check_val[i]).getElementsByTagName('a')[0].getAttribute('href');
     }
-    document.getElementById('sharelinks').value=textarea_value.join(' \r\n ');
+    document.getElementById('sharelinks').value=textarea_value.join('\r\n');
 });
 
 //当前页关键词搜索
@@ -142,7 +142,7 @@ mdui.JQ('#newfolder').on('click', function () {
             httpRequest.setRequestHeader("Content-type","application/x-www-form-urlencoded");//设置请求头 注：post方式必须设置请求头（在建立连接后设置请求头）
             var query='foldername='+value+'&uploadurl='+window.location.href;
             httpRequest.send(query);//发送请求 将情头体写在send中
-            alert('创建成功2秒后\n自动刷新列表！');
+            mdui.alert('创建成功2秒后\n自动刷新列表！');
             setInterval(function(){location.reload();},3000);
             /**
              * 获取数据后的处理程序
