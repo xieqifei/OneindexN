@@ -123,13 +123,15 @@ mdui.JQ('#newfolder').on('click', function () {
             httpRequest.setRequestHeader("Content-type","application/x-www-form-urlencoded");//设置请求头 注：post方式必须设置请求头（在建立连接后设置请求头）
             var query='foldername='+value+'&uploadurl='+window.location.href;
             httpRequest.send(query);//发送请求 将情头体写在send中
-            mdui.alert('创建成功2秒后\n自动刷新列表！');
-            setInterval(function(){location.reload();},3000);
+            // mdui.alert('创建成功2秒后\n自动刷新列表！');
+            // setInterval(function(){location.reload();},3000);
             /**
              * 获取数据后的处理程序
              */
             httpRequest.onreadystatechange = function () {//请求后的回调接口，可将请求成功后要执行的程序写在其中
                 if (httpRequest.readyState == 4 && httpRequest.status == 200) {//验证请求是否发送成功
+                    console.log(httpRequest.responseText);
+                   
                 }
             };
         },

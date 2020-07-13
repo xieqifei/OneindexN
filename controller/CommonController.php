@@ -54,7 +54,7 @@ class CommonController{
 			$remotepath = get_absolute_path(join('/', $paths));
 			$data = onedrive::create_folder(str_replace('//','/',config('onedrive_root').$remotepath),$_POST['foldername']);
 			oneindex::refresh_cache(get_absolute_path(config('onedrive_root')));
-			return $data;
+			return $remotepath;
 		}
 		else{
 			return '未登录无法新建文件夹';
