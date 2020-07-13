@@ -112,8 +112,10 @@ mdui.JQ('#pagesearch').on('click', function () {
         },
         function (value) {
         },
-        '确认',
-        '取消'
+        {
+            confirmText:'确认',
+            cancelText:'取消'
+        }
     );
 });
 //新建文件夹
@@ -139,6 +141,11 @@ mdui.JQ('#newfolder').on('click', function () {
         },
         function (value) {
         }
+        ,
+        {
+            confirmText:'确认',
+            cancelText:'取消'
+        }
     );
 });
 //重命名
@@ -162,6 +169,11 @@ mdui.JQ('#rename').on('click', function () {
             };
         },
         function (value) {
+        }
+        ,
+        {
+            confirmText:'确认',
+            cancelText:'取消'
         }
     );
 });
@@ -187,6 +199,11 @@ mdui.JQ('#deleteall').on('click', function(){
             };
         },
         function(){
+        }
+        ,
+        {
+            confirmText:'确认',
+            cancelText:'取消'
         }
     );
 });
