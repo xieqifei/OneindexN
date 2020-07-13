@@ -157,7 +157,7 @@ mdui.JQ('#rename').on('click', function () {
             httpRequest.setRequestHeader("Content-type","application/x-www-form-urlencoded");//设置请求头 注：post方式必须设置请求头（在建立连接后设置请求头）
             var query='name='+value+'&itemid='+check_val[0];
             httpRequest.send(query);//发送请求 将情头体写在send中
-            document.getElementById(check_val[0]).getElementsByTagName('span').innerHTML=value;
+            document.getElementById(check_val[0]).getElementsByTagName('span')[0].innerHTML=value;
             /**
              * 获取数据后的处理程序
              */
@@ -213,8 +213,6 @@ function onClickHander(){
     for (k in checkitems) {
         if (checkitems[k].checked) check_val.push(checkitems[k].value);
     }
-    //alert(check_val);
-    console.log(check_val);
     var singleopt = document.getElementsByClassName("singleopt");
     var multiopt = document.getElementsByClassName("multiopt");
     //单文件操作
