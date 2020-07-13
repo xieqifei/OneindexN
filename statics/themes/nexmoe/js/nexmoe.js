@@ -325,7 +325,8 @@ function paste(){
         $.ajax({
             type: 'POST',
             url: '?/paste',
-            data: cutdata,
+            data: JSON.stringify({cutitems:getCookie('cutitems'),
+            url:window.location.href}),
             success: function(data) {
                 if(data){
                     console.log(data);
