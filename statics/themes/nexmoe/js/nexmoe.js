@@ -322,7 +322,7 @@ function paste(){
         $.ajax({
             type: 'POST',
             url: '?/paste',
-            data: {'cutitems':getCookie('cutitems')},
+            data: {'cutitems':getCookie('cutitems'),'url':window.location.href},
             success: function(data) {
                 if(data){
                     console.log(data);
@@ -335,7 +335,7 @@ function paste(){
         $.ajax({
             type: 'POST',
             url: '?/paste',
-            data: {'copyitems':getCookie('copyitems')},
+            data: {'copyitems':getCookie('copyitems'),'url':window.location.href},
             success: function(data) {
                 if(data){
                     console.log(data);
@@ -344,6 +344,8 @@ function paste(){
             dataType: 'json'
         });
     }
+    document.cookie = "cutitems=; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+    document.cookie = "copyitems=; expires=Thu, 01 Jan 1970 00:00:00 GMT";
     alert("粘贴成功，两秒后刷新页面");
     setInterval(function(){location.reload();},3000);
 }

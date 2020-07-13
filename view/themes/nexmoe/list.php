@@ -24,9 +24,9 @@ function file_ico($item){
 	<button class="mdui-btn mdui-ripple" id="newfolder">新建文件夹</button>
 	<button class="mdui-btn mdui-ripple" id="file_upload">上传文件</button>
 	<button class="mdui-btn mdui-ripple multiopt" id="deleteall" style="display: none;">删除</button>
-	<button class="mdui-btn mdui-ripple multiopt" id="copybtn" style="display: none;">复制</button>
-	<button class="mdui-btn mdui-ripple multiopt" id="cutbtn" style="display: none;">剪切</button>
-	<button class="mdui-btn mdui-ripple multiopt" id="pastebtn" style="display: none;">粘贴</button>
+	<button class="mdui-btn mdui-ripple multiopt" id="copybtn" onclick="copy()" style="display: none;">复制</button>
+	<button class="mdui-btn mdui-ripple multiopt" id="cutbtn" onclick="cut()" style="display: none;">剪切</button>
+	<button class="mdui-btn mdui-ripple" id="pastebtn"  onclick="paste()" style="display: none;">粘贴</button>
 	<button class="mdui-btn mdui-ripple singleopt" id="rename" style="display: none;">重命名</button>
 	<button class="mdui-btn mdui-ripple multiopt" id="sharebtn" style="display: none;">分享</button>
 	</div>
