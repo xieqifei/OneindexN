@@ -212,6 +212,8 @@ function file_ico($item){
   </div>
 </div>
 <!-- <script src="https://cdn.jsdelivr.net/gh/xieqifei/OneindexN@v1.31/statics/js/nexmoe.js"></script> -->
-<script src="statics\themes\nexmoe\js\nexmoe.js"></script>
 <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/clipboard.js/2.0.6/clipboard.min.js"></script>
+<script src="statics\themes\nexmoe\js\nexmoe.js"></script>
+
 <?php view::end('content');?>

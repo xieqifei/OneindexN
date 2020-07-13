@@ -273,7 +273,6 @@ function submitForm() {
         async : false,
         success : function(data) {
             if(data){
-                alert(data);
             }
         }
     });
@@ -281,3 +280,6 @@ function submitForm() {
     setInterval(function(){location.reload();},3000);
 }
 
+import Clipboard from 'clipboard';
+const btnCopy = new Clipboard('btn');
+this.copyValue = window.location.host+document.getElementById(check_val[0]).getElementsByTagName('a')[0].getAttribute('href');
