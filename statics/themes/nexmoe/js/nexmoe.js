@@ -157,7 +157,12 @@ mdui.JQ('#rename').on('click', function () {
             httpRequest.setRequestHeader("Content-type","application/x-www-form-urlencoded");//设置请求头 注：post方式必须设置请求头（在建立连接后设置请求头）
             var query='name='+value+'&itemid='+check_val[0];
             httpRequest.send(query);//发送请求 将情头体写在send中
-            document.getElementById(check_val[0]).getElementsByTagName('span')[0].innerHTML=value;
+            var item_dom=document.getElementById(check_val[0]);
+            item_dom.getElementsByTagName('span')[0].innerHTML=value;
+            var a_href = item_dom.getElementsByTagName('a')[0].getAttribute('href');
+
+            a_href.replace(new RegExp('/(.*)'+item_dom.getElementsByTagName('span').innerHTML+'/'),'$1'+value);
+            item_dom.getElementsByTagName('a')[0].setAttribute('href') = a_href;
             /**
              * 获取数据后的处理程序
              */
