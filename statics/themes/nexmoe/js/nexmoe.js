@@ -300,6 +300,7 @@ function submitForm() {
 //点击复制
 function copy(){
     document.cookie="copyitems="+JSON.stringify(check_val);
+    document.getElementById('copybtn').style.display="none";
     document.getElementById('pastebtn').style.display="";
     document.getElementById('cutbtn').style.display="none";
 }
@@ -307,6 +308,7 @@ function copy(){
 function cut(){
     document.cookie="cutitems="+JSON.stringify(check_val);
     document.getElementById('pastebtn').style.display="";
+    document.getElementById('cutbtn').style.display="none";
     document.getElementById('copybtn').style.display="none";
 }
 //判断cookie是否有复制和粘贴
@@ -330,8 +332,7 @@ function paste(){
             },
             dataType: 'json'
         });
-    }
-    if(getCookie('copyitems')){
+    }else if(getCookie('copyitems')){
         $.ajax({
             type: 'POST',
             url: '?/paste',
@@ -347,7 +348,7 @@ function paste(){
     document.cookie = "cutitems=; expires=Thu, 01 Jan 1970 00:00:00 GMT";
     document.cookie = "copyitems=; expires=Thu, 01 Jan 1970 00:00:00 GMT";
     alert("粘贴成功，两秒后刷新页面");
-    setInterval(function(){location.reload();},3000);
+    // setInterval(function(){location.reload();},3000);
 }
 //获取cookie
 function getCookie(cname){
