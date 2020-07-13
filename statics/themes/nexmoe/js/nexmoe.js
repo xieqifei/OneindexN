@@ -236,12 +236,21 @@ function checkall(){
     onClickHander();
 }
 function submitForm() {
-       $('#filesubmit').submit(function() {
-        $(this).ajaxSubmit(function(result) {   
-          // 对于表单提交成功后处理，result为表单正常提交后返回的内容
-    	alert(result);   
-        });
-        return false; //阻止表单默认提交
-     });
+    var formData = new FormData($("#filesubmit")[0]);  //重点：要用这种方法接收表单的参数
+    $.ajax({
+        url : "?/onlinefileupload",
+        type : 'POST',
+        data : formData,
+        // 告诉jQuery不要去处理发送的数据
+        processData : false,                 
+        // 告诉jQuery不要去设置Content-Type请求头
+        contentType : false,
+        async : false,
+        success : function(data) {
+            if(data){
+                alert(data);
+            }
+        }
+    });
 }
 
