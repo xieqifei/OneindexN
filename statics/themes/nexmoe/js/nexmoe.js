@@ -91,10 +91,26 @@ document.getElementById('file_upload').addEventListener('click', function () {
     inst2.open();
 });
 
+//全局搜索
 var inst3 = new mdui.Dialog('#search_form');
 // method
 document.getElementById('search').addEventListener('click', function () {
     inst3.open();
+});
+
+//分享链接
+var inst4 = new mdui.Dialog('#share');
+document.getElementById('sharebtn').addEventListener('click', function () {
+    inst4.open();
+});
+var sharedialog = document.getElementById('share');
+sharedialog.addEventListener('open.mdui.dialog', function () {
+    var textarea_value = '';
+    for(var i=0;i<check_val.length;i++){
+        textarea_value += window.location.host+document.getElementById(check_val[i]).getElementsByTagName('a')[0].getAttribute('href');
+        textarea_value += '\n';
+    }
+    document.getElementById('sharelinks').setAttribute('value',textarea_value);
 });
 
 //当前页关键词搜索
@@ -279,7 +295,3 @@ function submitForm() {
     alert("上传成功，两秒后刷新页面");
     setInterval(function(){location.reload();},3000);
 }
-//获取链接到剪切板
-import Clipboard from 'clipboard';
-const btnCopy = new Clipboard('btn');
-this.copyValue = window.location.host+document.getElementById(check_val[0]).getElementsByTagName('a')[0].getAttribute('href');

@@ -24,7 +24,7 @@ function file_ico($item){
 	<button class="mdui-btn mdui-ripple" id="newfolder">新建文件夹</button>
 	<button class="mdui-btn mdui-ripple" id="file_upload">上传文件</button>
 	<button class="mdui-btn mdui-ripple multiopt" id="deleteall" style="display: none;">删除</button>
-	<button class="mdui-btn mdui-ripple multiopt" id="shareall" style="display: none;">分享</button>
+	<button class="mdui-btn mdui-ripple multiopt" id="sharebtn" style="display: none;">分享</button>
 	<button class="mdui-btn mdui-ripple singleopt" id="rename" style="display: none;">重命名</button>
 	</div>
 </div>
@@ -169,10 +169,9 @@ function file_ico($item){
       <button class="mdui-fab mdui-fab-mini mdui-ripple mdui-color-blue" onclick="thumb()"><i class="mdui-icon material-icons" id="format_list">format_list_bulleted</i>
       </button>
     </div>
-  </div>
+</div>
 
-  <div class="mdui-container">
-
+<div class="mdui-container">
   <div class="mdui-dialog" id="fileupload-dialog">
     <div class="mdui-dialog-title">文件上传</div>
     <div class="mdui-dialog-content">
@@ -208,6 +207,17 @@ function file_ico($item){
 				</div>
 			</div>
 		</form>
+	</div>
+  </div>
+</div>
+
+<div class="mdui-container">
+ <div class="mdui-dialog" id="share">
+    <div class="mdui-dialog-content">
+			<div class="mdui-textfield mdui-textfield-floating-label">
+				<label class="mdui-textfield-label">选中的项目链接</label>
+				<input class="mdui-textfield-input" type="textarea" style="margin: 20px 0;" readonly id="sharelinks"/>
+			</div>
 	</div>
   </div>
 </div>
