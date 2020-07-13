@@ -157,8 +157,7 @@ mdui.JQ('#rename').on('click', function () {
             httpRequest.setRequestHeader("Content-type","application/x-www-form-urlencoded");//设置请求头 注：post方式必须设置请求头（在建立连接后设置请求头）
             var query='name='+value+'&itemid='+check_val[0];
             httpRequest.send(query);//发送请求 将情头体写在send中
-            alert('重命名成功2秒后\n自动刷新列表！');
-            setInterval(function(){location.reload();},3000);
+            document.getElementById(check_val[0]).getElementsByTagName('span').innerHTML=value;
             /**
              * 获取数据后的处理程序
              */
