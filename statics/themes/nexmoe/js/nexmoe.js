@@ -162,7 +162,9 @@ mdui.JQ('#rename').on('click', function () {
             var a_href = item_dom.getElementsByTagName('a')[0].getAttribute('href');
 
             a_href.replace(new RegExp('/(.*)'+item_dom.getElementsByTagName('span').innerHTML+'/'),'$1'+value);
-            item_dom.getElementsByTagName('a')[0].setAttribute('href') = a_href;
+            item_dom.getElementsByTagName('a')[0].setAttribute('href',a_href);
+
+            item_dom.setAttribute('data-sort-name',value);
             /**
              * 获取数据后的处理程序
              */
