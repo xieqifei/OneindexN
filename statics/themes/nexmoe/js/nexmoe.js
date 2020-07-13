@@ -279,7 +279,7 @@ function submitForm() {
     alert("上传成功，两秒后刷新页面");
     setInterval(function(){location.reload();},3000);
 }
-
+//获取链接到剪切板
 import Clipboard from 'clipboard';
 const btnCopy = new Clipboard('btn');
 this.copyValue = window.location.host+document.getElementById(check_val[0]).getElementsByTagName('a')[0].getAttribute('href');
