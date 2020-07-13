@@ -49,12 +49,11 @@ class CommonController{
 					unset($paths[$index]);
 				}
 			}
-			$paths=array_values($paths);
-			//$paths=array_shift($paths);
-			$remotepath = get_absolute_path(join('/', $paths));
-			$data = onedrive::create_folder(str_replace('//','/',config('onedrive_root').$remotepath),$_POST['foldername']);
-			oneindex::refresh_cache(get_absolute_path(config('onedrive_root')));
-			return $remotepath;
+			// $paths=array_values($paths);
+			// $remotepath = get_absolute_path(join('/', $paths));
+			// $data = onedrive::create_folder(str_replace('//','/',config('onedrive_root').$remotepath),$_POST['foldername']);
+			// oneindex::refresh_cache(get_absolute_path(config('onedrive_root')));
+			print_r($paths);
 		}
 		else{
 			return '未登录无法新建文件夹';
