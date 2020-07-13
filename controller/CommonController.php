@@ -139,9 +139,10 @@ class CommonController{
 			$jsondata = json_decode($data);
 			if($jsondata['cutitems']){
 				$cutitems=$jsondata['cutitems'];
-				$url=$jsondata['url'];
-				$itemid=$this->url2id($url);
-				$resp=onedrive::move($cutitems,$itemid);
+				return json_encode($cutitems);
+				// $url=$jsondata['url'];
+				// $itemid=$this->url2id($url);
+				// $resp=onedrive::move($cutitems,$itemid);
 			}
 			if($jsondata('copyitems')){
 				return "功能完善中";
