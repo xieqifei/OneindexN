@@ -111,7 +111,9 @@ mdui.JQ('#pagesearch').on('click', function () {
 			}
         },
         function (value) {
-        }
+        },
+        '确认',
+        '取消'
     );
 });
 //新建文件夹

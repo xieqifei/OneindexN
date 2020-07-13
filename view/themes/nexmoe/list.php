@@ -201,7 +201,7 @@ function file_ico($item){
 		<form action="?/search" method="post">
 			<div class="mdui-textfield mdui-textfield-floating-label">
 				<label class="mdui-textfield-label">输入关键词</label>
-				<input class="mdui-textfield-input" type="text" style="margin: 50px 0;" name="keyword" />
+				<input class="mdui-textfield-input" type="text" style="margin: 20px 0;" name="keyword" />
 				<div class="mdui-row-xs-3">
 				<div class="mdui-col"></div>
 					<div class="mdui-col">
@@ -211,10 +211,6 @@ function file_ico($item){
 			</div>
 		</form>
 	</div>
-
-    <div class="mdui-dialog-actions">
-      <button class="mdui-btn mdui-ripple" mdui-dialog-cancel>取消</button>
-    </div>
   </div>
 </div>
 <!-- <script src="https://cdn.jsdelivr.net/gh/xieqifei/OneindexN@v1.31/statics/js/nexmoe.js"></script> -->
