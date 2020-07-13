@@ -159,8 +159,8 @@ mdui.JQ('#rename').on('click', function () {
             httpRequest.send(query);//发送请求 将情头体写在send中
             var item_dom=document.getElementById(check_val[0]);
             var a_href = item_dom.getElementsByTagName('a')[0].getAttribute('href');
-            a_href.replace(item_dom.getElementsByTagName('span').innerHTML,value);
-            //a_href.replace(new RegExp('/(.*)'+item_dom.getElementsByTagName('span').innerHTML+'/'),'$1'+value);
+            a_href.replace(item_dom.getElementsByTagName('span')[0].innerHTML,value);
+            //a_href.replace(new RegExp('/(.*)'+item_dom.getElementsByTagName('span')[0].innerHTML+'/'),'$1'+value);
             item_dom.getElementsByTagName('span')[0].innerHTML=value;
             item_dom.getElementsByTagName('a')[0].setAttribute('href',a_href);
             item_dom.setAttribute('data-sort-name',value);
