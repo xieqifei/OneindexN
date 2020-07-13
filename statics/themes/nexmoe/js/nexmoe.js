@@ -320,7 +320,8 @@ if(!getCookie('cutitems')&&!getCookie('copyitems')){
 }//点击粘贴
 function paste(){
     var cutdata = '{"cutitems":'+getCookie('cutitems')+',"url":'+'"'+window.location.href+'"}';
-    console.log(cutdata);
+    console.log(JSON.stringify({cutitems:getCookie('cutitems'),
+    url:window.location.href}));
     if(getCookie('cutitems')){
         $.ajax({
             type: 'POST',
