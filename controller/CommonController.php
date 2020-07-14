@@ -131,10 +131,9 @@ class CommonController{
 
 		return true;
 	}
-
 	//批量移动和批量复制
 	function paste(){
-		// if(is_login()){
+		if(is_login()){
 			$data = file_get_contents( "php://input" );
 			$jsondata = json_decode($data);
 			if($jsondata->cutitems){
@@ -149,10 +148,10 @@ class CommonController{
 				return "function not open";
 			}
 			return '操作失误，请重新尝试！';
-		// }
-		// else{
-		// 	return '未登录无法重命名';
-		// }
+		}
+		else{
+			return '未登录无法重命名';
+		}
 	}
 	//url转id
 	function url2id($url){

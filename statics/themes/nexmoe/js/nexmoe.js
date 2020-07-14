@@ -149,8 +149,21 @@ mdui.JQ('#newfolder').on('click', function () {
              */
             httpRequest.onreadystatechange = function () {//请求后的回调接口，可将请求成功后要执行的程序写在其中
                 if (httpRequest.readyState == 4 && httpRequest.status == 200) {//验证请求是否发送成功
-                    // console.log(httpRequest.responseText);
-                   
+                	console.log(httpRequest.responseText);
+                    var item = JSON.parse(httpRequest.responseText);
+                    if(item.id){
+	                    var $folder_domstr = $('<li class="mdui-list-item mdui-ripple filter" data-sort data-sort-name="'+item.name+'" data-sort-date="'+item.lastModifiedDateTime+'" data-sort-size="'+item.size+'" id="'+item.id+'"><label class="mdui-checkbox"><input type="checkbox" value="'+item.id+'" name="itemid" onclick="onClickHander()"><i class="mdui-checkbox-icon"></i></label><a href="'+window.location.href+item.name+'"><div class="mdui-col-xs-12 mdui-col-sm-7 mdui-text-truncate"><i class="mdui-icon material-icons">folder_open</i><span>'+item.name+'</span></div><div class="mdui-col-sm-3 mdui-text-right">'+item.lastModifiedDateTime.replace(/[a-zA-Z]/g,' ')+'</div><div class="mdui-col-sm-2 mdui-text-right">'+item.size+'</div></a></li>');
+	                    if($('#backtolast').length>0){
+	                    	$('#backtolast').after($folder_domstr);
+	                    	console.log('存在返回上一级');
+	                    }else{
+	                		 $('#indexsort').after($folder_domstr);
+	                		 console.log('不存在返回上一级');
+	                    }
+	                    console.log('新建文件夹成功');
+                    }else if(item.error){
+                    	alert('新建文件夹失败,错误代码:'+item.error.message);
+                    }
                 }
             };
         },
@@ -172,22 +185,18 @@ mdui.JQ('#rename').on('click', function () {
             httpRequest.setRequestHeader("Content-type","application/x-www-form-urlencoded");//设置请求头 注：post方式必须设置请求头（在建立连接后设置请求头）
             var query='name='+value+'&itemid='+check_val[0];
             httpRequest.send(query);//发送请求 将情头体写在send中
-            var item_dom=document.getElementById(check_val[0]);
-            var a_dom = item_dom.getElementsByTagName('a')[0];
-            var a_href = a_dom.getAttribute('href');
-            a_href = a_href.replace(new RegExp('/(.*)'+item_dom.getElementsByTagName('span')[0].innerHTML+'/'),'$1'+value);
-           // a_href.replace(item_dom.getElementsByTagName('span')[0].innerHTML,value);
-            console.log(item_dom.getElementsByTagName('span')[0].innerHTML+'替换物'+value+'替换后'+a_href);
-            
-            item_dom.getElementsByTagName('span')[0].innerHTML=value;
-            item_dom.getElementsByTagName('a')[0].setAttribute('href',a_href);
-            item_dom.setAttribute('data-sort-name',value);
             /**
              * 获取数据后的处理程序
              */
             httpRequest.onreadystatechange = function () {//请求后的回调接口，可将请求成功后要执行的程序写在其中
                 if (httpRequest.readyState == 4 && httpRequest.status == 200) {//验证请求是否发送成功
-
+                    var item_dom=document.getElementById(check_val[0]);
+                    var a_dom = item_dom.getElementsByTagName('a')[0];
+                    var a_href = a_dom.getAttribute('href');
+                    a_href = a_href.replace(new RegExp('/(.*)'+item_dom.getElementsByTagName('span')[0].innerHTML+'/'),'$1'+value);
+                    item_dom.getElementsByTagName('span')[0].innerHTML=value;
+                    item_dom.getElementsByTagName('a')[0].setAttribute('href',a_href);
+                    item_dom.setAttribute('data-sort-name',value);
                 }
             };
         },
@@ -317,36 +326,42 @@ if(!getCookie('cutitems')&&!getCookie('copyitems')){
     pastebtn.style.display="none";
 }else{
     pastebtn.style.display="";
-}//点击粘贴
+}
+//点击粘贴
 function paste(){
-    var cutdata = '{"cutitems":'+getCookie('cutitems')+',"url":'+'"'+window.location.href+'"}';
-    console.log(JSON.stringify({cutitems:getCookie('cutitems'),
-    url:window.location.href}));
     if(getCookie('cutitems')){
-        $.ajax({
-            type: 'POST',
-            url: '?/paste',
-            data: JSON.stringify({cutitems:getCookie('cutitems'),
-            url:window.location.href}),
-            success: function(data) {
-                if(data){
-                    console.log(data);
+    	// var json_data = {cutitems:getCookie('cutitems'),url:window.location.href};
+    	var json_data = '{"cutitems":'+getCookie('cutitems')+',"url":"'+window.location.href+'"}';
+        var httpRequest = new XMLHttpRequest();
+            httpRequest.open('POST', '?/paste', true);
+            httpRequest.setRequestHeader("Content-type","application/json");//设置请求头 注：post方式必须设置请求头（在建立连接后设置请求头）
+            // var query=JSON.stringify(json_data);
+            httpRequest.send(json_data);
+            /**
+             * 获取数据后的处理程序
+             */
+            httpRequest.onreadystatechange = function () {//请求后的回调接口，可将请求成功后要执行的程序写在其中
+                if (httpRequest.readyState == 4 && httpRequest.status == 200) {//验证请求是否发送成功
+                console.log(httpRequest.responseText);
                 }
-            },
-            dataType: 'json'
-        });
+            };
     }else if(getCookie('copyitems')){
-        $.ajax({
-            type: 'POST',
-            url: '?/paste',
-            data: {"copyitems":getCookie('copyitems'),"url":window.location.href},
-            success: function(data) {
-                if(data){
-                    console.log(data);
+    	// var json_data = {cutitems:getCookie('cutitems'),url:window.location.href};
+    	var json_data = '{"copyitems":'+getCookie('copyitems')+',"url":"'+window.location.href+'"}';
+        var httpRequest = new XMLHttpRequest();
+            httpRequest.open('POST', '?/paste', true);
+            httpRequest.setRequestHeader("Content-type","application/json");//设置请求头 注：post方式必须设置请求头（在建立连接后设置请求头）
+            // var query=JSON.stringify(json_data);
+            httpRequest.send(json_data);
+            /**
+             * 获取数据后的处理程序
+             */
+            httpRequest.onreadystatechange = function () {//请求后的回调接口，可将请求成功后要执行的程序写在其中
+                if (httpRequest.readyState == 4 && httpRequest.status == 200) {//验证请求是否发送成功
+                console.log(httpRequest.responseText);
+
                 }
-            },
-            dataType: 'json'
-        });
+            };
     }
     document.cookie = "cutitems=; expires=Thu, 01 Jan 1970 00:00:00 GMT";
     document.cookie = "copyitems=; expires=Thu, 01 Jan 1970 00:00:00 GMT";

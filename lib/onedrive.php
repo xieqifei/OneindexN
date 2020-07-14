@@ -494,8 +494,7 @@
 			}
 
 			curl_multi_close($mh);
-			return '批量移动完成';
-			
+			print_r($result);
 		}
 
 		 //文件路径转itemsid

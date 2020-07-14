@@ -77,7 +77,7 @@ function file_ico($item){
 <div class="nexmoe-item">
 <div class="mdui-row">
 	<ul class="mdui-list">
-		<li class="mdui-list-item th">
+		<li class="mdui-list-item th" id="indexsort">
 		<?php if(is_login()):?>
 			<label class="mdui-checkbox"><input type="checkbox" value="" id="checkall" onclick="checkall()"><i
 					class="mdui-checkbox-icon"></i></label>
@@ -87,7 +87,7 @@ function file_ico($item){
 		  <div class="mdui-col-sm-2 mdui-text-right">大小 <i class="mdui-icon material-icons icon-sort" data-sort="size" data-order="downward">expand_more</i></div>
 		</li>
 		<?php if($path != '/'):?>
-		<li class="mdui-list-item mdui-ripple">
+		<li class="mdui-list-item mdui-ripple" id="backtolast">
 			<a href="<?php echo get_absolute_path($root.$path.'../');?>">
 			  <div class="mdui-col-xs-12 mdui-col-sm-7">
 				<i class="mdui-icon material-icons">arrow_upward</i>
