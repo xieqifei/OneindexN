@@ -291,7 +291,7 @@ function checkall(){
 //在线上传小文件,需要一个id为filesubmit的表单，有类型为file的input
 function submitForm() {
     var formData = new FormData($("#filesubmit")[0]);  //重点：要用这种方法接收表单的参数
-    alert("已提交上传，页面将自动刷新");
+    // alert("已提交上传，页面将自动刷新");
     $.ajax({
         url : "?/onlinefileupload",
         type : 'POST',
@@ -302,9 +302,7 @@ function submitForm() {
         contentType : false,
         async : false,
         success : function(data) {
-            if(data){
-                location.reload();
-            }
+            location.reload;
         }
     });
     
