@@ -316,9 +316,9 @@ function copy(){
 //点击剪切
 function cut(){
     document.cookie="cutitems="+JSON.stringify(check_val);
-    document.getElementById('pastebtn').style.display="none";
-    document.getElementById('cutbtn').style.display="";
-    document.getElementById('copybtn').style.display="";
+    document.getElementById('pastebtn').style.display="";
+    document.getElementById('cutbtn').style.display="none";
+    document.getElementById('copybtn').style.display="none";
 }
 //判断cookie是否有复制和粘贴
 var pastebtn = document.getElementById('pastebtn');
@@ -342,7 +342,11 @@ function paste(){
              */
             httpRequest.onreadystatechange = function () {//请求后的回调接口，可将请求成功后要执行的程序写在其中
                 if (httpRequest.readyState == 4 && httpRequest.status == 200) {//验证请求是否发送成功
-                console.log(httpRequest.responseText);
+                    console.log(httpRequest.responseText);
+                    document.cookie = "cutitems=; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+                    document.getElementById('pastebtn').style.display='none';
+                    document.getElementById('cutbtn').style.display="";
+                    document.getElementById('copybtn').style.display="";    
                 }
             };
     }else if(getCookie('copyitems')){
@@ -358,13 +362,16 @@ function paste(){
              */
             httpRequest.onreadystatechange = function () {//请求后的回调接口，可将请求成功后要执行的程序写在其中
                 if (httpRequest.readyState == 4 && httpRequest.status == 200) {//验证请求是否发送成功
-                console.log(httpRequest.responseText);
-
+                    console.log(httpRequest.responseText);
+                    document.cookie = "copyitems=; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+                    document.getElementById('pastebtn').style.display='none';
+                    document.getElementById('cutbtn').style.display="";
+                    document.getElementById('copybtn').style.display="";   
                 }
             };
     }
-    document.cookie = "cutitems=; expires=Thu, 01 Jan 1970 00:00:00 GMT";
-    document.cookie = "copyitems=; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+    
+    
     alert("粘贴成功，两秒后刷新页面");
     // setInterval(function(){location.reload();},3000);
 }
