@@ -497,7 +497,7 @@
 			print_r($result);
 		}
 
-		 //文件路径转itemsid
+		 //文件路径转itemid
 		 public static function path2id($path)
 		 {
 			 $request = self::request(urldecode($path));
@@ -506,5 +506,22 @@
 			 $resp = fetch::get($request);
 			 $data = json_decode($resp->content, true);
 			 return $data['id'];
+		 }
+
+		 //itemid转文件路径，原理：移动项目到其本身所在文件夹，可以返回其路径信息
+		 //itemid：待转item的id
+		 //parentid：待转item父项id。
+		 public static function id2path($itemid,$parentid)
+		 {
+			$itemids[0]=$itemid;
+			$resp = self::move($itemids,$parentid);
+			$resp_json = json_decode($resp)[0];
+			$totalpath=$resp_json->parentReference->path;
+			$path = substr($totalpath,12);//截取除掉/drive/root:/。
+			$count=strpos($totalpath,"/drive/root:");
+			$pathwithroot=substr_replace($totalpath,"",$count,strlen('/drive/root:'));
+			$count2 = strpos($pathwithroot,config('onedrive_path'));
+			$path = config('root_path').'/'.substr_replace($pathwithroot,"",$count2,strlen(config('onedrive_path')));
+			return $path;
 		 }
 	}

@@ -316,9 +316,9 @@ function copy(){
 //点击剪切
 function cut(){
     document.cookie="cutitems="+JSON.stringify(check_val);
-    document.getElementById('pastebtn').style.display="";
-    document.getElementById('cutbtn').style.display="none";
-    document.getElementById('copybtn').style.display="none";
+    document.getElementById('pastebtn').style.display="none";
+    document.getElementById('cutbtn').style.display="";
+    document.getElementById('copybtn').style.display="";
 }
 //判断cookie是否有复制和粘贴
 var pastebtn = document.getElementById('pastebtn');

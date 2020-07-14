@@ -131,7 +131,7 @@ class CommonController{
 
 		return true;
 	}
-	//批量移动和批量复制
+	//粘贴
 	function paste(){
 		if(is_login()){
 			$data = file_get_contents( "php://input" );
@@ -139,10 +139,7 @@ class CommonController{
 			if($jsondata->cutitems){
 				$cutitems=$jsondata->cutitems;
 				$url=$jsondata->url;
-				$itemid=$this->url2id($url);
-				$resp=onedrive::move($cutitems,$itemid);
-				oneindex::refresh_cache(get_absolute_path(config('onedrive_root')));
-				return $resp;
+				return $this->cut($cutitems,$url);
 			}
 			if($jsondata->copyitems){
 				return "function not open";
@@ -152,6 +149,13 @@ class CommonController{
 		else{
 			return '未登录无法重命名';
 		}
+	}
+	//移动或剪切
+	function cut($cutitems,$url){
+		$itemid=$this->url2id($url);
+		$resp=onedrive::move($cutitems,$itemid);
+		oneindex::refresh_cache(get_absolute_path(config('onedrive_root')));
+		return $resp;
 	}
 	//url转id
 	function url2id($url){
@@ -165,5 +169,11 @@ class CommonController{
 		$totalpath = str_replace('//','/',config('onedrive_root').get_absolute_path(join('/', $paths)));
 		$itemid=onedrive::path2id($totalpath);
 		return $itemid;
+	}
+	//id转路径
+	function id2path(){
+		$itemid=$_POST['id'];
+		$paid = $_POST['paid'];
+		return onedrive::id2path($itemid,$paid);
 	}
 }
