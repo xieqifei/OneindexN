@@ -10,7 +10,7 @@ class CommonController{
 			return view::load('common/offline');
 		}
 		else{
-			return view::load('common/tips');
+			return view::load('common/tips')->with('tip','管理员未授权使用');
 		}
 	}
 
@@ -20,10 +20,12 @@ class CommonController{
 			if($_POST['keyword']){
 				$keyword=$_POST['keyword'];
 				$items = onedrive::search($keyword);
-				$navs=array();
+				if(!$items){
+					return view::load('common/tips')->with('tip','无匹配结果');
+				}
 				$searchinfo['keyword']=$keyword;
 				$searchinfo['count']=count($items);
-				return view::load('common/search')->with('items',$items);
+				return view::load('common/search')->with('items',$items)->with('searchinfo',$searchinfo);
 			}else{
 				return '参数错误';
 			}
@@ -31,7 +33,6 @@ class CommonController{
 		else{
 			return '请登陆后尝试';
 		}
-		
 	}
 	//新建文件夹
 	//post参数：uploadurl，当前url的路径

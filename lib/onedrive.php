@@ -143,12 +143,15 @@
 
 			foreach((array)$data['value'] as $item){
 				//var_dump($item);
+				$path = self::id2path($item['id'],$item['parentReference']['id']);
+				
 				$items[$item['name']] = array(
 					'name'=>$item['name'],
 					'id' => $item['id'],
 					'size'=>$item['size'],
 					'lastModifiedDateTime'=>strtotime($item['lastModifiedDateTime']),
-					'folder'=>empty($item['folder'])?false:true
+					'folder'=>empty($item['folder'])?false:true,
+					'path'=>$path
 				);
 			}
 			return $items;
@@ -423,7 +426,7 @@
 		//文件批量移动
 		public static function move($itemid = array(), $newitemid)
 		{		
-			var_dump($itemid);
+			// var_dump($itemid);
 			$apis = array();
 			$api = str_replace('root', 'items/', self::$api_url."/me/drive/root");
 			for ($i = 0; $i < count($itemid); ++$i) {
@@ -431,7 +434,7 @@
 			}
 
 		
-			$result = $res = $ch = array();
+			// $result = $res = $ch = array();
 			$nch = 0;
 			$mh = curl_multi_init();
 			foreach ($apis as $nk => $url) {
@@ -494,7 +497,7 @@
 			}
 
 			curl_multi_close($mh);
-			print_r($result);
+			return $result;
 		}
 
 		 //文件路径转itemid
@@ -515,13 +518,14 @@
 		 {
 			$itemids[0]=$itemid;
 			$resp = self::move($itemids,$parentid);
-			$resp_json = json_decode($resp)[0];
+			$result = $resp[0];
+			$resp_json = json_decode($result);
 			$totalpath=$resp_json->parentReference->path;
-			$path = substr($totalpath,12);//截取除掉/drive/root:/。
 			$count=strpos($totalpath,"/drive/root:");
 			$pathwithroot=substr_replace($totalpath,"",$count,strlen('/drive/root:'));
 			$count2 = strpos($pathwithroot,config('onedrive_path'));
-			$path = config('root_path').'/'.substr_replace($pathwithroot,"",$count2,strlen(config('onedrive_path')));
+			$path = config('root_path').'/'.substr_replace($pathwithroot,"",$count2,strlen(config('onedrive_root'))).'/';
+			$path = str_replace("//",'/',$path);
 			return $path;
 		 }
 	}

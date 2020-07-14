@@ -112,7 +112,7 @@ sharedialog.addEventListener('open.mdui.dialog', function () {
     document.getElementById('sharelinks').value=textarea_value.join('\r\n');
 });
 
-//当前页关键词搜索
+//当前页关键词过滤
 mdui.JQ('#pagesearch').on('click', function () {
     mdui.prompt('输入过滤的关键词或后缀',
         function (value) {
@@ -142,8 +142,8 @@ mdui.JQ('#newfolder').on('click', function () {
             httpRequest.setRequestHeader("Content-type","application/x-www-form-urlencoded");//设置请求头 注：post方式必须设置请求头（在建立连接后设置请求头）
             var query='foldername='+value+'&uploadurl='+window.location.href;
             httpRequest.send(query);//发送请求 将情头体写在send中
-            mdui.alert('创建成功2秒后\n自动刷新列表！');
-            setInterval(function(){location.reload();},3000);
+            // mdui.alert('创建成功2秒后\n自动刷新列表！');
+            // setInterval(function(){location.reload();},3000);
             /**
              * 获取数据后的处理程序
              */
@@ -218,15 +218,15 @@ mdui.JQ('#deleteall').on('click', function(){
             httpRequest.setRequestHeader("Content-type","application/json");//设置请求头 注：post方式必须设置请求头（在建立连接后设置请求头）
             var query=JSON.stringify(check_val);
             httpRequest.send(query);
-            for(var i=0;i<check_val.length;i++){
-                document.getElementById(check_val[i]).style.display = 'none';
-            }
+            
             /**
              * 获取数据后的处理程序
              */
             httpRequest.onreadystatechange = function () {//请求后的回调接口，可将请求成功后要执行的程序写在其中
                 if (httpRequest.readyState == 4 && httpRequest.status == 200) {//验证请求是否发送成功
-
+                    for(var i=0;i<check_val.length;i++){
+                        document.getElementById(check_val[i]).style.display = 'none';
+                    }
                 }
             };
         },
@@ -240,14 +240,16 @@ mdui.JQ('#deleteall').on('click', function(){
     );
 });
 
-//文件选中
+//文件选中某个文件后
 function onClickHander(){
     checkitems = document.getElementsByName("itemid");
     check_val = [];
     for (k in checkitems) {
         if (checkitems[k].checked) check_val.push(checkitems[k].value);
     }
+    //选中一个文件时显示可以重命名按钮
     var singleopt = document.getElementsByClassName("singleopt");
+    //选中多个文件时，可以复制移动等
     var multiopt = document.getElementsByClassName("multiopt");
     //单文件操作
     if(check_val.length==1){
@@ -286,9 +288,10 @@ function checkall(){
     }
     onClickHander();
 }
-//在线上传小文件
+//在线上传小文件,需要一个id为filesubmit的表单，有类型为file的input
 function submitForm() {
     var formData = new FormData($("#filesubmit")[0]);  //重点：要用这种方法接收表单的参数
+    alert("已提交上传，页面将自动刷新");
     $.ajax({
         url : "?/onlinefileupload",
         type : 'POST',
@@ -300,11 +303,11 @@ function submitForm() {
         async : false,
         success : function(data) {
             if(data){
+                location.reload();
             }
         }
     });
-    alert("上传成功，两秒后刷新页面");
-    setInterval(function(){location.reload();},3000);
+    
 }
 //点击复制
 function copy(){
@@ -371,9 +374,8 @@ function paste(){
             };
     }
     
-    
     alert("粘贴成功，两秒后刷新页面");
-    // setInterval(function(){location.reload();},3000);
+    setInterval(function(){location.reload();},3000);
 }
 //获取cookie
 function getCookie(cname){

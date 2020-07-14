@@ -90,7 +90,7 @@
 								<input type="checkbox" value="<?php echo $item["id"] ?>" name="itemid" onclick="onClickHander()">
 								<i class="mdui-checkbox-icon"></i></label>
 							<?endif;?> 		
-							<!-- abiaoqian -->
+							<a href="<?php echo $item['path'].$item['name'];?>" target="_blank">
 							<div class="mdui-col-xs-12 mdui-col-sm-7 mdui-text-truncate">
 								<i class="mdui-icon material-icons">folder_open</i>
 								<span><?php echo $item['name'];?></span>
@@ -110,7 +110,7 @@
 								<input type="checkbox" value="<?php echo $item["id"] ?>" name="itemid" onclick="onClickHander()">
 								<i class="mdui-checkbox-icon"></i></label>
 							<?endif;?> 	
-							<!-- abiaoqian -->
+							<a href="<?php echo $item['path'].$item['name'];?>" target="_blank">
 							<div class="mdui-col-xs-12 mdui-col-sm-7 mdui-text-truncate">
 								<i class="mdui-icon material-icons"><?php echo file_ico($item);?></i>
 								<span><?php e($item['name']);?></span>
