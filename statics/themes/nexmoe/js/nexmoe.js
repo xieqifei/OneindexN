@@ -161,7 +161,9 @@ mdui.JQ('#newfolder').on('click', function () {
                         $('#pending').css('display','none');
                     	alert('新建文件夹失败,错误代码:'+item.error.message);
                     }
-                }else{
+                }
+                if(httpRequest.status==502&&httpRequest.readyState==4){
+                	alert('服务器无响应！请刷新后查看是否新建成功！');
                 	$('#pending').css('display','none');
                 }
             };
@@ -235,9 +237,11 @@ mdui.JQ('#deleteall').on('click', function(){
                     	}
                     }
                     if(deleteerror==1){
-                    	
                     	alert('部分文件删除失败！请重试。错误代码：'+errormessage);
                     }
+                }
+                if(httpRequest.status==502&&httpRequest.readyState==4){
+                	alert('服务器无响应！请刷新后查看是否删除成功！');
                 }
             };
         },
