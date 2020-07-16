@@ -143,9 +143,8 @@ mdui.JQ('#newfolder').on('click', function () {
             httpRequest.setRequestHeader("Content-type","application/x-www-form-urlencoded");//设置请求头 注：post方式必须设置请求头（在建立连接后设置请求头）
             var query='foldername='+value+'&uploadurl='+window.location.href;
             httpRequest.send(query);
-            httpRequest.onreadystatechange = function () {//请求后的回调接口，可将请求成功后要执行的程序写在其中
-                if(httpRequest.readyState == 4 && httpRequest.status == 200) {//验证请求是否发送成功
-                	// console.log(httpRequest.responseText);
+            httpRequest.onreadystatechange = function () {
+                if(httpRequest.readyState == 4 && httpRequest.status == 200) {
                     var item = JSON.parse(httpRequest.responseText);
                     if(item.id){
 	                    var $folder_domstr = $('<li class="mdui-list-item mdui-ripple filter" data-sort data-sort-name="'+item.name+'" data-sort-date="'+item.lastModifiedDateTime+'" data-sort-size="'+item.size+'" id="'+item.id+'"><label class="mdui-checkbox"><input type="checkbox" value="'+item.id+'" name="itemid" onclick="onClickHander()"><i class="mdui-checkbox-icon"></i></label><a href="'+window.location.href+item.name+'"><div class="mdui-col-xs-12 mdui-col-sm-7 mdui-text-truncate"><i class="mdui-icon material-icons">folder_open</i><span>'+item.name+'</span></div><div class="mdui-col-sm-3 mdui-text-right">'+item.lastModifiedDateTime.replace(/[a-zA-Z]/g,' ')+'</div><div class="mdui-col-sm-2 mdui-text-right">'+item.size+'</div></a></li>');
@@ -158,14 +157,13 @@ mdui.JQ('#newfolder').on('click', function () {
                         }
                         $('#pending').css('display','none');
 	                    console.log('新建文件夹成功');
-                    }
-
-                    if(item.error){
+                    }else if(item.error){
                         $('#pending').css('display','none');
                     	alert('新建文件夹失败,错误代码:'+item.error.message);
                     }
+                }else{
+                	$('#pending').css('display','none');
                 }
-                console.log(httpRequest.responseText);
             };
         },
         function (value) {
