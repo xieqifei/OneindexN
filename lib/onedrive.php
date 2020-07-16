@@ -351,7 +351,7 @@
 			));
 			$response = curl_exec($curl);
 			curl_close($curl);
-			var_dump($response);
+			return $response;
 		}
 		
 		  //文件删除

@@ -186,18 +186,22 @@ mdui.JQ('#rename').on('click', function () {
             httpRequest.setRequestHeader("Content-type","application/x-www-form-urlencoded");//设置请求头 注：post方式必须设置请求头（在建立连接后设置请求头）
             var query='name='+value+'&itemid='+check_val[0];
             httpRequest.send(query);//发送请求 将情头体写在send中
+            var item_dom=document.getElementById(check_val[0]);
+            item_dom.getElementsByClassName('loading-gif')[0].style.display='';
+           
             /**
              * 获取数据后的处理程序
              */
             httpRequest.onreadystatechange = function () {//请求后的回调接口，可将请求成功后要执行的程序写在其中
                 if (httpRequest.readyState == 4 && httpRequest.status == 200) {//验证请求是否发送成功
-                    var item_dom=document.getElementById(check_val[0]);
                     var a_dom = item_dom.getElementsByTagName('a')[0];
                     var a_href = a_dom.getAttribute('href');
                     a_href = a_href.replace(new RegExp('/(.*)'+item_dom.getElementsByTagName('span')[0].innerHTML+'/'),'$1'+value);
-                    item_dom.getElementsByTagName('span')[0].innerHTML=value;
+                    item_dom.getElementsByClassName('loading-gif')[0].style.display='none';
                     item_dom.getElementsByTagName('a')[0].setAttribute('href',a_href);
                     item_dom.setAttribute('data-sort-name',value);
+                }else{
+                    item_dom.getElementsByTagName('span')[0].innerHTML=spantext;
                 }
             };
         },
@@ -215,7 +219,7 @@ mdui.JQ('#deleteall').on('click', function(){
     mdui.confirm('请确认是否删除选中项目',
         function(){
             for(var i=0;i<check_val.length;i++){
-                $('#'+check_val[i]).prepend($('#loading').clone().attr('id','deleteloading'));
+                $('#'+check_val[i]).$('#loading-gif').css('display',null);
             }
             var httpRequest = new XMLHttpRequest();
             httpRequest.open('POST', '?/deleteitems', true);
@@ -230,18 +234,22 @@ mdui.JQ('#deleteall').on('click', function(){
                     for(var i=0;i<check_val.length;i++){
                     	if(resp[i]){
                     		
-                    		deleteerror = 1;
+                            deleteerror = 1;
+                            $('#'+check_val[i]).$('#loading-gif').css('display','none');
                     		errormessage = JSON.parse(resp[i])['error']['message'];
                     	}else{
                     		document.getElementById(check_val[i]).style.display = 'none';
                     	}
                     }
                     if(deleteerror==1){
-                    	alert('部分文件删除失败！请重试。错误代码：'+errormessage);
+                        alert('部分文件删除失败！请重试。错误代码：'+errormessage);
                     }
                 }
                 if(httpRequest.status==502&&httpRequest.readyState==4){
-                	alert('服务器无响应！请刷新后查看是否删除成功！');
+                    alert('服务器无响应！请刷新后查看是否删除成功！');
+                    for(var i=0;i<check_val.length;i++){
+                        $('#'+check_val[i]).$('#loading-gif').css('display','none');
+                    }
                 }
             };
         },
@@ -331,6 +339,8 @@ function submitForm() {
             	$('#pending').css('display','none');
                 alert('新建文件夹失败,错误代码:'+item.error.message);
             }
+        }else{
+            $('#pending').css('display','none');
         }
     };
 }
