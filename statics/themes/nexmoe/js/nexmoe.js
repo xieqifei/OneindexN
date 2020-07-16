@@ -165,6 +165,7 @@ mdui.JQ('#newfolder').on('click', function () {
                     	alert('新建文件夹失败,错误代码:'+item.error.message);
                     }
                 }
+                console.log(httpRequest.responseText);
             };
         },
         function (value) {
