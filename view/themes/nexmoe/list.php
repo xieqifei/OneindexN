@@ -73,6 +73,18 @@ function file_ico($item){
 	position: absolute;
     top: 180px;
 }
+/*loading动画*/
+.simple-spinner {
+  height: 100%;
+  border: 8px solid rgba(150, 150, 150, 0.2);
+  border-radius: 50%;
+  border-top-color: rgb(150, 150, 150);
+  animation: rotate 1s 0s infinite ease-in-out alternate;
+}
+@keyframes rotate {
+  0%   { transform: rotate(0);      }
+  100% { transform: rotate(360deg); }
+}
 </style>
 <div class="nexmoe-item">
 <div class="mdui-row">
@@ -99,6 +111,8 @@ function file_ico($item){
 		</li>
 		<?php endif;?>
 		
+		<li class="mdui-list-item mdui-ripple filter" id="pending" style="display:none;"><div class="simple-spinner" id="loading"></div>文件加载中~~~
+		</li>
 		<?php foreach((array)$items as $item):?>
 			<?php if(!empty($item['folder'])):?>
 

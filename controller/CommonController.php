@@ -76,7 +76,7 @@ class CommonController{
 			$items = json_decode( $data );
 			$resp=onedrive::delete($items);
 			oneindex::refresh_cache(get_absolute_path(config('onedrive_root')));
-			return $data;
+			return $resp;
 		}
 		else{
 			return '未登录无法删除';
@@ -114,11 +114,14 @@ class CommonController{
 				$http_type = ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') || (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https')) ? 'https://' : 'http://';
 				$url = $_SERVER['HTTP_HOST'].$root.'/'.$remotepath.rawurldecode($filename).((config('root_path') == '?')?'&s':'?s');
 				$url = $http_type.str_replace('//','/', $url);
+				$result['path']=$url;
 				// view::direct($url);
-				return '上传成功';
+				return json_encode($result);
 			}
+		}else{
+			return '未登录或文件过大';
 		}
-		return '上传失败';
+		
 	}
 	//上传文件的条件判断
 	function uploadcondition($file){
@@ -126,7 +129,7 @@ class CommonController{
 		if($file['size'] > 4485760 || $file['size'] == 0){
 			return false;
 		}
-		if(config('offline')['online']==false&&$_COOKIE['admin'] != md5(config('password').config('refresh_token'))){
+		if(config('offline')['online']==false&&!is_login()){
 			return false;
 		}
 

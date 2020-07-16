@@ -420,7 +420,7 @@
 				  ++$nch;
 			  }
 			  curl_multi_close($mh);
-			  return '批量处理完成';
+			  return $result;
 		  }
 		  
 		//文件批量移动
