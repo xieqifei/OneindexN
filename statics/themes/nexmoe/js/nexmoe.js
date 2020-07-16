@@ -409,8 +409,6 @@ function paste(){
             };
     }
     
-    alert("粘贴成功，两秒后刷新页面");
-    setInterval(function(){location.reload();},3000);
 }
 //获取cookie
 function getCookie(cname){

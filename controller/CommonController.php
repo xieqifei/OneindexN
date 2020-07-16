@@ -139,14 +139,16 @@ class CommonController{
 	function paste(){
 		if(is_login()){
 			$data = file_get_contents( "php://input" );
-			$jsondata = json_decode($data);
+			$jsondata = json_decode($data);//字符串转对象。
 			if($jsondata->cutitems){
 				$cutitems=$jsondata->cutitems;
 				$url=$jsondata->url;
 				return $this->cut($cutitems,$url);
 			}
 			if($jsondata->copyitems){
-				return "function not open";
+				$copyitems=$jsondata->copyitems;
+				$url=$jsondata->url;
+				return $this->copy($copyitems,$url);
 			}
 			return '操作失误，请重新尝试！';
 		}
@@ -158,6 +160,12 @@ class CommonController{
 	function cut($cutitems,$url){
 		$itemid=$this->url2id($url);
 		$resp=onedrive::move($cutitems,$itemid);
+		oneindex::refresh_cache(get_absolute_path(config('onedrive_root')));
+		return $resp;
+	}
+	function copy($copyitems,$url){
+		$itemid=$this->url2id($url);
+		$resp=onedrive::copy($copyitems,$itemid);
 		oneindex::refresh_cache(get_absolute_path(config('onedrive_root')));
 		return $resp;
 	}

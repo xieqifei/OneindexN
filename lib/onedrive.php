@@ -143,8 +143,7 @@
 
 			foreach((array)$data['value'] as $item){
 				//var_dump($item);
-				$path = self::id2path($item['id'],$item['parentReference']['id']);
-				
+				$path = self::id2path($item['id']);
 				$items[$item['name']] = array(
 					'name'=>$item['name'],
 					'id' => $item['id'],
@@ -514,18 +513,41 @@
 		 //itemid转文件路径，原理：移动项目到其本身所在文件夹，可以返回其路径信息
 		 //itemid：待转item的id
 		 //parentid：待转item父项id。
-		 public static function id2path($itemid,$parentid)
+		 public static function id2path($itemid)
 		 {
-			$itemids[0]=$itemid;
-			$resp = self::move($itemids,$parentid);
-			$result = $resp[0];
-			$resp_json = json_decode($result);
-			$totalpath=$resp_json->parentReference->path;
+			$resp_json = self::detail($itemid);
+			$totalpath=$resp_json['parentReference']['path'];
 			$count=strpos($totalpath,"/drive/root:");
 			$pathwithroot=substr_replace($totalpath,"",$count,strlen('/drive/root:'));
 			$count2 = strpos($pathwithroot,config('onedrive_path'));
 			$path = config('root_path').'/'.substr_replace($pathwithroot,"",$count2,strlen(config('onedrive_root'))).'/';
-			$path = str_replace("//",'/',$path);
+			$path = str_replace("//",'/',$path).$resp_json['name'];
 			return $path;
+		 }
+
+		 //itemid获取详细信息
+		 public static function detail($itemid){
+			$token = self::access_token();
+			$request['headers'] = "Authorization: bearer {$token}".PHP_EOL."Content-Type: application/json".PHP_EOL;
+			$request['url'] = self::$api_url."/me/drive/items/".$itemid;
+			$resp = fetch::get($request);
+			$data = json_decode($resp->content, true);
+			return $data;
+		 }
+
+		 //文件批量复制
+		 public static function copy($itemids=array(), $destitemid){
+			
+			$detail = self::detail($destitemid);
+			$dvid = $detail['parentReference']['driveId'];//其driveid与其父项dvid相同
+			$token = self::access_token();
+			$request['headers'] = "Authorization: bearer {$token}".PHP_EOL."Content-Type: application/json".PHP_EOL;
+			foreach($itemids as $index => $itemid){
+				$itemdetail=self::detail($itemid);
+				$request['url'] = self::$api_url."/me/drive/items/".$itemid.'/copy';
+				$request['post_data'] = '{"parentReference": {"driveId": "'.$dvid.'","id": "'.$destitemid.'"},"name": "'.$itemdetail['name'].'"}';
+				$resp[$index]=fetch::post($request);
+			}
+			return $resp;
 		 }
 	}
