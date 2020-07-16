@@ -112,7 +112,7 @@ sharedialog.addEventListener('open.mdui.dialog', function () {
     document.getElementById('sharelinks').value=textarea_value.join('\r\n');
 });
 
-//当前页关键词搜索
+//当前页关键词过滤
 mdui.JQ('#pagesearch').on('click', function () {
     mdui.prompt('输入过滤的关键词或后缀',
         function (value) {
@@ -138,19 +138,33 @@ mdui.JQ('#newfolder').on('click', function () {
     mdui.prompt('输入文件夹名称',
         function (value) {
             var httpRequest = new XMLHttpRequest();//第一步：创建需要的对象
+            $('#pending').css('display',null);
             httpRequest.open('POST', '?/create_folder', true); //第二步：打开连接
             httpRequest.setRequestHeader("Content-type","application/x-www-form-urlencoded");//设置请求头 注：post方式必须设置请求头（在建立连接后设置请求头）
             var query='foldername='+value+'&uploadurl='+window.location.href;
-            httpRequest.send(query);//发送请求 将情头体写在send中
-            mdui.alert('创建成功2秒后\n自动刷新列表！');
-            setInterval(function(){location.reload();},3000);
-            /**
-             * 获取数据后的处理程序
-             */
-            httpRequest.onreadystatechange = function () {//请求后的回调接口，可将请求成功后要执行的程序写在其中
-                if (httpRequest.readyState == 4 && httpRequest.status == 200) {//验证请求是否发送成功
-                    // console.log(httpRequest.responseText);
-                   
+            httpRequest.send(query);
+            httpRequest.onreadystatechange = function () {
+                if(httpRequest.readyState == 4 && httpRequest.status == 200) {
+                    var item = JSON.parse(httpRequest.responseText);
+                    if(item.id){
+	                    var $folder_domstr = $('<li class="mdui-list-item mdui-ripple filter" data-sort data-sort-name="'+item.name+'" data-sort-date="'+item.lastModifiedDateTime+'" data-sort-size="'+item.size+'" id="'+item.id+'"><label class="mdui-checkbox"><input type="checkbox" value="'+item.id+'" name="itemid" onclick="onClickHander()"><i class="mdui-checkbox-icon"></i></label><a href="'+window.location.href+item.name+'"><div class="mdui-col-xs-12 mdui-col-sm-7 mdui-text-truncate"><i class="mdui-icon material-icons">folder_open</i><span>'+item.name+'</span></div><div class="mdui-col-sm-3 mdui-text-right">'+item.lastModifiedDateTime.replace(/[a-zA-Z]/g,' ')+'</div><div class="mdui-col-sm-2 mdui-text-right">'+item.size+'</div></a></li>');
+	                    if($('#backtolast').length>0){
+	                    	$('#backtolast').after($folder_domstr);
+	                    	console.log('存在返回上一级');
+	                    }else{
+	                		 $('#indexsort').after($folder_domstr);
+	                		 console.log('不存在返回上一级');
+                        }
+                        $('#pending').css('display','none');
+	                    console.log('新建文件夹成功');
+                    }else if(item.error){
+                        $('#pending').css('display','none');
+                    	alert('新建文件夹失败,错误代码:'+item.error.message);
+                    }
+                }
+                if(httpRequest.status==502&&httpRequest.readyState==4){
+                	alert('服务器无响应！请刷新后查看是否新建成功！');
+                	$('#pending').css('display','none');
                 }
             };
         },
@@ -172,22 +186,18 @@ mdui.JQ('#rename').on('click', function () {
             httpRequest.setRequestHeader("Content-type","application/x-www-form-urlencoded");//设置请求头 注：post方式必须设置请求头（在建立连接后设置请求头）
             var query='name='+value+'&itemid='+check_val[0];
             httpRequest.send(query);//发送请求 将情头体写在send中
-            var item_dom=document.getElementById(check_val[0]);
-            var a_dom = item_dom.getElementsByTagName('a')[0];
-            var a_href = a_dom.getAttribute('href');
-            a_href = a_href.replace(new RegExp('/(.*)'+item_dom.getElementsByTagName('span')[0].innerHTML+'/'),'$1'+value);
-           // a_href.replace(item_dom.getElementsByTagName('span')[0].innerHTML,value);
-            console.log(item_dom.getElementsByTagName('span')[0].innerHTML+'替换物'+value+'替换后'+a_href);
-            
-            item_dom.getElementsByTagName('span')[0].innerHTML=value;
-            item_dom.getElementsByTagName('a')[0].setAttribute('href',a_href);
-            item_dom.setAttribute('data-sort-name',value);
             /**
              * 获取数据后的处理程序
              */
             httpRequest.onreadystatechange = function () {//请求后的回调接口，可将请求成功后要执行的程序写在其中
                 if (httpRequest.readyState == 4 && httpRequest.status == 200) {//验证请求是否发送成功
-
+                    var item_dom=document.getElementById(check_val[0]);
+                    var a_dom = item_dom.getElementsByTagName('a')[0];
+                    var a_href = a_dom.getAttribute('href');
+                    a_href = a_href.replace(new RegExp('/(.*)'+item_dom.getElementsByTagName('span')[0].innerHTML+'/'),'$1'+value);
+                    item_dom.getElementsByTagName('span')[0].innerHTML=value;
+                    item_dom.getElementsByTagName('a')[0].setAttribute('href',a_href);
+                    item_dom.setAttribute('data-sort-name',value);
                 }
             };
         },
@@ -204,20 +214,34 @@ mdui.JQ('#rename').on('click', function () {
 mdui.JQ('#deleteall').on('click', function(){
     mdui.confirm('请确认是否删除选中项目',
         function(){
+            for(var i=0;i<check_val.length;i++){
+                $('#'+check_val[i]).prepend($('#loading').clone().attr('id','deleteloading'));
+            }
             var httpRequest = new XMLHttpRequest();
             httpRequest.open('POST', '?/deleteitems', true);
             httpRequest.setRequestHeader("Content-type","application/json");//设置请求头 注：post方式必须设置请求头（在建立连接后设置请求头）
             var query=JSON.stringify(check_val);
             httpRequest.send(query);
-            for(var i=0;i<check_val.length;i++){
-                document.getElementById(check_val[i]).style.display = 'none';
-            }
-            /**
-             * 获取数据后的处理程序
-             */
             httpRequest.onreadystatechange = function () {//请求后的回调接口，可将请求成功后要执行的程序写在其中
                 if (httpRequest.readyState == 4 && httpRequest.status == 200) {//验证请求是否发送成功
-
+            		 var deleteerror = 0;
+            		 var errormessage = '';
+                	var resp = JSON.parse(httpRequest.responseText);
+                    for(var i=0;i<check_val.length;i++){
+                    	if(resp[i]){
+                    		
+                    		deleteerror = 1;
+                    		errormessage = JSON.parse(resp[i])['error']['message'];
+                    	}else{
+                    		document.getElementById(check_val[i]).style.display = 'none';
+                    	}
+                    }
+                    if(deleteerror==1){
+                    	alert('部分文件删除失败！请重试。错误代码：'+errormessage);
+                    }
+                }
+                if(httpRequest.status==502&&httpRequest.readyState==4){
+                	alert('服务器无响应！请刷新后查看是否删除成功！');
                 }
             };
         },
@@ -231,13 +255,17 @@ mdui.JQ('#deleteall').on('click', function(){
     );
 });
 
+
+//文件选中某个文件后
 function onClickHander(){
     checkitems = document.getElementsByName("itemid");
     check_val = [];
     for (k in checkitems) {
         if (checkitems[k].checked) check_val.push(checkitems[k].value);
     }
+    //选中一个文件时显示可以重命名按钮
     var singleopt = document.getElementsByClassName("singleopt");
+    //选中多个文件时，可以复制移动等
     var multiopt = document.getElementsByClassName("multiopt");
     //单文件操作
     if(check_val.length==1){
@@ -261,6 +289,7 @@ function onClickHander(){
         }
     }
 }
+//选中所有文件
 function checkall(){
     var checkall = document.getElementById("checkall");
     var itemsbox = document.getElementsByName("itemid");
@@ -275,22 +304,113 @@ function checkall(){
     }
     onClickHander();
 }
+//在线上传小文件,需要一个id为filesubmit的表单，有类型为file的input
 function submitForm() {
     var formData = new FormData($("#filesubmit")[0]);  //重点：要用这种方法接收表单的参数
-    $.ajax({
-        url : "?/onlinefileupload",
-        type : 'POST',
-        data : formData,
-        // 告诉jQuery不要去处理发送的数据
-        processData : false,                 
-        // 告诉jQuery不要去设置Content-Type请求头
-        contentType : false,
-        async : false,
-        success : function(data) {
-            if(data){
+    inst2.close();
+    $('#pending').css('display',null);
+    const req = new XMLHttpRequest();
+    req.open('post', '?/onlinefileupload', true);
+    req.send(formData);
+    req.onreadystatechange = function () {//请求后的回调接口，可将请求成功后要执行的程序写在其中
+        if (req.readyState == 4 && req.status == 200) {//验证请求是否发送成功
+            var item=JSON.parse(req.responseText);
+            // console.log(JSON.parse(req.responseText).parentReference.path);
+            if(item.id){
+            	$('#pending').css('display','none');
+                var $dom_items='<li class="mdui-list-item file mdui-ripple filter" data-sort data-sort-name="'+item.name+'" data-sort-date="'+item.lastModifiedDateTime+'" data-sort-size="'+item.size+'" id="'+item.id+'"><label class="mdui-checkbox"><input type="checkbox" value="'+item.id+'" name="itemid" onclick="onClickHander()"><i class="mdui-checkbox-icon"></i></label><a href="'+item.path+'" target="_blank"><div class="mdui-col-xs-12 mdui-col-sm-7 mdui-text-truncate"><i class="mdui-icon material-icons">insert_drive_file</i><span>'+item.name+'</span></div><div class="mdui-col-sm-3 mdui-text-right">'+item.lastModifiedDateTime.replace(/[a-zA-Z]/g,' ')+'</div><div class="mdui-col-sm-2 mdui-text-right">'+item.size+'</div></a></li>';
+                 if($('#backtolast').length>0){
+                    $('#backtolast').after($dom_items);
+                    console.log('存在返回上一级');
+                }else{
+                     $('#indexsort').after($dom_items);
+                     console.log('不存在返回上一级');
+                }
+                console.log('上传成功');
+            }else if(item.error){
+            	$('#pending').css('display','none');
+                alert('新建文件夹失败,错误代码:'+item.error.message);
             }
         }
-    });
-    alert("上传成功，两秒后刷新页面");
+    };
+}
+//点击复制
+function copy(){
+    document.cookie="copyitems="+JSON.stringify(check_val);
+    document.getElementById('copybtn').style.display="none";
+    document.getElementById('pastebtn').style.display="";
+    document.getElementById('cutbtn').style.display="none";
+}
+//点击剪切
+function cut(){
+    document.cookie="cutitems="+JSON.stringify(check_val);
+    document.getElementById('pastebtn').style.display="";
+    document.getElementById('cutbtn').style.display="none";
+    document.getElementById('copybtn').style.display="none";
+}
+//判断cookie是否有复制和粘贴
+var pastebtn = document.getElementById('pastebtn');
+if(!getCookie('cutitems')&&!getCookie('copyitems')){
+    pastebtn.style.display="none";
+}else{
+    pastebtn.style.display="";
+}
+//点击粘贴
+function paste(){
+    if(getCookie('cutitems')){
+    	// var json_data = {cutitems:getCookie('cutitems'),url:window.location.href};
+    	var json_data = '{"cutitems":'+getCookie('cutitems')+',"url":"'+window.location.href+'"}';
+        var httpRequest = new XMLHttpRequest();
+            httpRequest.open('POST', '?/paste', true);
+            httpRequest.setRequestHeader("Content-type","application/json");//设置请求头 注：post方式必须设置请求头（在建立连接后设置请求头）
+            // var query=JSON.stringify(json_data);
+            httpRequest.send(json_data);
+            /**
+             * 获取数据后的处理程序
+             */
+            httpRequest.onreadystatechange = function () {//请求后的回调接口，可将请求成功后要执行的程序写在其中
+                if (httpRequest.readyState == 4 && httpRequest.status == 200) {//验证请求是否发送成功
+                    console.log(httpRequest.responseText);
+                    document.cookie = "cutitems=; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+                    document.getElementById('pastebtn').style.display='none';
+                    document.getElementById('cutbtn').style.display="";
+                    document.getElementById('copybtn').style.display="";    
+                }
+            };
+    }else if(getCookie('copyitems')){
+    	// var json_data = {cutitems:getCookie('cutitems'),url:window.location.href};
+    	var json_data = '{"copyitems":'+getCookie('copyitems')+',"url":"'+window.location.href+'"}';
+        var httpRequest = new XMLHttpRequest();
+            httpRequest.open('POST', '?/paste', true);
+            httpRequest.setRequestHeader("Content-type","application/json");//设置请求头 注：post方式必须设置请求头（在建立连接后设置请求头）
+            // var query=JSON.stringify(json_data);
+            httpRequest.send(json_data);
+            /**
+             * 获取数据后的处理程序
+             */
+            httpRequest.onreadystatechange = function () {//请求后的回调接口，可将请求成功后要执行的程序写在其中
+                if (httpRequest.readyState == 4 && httpRequest.status == 200) {//验证请求是否发送成功
+                    console.log(httpRequest.responseText);
+                    document.cookie = "copyitems=; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+                    document.getElementById('pastebtn').style.display='none';
+                    document.getElementById('cutbtn').style.display="";
+                    document.getElementById('copybtn').style.display="";   
+                }
+            };
+    }
+    
+    alert("粘贴成功，两秒后刷新页面");
     setInterval(function(){location.reload();},3000);
+}
+//获取cookie
+function getCookie(cname){
+    var name = cname + "=";
+    var ca = document.cookie.split(';');
+    for(var i=0; i<ca.length; i++) {
+        var c = ca[i].trim();
+        if (c.indexOf(name)==0) { 
+            return c.substring(name.length,c.length); 
+        }
+    }
+    return false;
 }

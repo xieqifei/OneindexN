@@ -24,8 +24,11 @@ function file_ico($item){
 	<button class="mdui-btn mdui-ripple" id="newfolder">新建文件夹</button>
 	<button class="mdui-btn mdui-ripple" id="file_upload">上传文件</button>
 	<button class="mdui-btn mdui-ripple multiopt" id="deleteall" style="display: none;">删除</button>
-	<button class="mdui-btn mdui-ripple multiopt" id="sharebtn" style="display: none;">分享</button>
+	<button class="mdui-btn mdui-ripple multiopt" id="copybtn" onclick="copy()" style="display: none;">复制</button>
+	<button class="mdui-btn mdui-ripple multiopt" id="cutbtn" onclick="cut()" style="display: none;">剪切</button>
+	<button class="mdui-btn mdui-ripple" id="pastebtn"  onclick="paste()" style="display: none;">粘贴</button>
 	<button class="mdui-btn mdui-ripple singleopt" id="rename" style="display: none;">重命名</button>
+	<button class="mdui-btn mdui-ripple multiopt" id="sharebtn" style="display: none;">分享</button>
 	</div>
 </div>
 <?endif;?> 
@@ -70,11 +73,23 @@ function file_ico($item){
 	position: absolute;
     top: 180px;
 }
+/*loading动画*/
+.simple-spinner {
+  height: 100%;
+  border: 8px solid rgba(150, 150, 150, 0.2);
+  border-radius: 50%;
+  border-top-color: rgb(150, 150, 150);
+  animation: rotate 1s 0s infinite ease-in-out alternate;
+}
+@keyframes rotate {
+  0%   { transform: rotate(0);      }
+  100% { transform: rotate(360deg); }
+}
 </style>
 <div class="nexmoe-item">
 <div class="mdui-row">
 	<ul class="mdui-list">
-		<li class="mdui-list-item th">
+		<li class="mdui-list-item th" id="indexsort">
 		<?php if(is_login()):?>
 			<label class="mdui-checkbox"><input type="checkbox" value="" id="checkall" onclick="checkall()"><i
 					class="mdui-checkbox-icon"></i></label>
@@ -84,7 +99,7 @@ function file_ico($item){
 		  <div class="mdui-col-sm-2 mdui-text-right">大小 <i class="mdui-icon material-icons icon-sort" data-sort="size" data-order="downward">expand_more</i></div>
 		</li>
 		<?php if($path != '/'):?>
-		<li class="mdui-list-item mdui-ripple">
+		<li class="mdui-list-item mdui-ripple" id="backtolast">
 			<a href="<?php echo get_absolute_path($root.$path.'../');?>">
 			  <div class="mdui-col-xs-12 mdui-col-sm-7">
 				<i class="mdui-icon material-icons">arrow_upward</i>
@@ -96,6 +111,8 @@ function file_ico($item){
 		</li>
 		<?php endif;?>
 		
+		<li class="mdui-list-item mdui-ripple filter" id="pending" style="display:none;"><div class="simple-spinner" id="loading"></div>文件加载中~~~
+		</li>
 		<?php foreach((array)$items as $item):?>
 			<?php if(!empty($item['folder'])):?>
 
@@ -222,8 +239,8 @@ function file_ico($item){
   </div>
 </div>
 <!-- <script src="https://cdn.jsdelivr.net/gh/xieqifei/OneindexN@v1.31/statics/js/nexmoe.js"></script> -->
+
 <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
 <script src="https://cdn.bootcdn.net/ajax/libs/clipboard.js/2.0.6/clipboard.min.js"></script>
 <script src="statics\themes\nexmoe\js\nexmoe.js"></script>
-
 <?php view::end('content');?>

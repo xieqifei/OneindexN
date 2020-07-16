@@ -48,7 +48,8 @@ route::any('/create_folder','CommonController@create_folder');
 route::any('/rename','CommonController@rename');
 route::any('/deleteitems','CommonController@deleteitems');
 route::any('/search','CommonController@search');
-
+route::any('/paste','CommonController@paste');
+route::any('/id2path','CommonController@id2path');
 //跳转到登陆
 route::any('/admin/',function(){
 	return view::direct(get_absolute_path(dirname($_SERVER['SCRIPT_NAME'])).'?/login');

@@ -10,7 +10,7 @@ class CommonController{
 			return view::load('common/offline');
 		}
 		else{
-			return view::load('common/tips');
+			return view::load('common/tips')->with('tip','管理员未授权使用');
 		}
 	}
 
@@ -20,10 +20,12 @@ class CommonController{
 			if($_POST['keyword']){
 				$keyword=$_POST['keyword'];
 				$items = onedrive::search($keyword);
-				$navs=array();
+				if(!$items){
+					return view::load('common/tips')->with('tip','无匹配结果');
+				}
 				$searchinfo['keyword']=$keyword;
 				$searchinfo['count']=count($items);
-				return view::load('common/search')->with('items',$items);
+				return view::load('common/search')->with('items',$items)->with('searchinfo',$searchinfo);
 			}else{
 				return '参数错误';
 			}
@@ -31,7 +33,6 @@ class CommonController{
 		else{
 			return '请登陆后尝试';
 		}
-		
 	}
 	//新建文件夹
 	//post参数：uploadurl，当前url的路径
@@ -75,10 +76,10 @@ class CommonController{
 			$items = json_decode( $data );
 			$resp=onedrive::delete($items);
 			oneindex::refresh_cache(get_absolute_path(config('onedrive_root')));
-			return $data;
+			return $resp;
 		}
 		else{
-			return '未登录无法重命名';
+			return '未登录无法删除';
 		}
 	}
 
@@ -113,22 +114,70 @@ class CommonController{
 				$http_type = ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') || (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https')) ? 'https://' : 'http://';
 				$url = $_SERVER['HTTP_HOST'].$root.'/'.$remotepath.rawurldecode($filename).((config('root_path') == '?')?'&s':'?s');
 				$url = $http_type.str_replace('//','/', $url);
+				$result['path']=$url;
 				// view::direct($url);
-				return '上传成功';
+				return json_encode($result);
 			}
+		}else{
+			return '未登录或文件过大';
 		}
-		return '上传失败';
+		
 	}
-
+	//上传文件的条件判断
 	function uploadcondition($file){
 		
 		if($file['size'] > 4485760 || $file['size'] == 0){
 			return false;
 		}
-		if(config('offline')['online']==false&&$_COOKIE['admin'] != md5(config('password').config('refresh_token'))){
+		if(config('offline')['online']==false&&!is_login()){
 			return false;
 		}
 
 		return true;
+	}
+	//粘贴
+	function paste(){
+		if(is_login()){
+			$data = file_get_contents( "php://input" );
+			$jsondata = json_decode($data);
+			if($jsondata->cutitems){
+				$cutitems=$jsondata->cutitems;
+				$url=$jsondata->url;
+				return $this->cut($cutitems,$url);
+			}
+			if($jsondata->copyitems){
+				return "function not open";
+			}
+			return '操作失误，请重新尝试！';
+		}
+		else{
+			return '未登录无法重命名';
+		}
+	}
+	//移动或剪切
+	function cut($cutitems,$url){
+		$itemid=$this->url2id($url);
+		$resp=onedrive::move($cutitems,$itemid);
+		oneindex::refresh_cache(get_absolute_path(config('onedrive_root')));
+		return $resp;
+	}
+	//url转id
+	function url2id($url){
+		$urlinfo=parse_url($url);
+		if(stristr($url,'?')){
+			$paths = explode('/', rawurldecode($urlinfo['query']));
+		}else{
+			$paths = explode('/', rawurldecode($urlinfo['path']));
+		}
+		$paths=array_values($paths);
+		$totalpath = str_replace('//','/',config('onedrive_root').get_absolute_path(join('/', $paths)));
+		$itemid=onedrive::path2id($totalpath);
+		return $itemid;
+	}
+	//id转路径
+	function id2path(){
+		$itemid=$_POST['id'];
+		$paid = $_POST['paid'];
+		return onedrive::id2path($itemid,$paid);
 	}
 }
