@@ -164,9 +164,6 @@ mdui.JQ('#newfolder').on('click', function () {
                         $('#pending').css('display','none');
                     	alert('新建文件夹失败,错误代码:'+item.error.message);
                     }
-                }else{
-                	$('#pending').css('display','none');
-                	alert('与服务器连接失败！');
                 }
             };
         },
