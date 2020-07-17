@@ -135,24 +135,43 @@ mdui.JQ('#rename').on('click', function () {
 mdui.JQ('#deleteall').on('click', function(){
     mdui.confirm('请确认是否删除选中项目',
         function(){
+            for(var i=0;i<check_val.length;i++){
+                $('#'+check_val[i]).prepend($('#loading').clone().attr('id','deleteloading'));
+            }
             var httpRequest = new XMLHttpRequest();
             httpRequest.open('POST', '?/deleteitems', true);
             httpRequest.setRequestHeader("Content-type","application/json");//设置请求头 注：post方式必须设置请求头（在建立连接后设置请求头）
             var query=JSON.stringify(check_val);
             httpRequest.send(query);
-            mdui.alert('删除成功2秒后\n自动刷新列表！');
-            setInterval(function(){location.reload();},3000);
-
-            /**
-             * 获取数据后的处理程序
-             */
             httpRequest.onreadystatechange = function () {//请求后的回调接口，可将请求成功后要执行的程序写在其中
                 if (httpRequest.readyState == 4 && httpRequest.status == 200) {//验证请求是否发送成功
-
+            		 var deleteerror = 0;
+            		 var errormessage = '';
+                	var resp = JSON.parse(httpRequest.responseText);
+                    for(var i=0;i<check_val.length;i++){
+                    	if(resp[i]){
+                    		
+                    		deleteerror = 1;
+                    		errormessage = JSON.parse(resp[i])['error']['message'];
+                    	}else{
+                    		document.getElementById(check_val[i]).style.display = 'none';
+                    	}
+                    }
+                    if(deleteerror==1){
+                    	alert('部分文件删除失败！请重试。错误代码：'+errormessage);
+                    }
+                }
+                if(httpRequest.status==502&&httpRequest.readyState==4){
+                	alert('服务器无响应！请刷新后查看是否删除成功！');
                 }
             };
         },
         function(){
+        }
+        ,
+        {
+            confirmText:'确认',
+            cancelText:'取消'
         }
     );
 });
