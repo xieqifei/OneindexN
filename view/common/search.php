@@ -18,12 +18,13 @@
 <?php if(is_login()):?>
 	<div class="mdui-container-fluid" >
 		<div class="nexmoe-item">
-		<button class="mdui-btn mdui-ripple" id="pagesearch">搜索</button>
-		<button class="mdui-btn mdui-ripple" id="example-confirm-1">Aria2</button>
-		<button class="mdui-btn mdui-ripple multiopt" id="deleteall" style="display: none;">删除</button>
-		<button class="mdui-btn mdui-ripple multiopt" id="shareall" style="display: none;">分享</button>
+		<button class="mdui-btn mdui-ripple" id="pagesearch">过滤</button>
 		<button class="mdui-btn mdui-ripple singleopt" id="rename" style="display: none;">重命名</button>
-		<button class="mdui-btn mdui-ripple" id="search">全局搜索</button>
+		<button class="mdui-btn mdui-ripple multiopt" id="deleteall" style="display: none;">删除</button>
+		<button class="mdui-btn mdui-ripple multiopt" id="copybtn" onclick="copy()" style="display: none;">复制</button>
+		<button class="mdui-btn mdui-ripple multiopt" id="cutbtn" onclick="cut()" style="display: none;">剪切</button>
+		<button class="mdui-btn mdui-ripple multiopt" id="shareall" style="display: none;">分享</button>
+		
 		</div>
 	</div>
 <?endif;?> 
