@@ -82,13 +82,6 @@ $(function(){
         $(this).attr("data-order", sort_order_to).text("expand_" + sort_order_to);
     });
 });
-var inst1 = new mdui.Fab('#myFab');
-
-//全局搜索
-var inst3 = new mdui.Dialog('#search_form');
-document.getElementById('search').addEventListener('click', function () {
-    inst3.open();
-});
 //分享链接
 var inst4 = new mdui.Dialog('#share');
 document.getElementById('sharebtn').addEventListener('click', function () {
@@ -136,10 +129,6 @@ mdui.JQ('#rename').on('click', function () {
             httpRequest.send(query);//发送请求 将情头体写在send中
             var item_dom=document.getElementById(check_val[0]);
             item_dom.getElementsByClassName('loading-gif')[0].style.display='';
-           
-            /**
-             * 获取数据后的处理程序
-             */
             httpRequest.onreadystatechange = function () {//请求后的回调接口，可将请求成功后要执行的程序写在其中
                 if (httpRequest.readyState == 4 && httpRequest.status == 200) {//验证请求是否发送成功
                 	item=JSON.parse(httpRequest.responseText);
