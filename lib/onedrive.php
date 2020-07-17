@@ -182,7 +182,7 @@
 			$data = @json_decode($resp->content, true);
 			return $data;
 		}
-
+		//url上传
 		static function upload_url($path, $url){
 			$request = self::request(get_absolute_path(dirname($path)),"children");
 			$request['headers'] .= "Prefer: respond-async".PHP_EOL;
@@ -191,7 +191,7 @@
 			$post_data['file'] = json_decode("{}");
 			$request['post_data'] = json_encode($post_data);
 			$resp = fetch::post($request);
-			list($tmp, $location) = explode('ocation:', $resp->headers);
+			list($tmp, $location) = explode('Location:', $resp->headers);
 			list($location, $tmp) = explode(PHP_EOL, $location);
 			return trim($location);
 		}
