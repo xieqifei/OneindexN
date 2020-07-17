@@ -149,7 +149,16 @@
     </div>
   </div>
 </div>
-
+<div class="mdui-container">
+ <div class="mdui-dialog" id="share">
+    <div class="mdui-dialog-content">
+			<div class="mdui-textfield mdui-textfield-floating-label">
+				<label class="mdui-textfield-label">选中的项目链接</label>
+				<textarea class="mdui-textfield-input" style="margin: 20px 0;" rows="5" readonly id="sharelinks"></textarea>
+			</div>
+	</div>
+  </div>
+</div>
 <!-- <script src="https://cdn.jsdelivr.net/gh/xieqifei/OneindexN@v1.31/statics/js/nexmoe.js"></script> -->
 <script src="statics\common\search\js\search.js"></script>
 <?php view::end('content');?>
