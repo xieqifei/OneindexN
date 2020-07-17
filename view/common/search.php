@@ -23,8 +23,7 @@
 		<button class="mdui-btn mdui-ripple multiopt" id="deleteall" style="display: none;">删除</button>
 		<button class="mdui-btn mdui-ripple multiopt" id="copybtn" onclick="copy()" style="display: none;">复制</button>
 		<button class="mdui-btn mdui-ripple multiopt" id="cutbtn" onclick="cut()" style="display: none;">剪切</button>
-		<button class="mdui-btn mdui-ripple multiopt" id="shareall" style="display: none;">分享</button>
-		
+		<button class="mdui-btn mdui-ripple multiopt" id="sharebtn" style="display: none;">分享</button>
 		</div>
 	</div>
 <?endif;?> 
