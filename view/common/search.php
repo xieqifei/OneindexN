@@ -63,6 +63,18 @@
 		position: absolute;
 		top: 180px;
 	}
+	/*loading动画*/
+	.simple-spinner {
+	height: 100%;
+	border: 8px solid rgba(150, 150, 150, 0.2);
+	border-radius: 50%;
+	border-top-color: rgb(150, 150, 150);
+	animation: rotate 1s 0s infinite ease-in-out alternate;
+	}
+	@keyframes rotate {
+	0%   { transform: rotate(0);      }
+	100% { transform: rotate(360deg); }
+	}
 	</style>
 
 	<div class="nexmoe-item">
