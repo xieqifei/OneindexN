@@ -85,6 +85,7 @@
 									data-sort-date="<?php echo $item['lastModifiedDateTime'];?>"
 									data-sort-size="<?php echo $item['size'];?>" 
 									id="<?php echo $item["id"] ?>">
+							<div class="simple-spinner loading-gif" style="display: none;"></div>
 							<?php if(is_login()):?>
 								<label class="mdui-checkbox">
 								<input type="checkbox" value="<?php echo $item["id"] ?>" name="itemid" onclick="onClickHander()">
@@ -105,6 +106,7 @@
 									data-sort-date="<?php echo $item['lastModifiedDateTime'];?>"
 									data-sort-size="<?php echo $item['size'];?>" 
 									id="<?php echo $item["id"] ?>">
+							<div class="simple-spinner loading-gif" style="display: none;"></div>
 							<?php if(is_login()):?>
 								<label class="mdui-checkbox">
 								<input type="checkbox" value="<?php echo $item["id"] ?>" name="itemid" onclick="onClickHander()">
