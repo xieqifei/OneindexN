@@ -194,9 +194,9 @@ mdui.JQ('#rename').on('click', function () {
              */
             httpRequest.onreadystatechange = function () {//请求后的回调接口，可将请求成功后要执行的程序写在其中
                 if (httpRequest.readyState == 4 && httpRequest.status == 200) {//验证请求是否发送成功
+                	item=JSON.parse(httpRequest.responseText);
                     var a_dom = item_dom.getElementsByTagName('a')[0];
-                    var a_href = a_dom.getAttribute('href');
-                    a_href = a_href.replace(new RegExp('/(.*)'+item_dom.getElementsByTagName('span')[0].innerHTML+'/'),'$1'+value);
+                    a_href = item.parentReference.path.replace("/drive/root:","?")+"/"+item.name;
                     item_dom.getElementsByTagName('span')[0].innerHTML=value;
                     item_dom.getElementsByClassName('loading-gif')[0].style.display='none';
                     item_dom.getElementsByTagName('a')[0].setAttribute('href',a_href);
