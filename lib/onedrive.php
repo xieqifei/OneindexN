@@ -499,6 +499,22 @@
 			return $result;
 		}
 
+		 //文件批量复制
+		 public static function copy($itemids=array(), $destitemid){
+			
+			$detail = self::detail($destitemid);
+			$dvid = $detail['parentReference']['driveId'];//其driveid与其父项dvid相同
+			$token = self::access_token();
+			$request['headers'] = "Authorization: bearer {$token}".PHP_EOL."Content-Type: application/json".PHP_EOL;
+			foreach($itemids as $index => $itemid){
+				$itemdetail=self::detail($itemid);
+				$request['url'] = self::$api_url."/me/drive/items/".$itemid.'/copy';
+				$request['post_data'] = '{"parentReference": {"driveId": "'.$dvid.'","id": "'.$destitemid.'"},"name": "'.$itemdetail['name'].'"}';
+				$resp[$index]=fetch::post($request);
+			}
+			return $resp;
+		 }
+
 		 //文件路径转itemid
 		 public static function path2id($path)
 		 {
@@ -535,19 +551,5 @@
 			return $data;
 		 }
 
-		 //文件批量复制
-		 public static function copy($itemids=array(), $destitemid){
-			
-			$detail = self::detail($destitemid);
-			$dvid = $detail['parentReference']['driveId'];//其driveid与其父项dvid相同
-			$token = self::access_token();
-			$request['headers'] = "Authorization: bearer {$token}".PHP_EOL."Content-Type: application/json".PHP_EOL;
-			foreach($itemids as $index => $itemid){
-				$itemdetail=self::detail($itemid);
-				$request['url'] = self::$api_url."/me/drive/items/".$itemid.'/copy';
-				$request['post_data'] = '{"parentReference": {"driveId": "'.$dvid.'","id": "'.$destitemid.'"},"name": "'.$itemdetail['name'].'"}';
-				$resp[$index]=fetch::post($request);
-			}
-			return $resp;
-		 }
+		
 	}

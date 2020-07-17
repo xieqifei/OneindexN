@@ -161,7 +161,7 @@ class CommonController{
 		$itemid=$this->url2id($url);
 		$resp=onedrive::move($cutitems,$itemid);
 		oneindex::refresh_cache(get_absolute_path(config('onedrive_root')));
-		return $resp;
+		return json_encode(json_decode(json_encode($resp)));//decode去掉字符串中的转义字符再
 	}
 	function copy($copyitems,$url){
 		$itemid=$this->url2id($url);
