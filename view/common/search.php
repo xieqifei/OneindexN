@@ -18,12 +18,12 @@
 <?php if(is_login()):?>
 	<div class="mdui-container-fluid" >
 		<div class="nexmoe-item">
-		<button class="mdui-btn mdui-ripple" id="pagesearch">搜索</button>
-		<button class="mdui-btn mdui-ripple" id="example-confirm-1">Aria2</button>
-		<button class="mdui-btn mdui-ripple multiopt" id="deleteall" style="display: none;">删除</button>
-		<button class="mdui-btn mdui-ripple multiopt" id="shareall" style="display: none;">分享</button>
+		<button class="mdui-btn mdui-ripple" id="pagesearch">过滤</button>
 		<button class="mdui-btn mdui-ripple singleopt" id="rename" style="display: none;">重命名</button>
-		<button class="mdui-btn mdui-ripple" id="search">全局搜索</button>
+		<button class="mdui-btn mdui-ripple multiopt" id="deleteall" style="display: none;">删除</button>
+		<button class="mdui-btn mdui-ripple multiopt" id="copybtn" onclick="copy()" style="display: none;">复制</button>
+		<button class="mdui-btn mdui-ripple multiopt" id="cutbtn" onclick="cut()" style="display: none;">剪切</button>
+		<button class="mdui-btn mdui-ripple multiopt" id="sharebtn" style="display: none;">分享</button>
 		</div>
 	</div>
 <?endif;?> 
@@ -63,6 +63,18 @@
 		position: absolute;
 		top: 180px;
 	}
+	/*loading动画*/
+	.simple-spinner {
+	height: 100%;
+	border: 8px solid rgba(150, 150, 150, 0.2);
+	border-radius: 50%;
+	border-top-color: rgb(150, 150, 150);
+	animation: rotate 1s 0s infinite ease-in-out alternate;
+	}
+	@keyframes rotate {
+	0%   { transform: rotate(0);      }
+	100% { transform: rotate(360deg); }
+	}
 	</style>
 
 	<div class="nexmoe-item">
@@ -85,12 +97,13 @@
 									data-sort-date="<?php echo $item['lastModifiedDateTime'];?>"
 									data-sort-size="<?php echo $item['size'];?>" 
 									id="<?php echo $item["id"] ?>">
+							<div class="simple-spinner loading-gif" style="display: none;"></div>
 							<?php if(is_login()):?>
 								<label class="mdui-checkbox">
 								<input type="checkbox" value="<?php echo $item["id"] ?>" name="itemid" onclick="onClickHander()">
 								<i class="mdui-checkbox-icon"></i></label>
 							<?endif;?> 		
-							<a href="<?php echo $item['path'].$item['name'];?>" target="_blank">
+							<a href="<?php echo $item['path'];?>" target="_blank">
 							<div class="mdui-col-xs-12 mdui-col-sm-7 mdui-text-truncate">
 								<i class="mdui-icon material-icons">folder_open</i>
 								<span><?php echo $item['name'];?></span>
@@ -105,12 +118,13 @@
 									data-sort-date="<?php echo $item['lastModifiedDateTime'];?>"
 									data-sort-size="<?php echo $item['size'];?>" 
 									id="<?php echo $item["id"] ?>">
+							<div class="simple-spinner loading-gif" style="display: none;"></div>
 							<?php if(is_login()):?>
 								<label class="mdui-checkbox">
 								<input type="checkbox" value="<?php echo $item["id"] ?>" name="itemid" onclick="onClickHander()">
 								<i class="mdui-checkbox-icon"></i></label>
 							<?endif;?> 	
-							<a href="<?php echo $item['path'].$item['name'];?>" target="_blank">
+							<a href="<?php echo $item['path'];?>" target="_blank">
 							<div class="mdui-col-xs-12 mdui-col-sm-7 mdui-text-truncate">
 								<i class="mdui-icon material-icons"><?php echo file_ico($item);?></i>
 								<span><?php e($item['name']);?></span>
@@ -149,7 +163,16 @@
     </div>
   </div>
 </div>
-
+<div class="mdui-container">
+ <div class="mdui-dialog" id="share">
+    <div class="mdui-dialog-content">
+			<div class="mdui-textfield mdui-textfield-floating-label">
+				<label class="mdui-textfield-label">选中的项目链接</label>
+				<textarea class="mdui-textfield-input" style="margin: 20px 0;" rows="5" readonly id="sharelinks"></textarea>
+			</div>
+	</div>
+  </div>
+</div>
 <!-- <script src="https://cdn.jsdelivr.net/gh/xieqifei/OneindexN@v1.31/statics/js/nexmoe.js"></script> -->
 <script src="statics\common\search\js\search.js"></script>
 <?php view::end('content');?>

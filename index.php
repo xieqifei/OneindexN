@@ -49,7 +49,7 @@ route::any('/rename','CommonController@rename');
 route::any('/deleteitems','CommonController@deleteitems');
 route::any('/search','CommonController@search');
 route::any('/paste','CommonController@paste');
-route::any('/id2path','CommonController@id2path');
+route::any('/upload_url','CommonController@upload_url');
 //跳转到登陆
 route::any('/admin/',function(){
 	return view::direct(get_absolute_path(dirname($_SERVER['SCRIPT_NAME'])).'?/login');

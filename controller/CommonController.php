@@ -82,6 +82,23 @@ class CommonController{
 			return '未登录无法删除';
 		}
 	}
+	//url上传
+	function upload_url(){
+		if(is_login()){
+			if($_POST['file_url']&&$_POST['path_url']){
+				$file_url=$_POST['file_url'];
+				$path_url=$_POST['path_url'];
+				$file_name = pathinfo(parse_url($file_url)['path'])['basename'];
+				$path = str_replace('//','/',$this->url2path($path_url).'/'.$file_name);
+				$process_url = onedrive::upload_url($path , $file_url);
+				return $process_url;
+			}else{
+				return '参数错误';
+			}
+		}else{
+			return '未登录';
+		}
+	}
 
 	//任意文件在线上传，从个人电脑上传
 	//post参数：onlinefile：一个文件；uploadurl：当前url路径
@@ -139,14 +156,16 @@ class CommonController{
 	function paste(){
 		if(is_login()){
 			$data = file_get_contents( "php://input" );
-			$jsondata = json_decode($data);
+			$jsondata = json_decode($data);//字符串转对象。
 			if($jsondata->cutitems){
 				$cutitems=$jsondata->cutitems;
 				$url=$jsondata->url;
 				return $this->cut($cutitems,$url);
 			}
 			if($jsondata->copyitems){
-				return "function not open";
+				$copyitems=$jsondata->copyitems;
+				$url=$jsondata->url;
+				return $this->copy($copyitems,$url);
 			}
 			return '操作失误，请重新尝试！';
 		}
@@ -159,8 +178,28 @@ class CommonController{
 		$itemid=$this->url2id($url);
 		$resp=onedrive::move($cutitems,$itemid);
 		oneindex::refresh_cache(get_absolute_path(config('onedrive_root')));
+		return json_encode(json_decode(json_encode($resp)));//decode去掉字符串中的转义字符再
+	}
+	//复制
+	function copy($copyitems,$url){
+		$itemid=$this->url2id($url);
+		$resp=onedrive::copy($copyitems,$itemid);
+		oneindex::refresh_cache(get_absolute_path(config('onedrive_root')));
 		return $resp;
 	}
+	//url转路径
+	function url2path($url){
+		$paths=array();
+		$paths = explode('/', rawurldecode($url));
+		if(strcmp($paths[1],'?')==0){
+			array_shift($paths);
+			array_shift($paths);
+		}
+		$remotepath = get_absolute_path(join('/', $paths));
+		$path = str_replace('//','/',config('onedrive_root').$remotepath);
+		return $path;
+	}
+
 	//url转id
 	function url2id($url){
 		$urlinfo=parse_url($url);
@@ -174,10 +213,5 @@ class CommonController{
 		$itemid=onedrive::path2id($totalpath);
 		return $itemid;
 	}
-	//id转路径
-	function id2path(){
-		$itemid=$_POST['id'];
-		$paid = $_POST['paid'];
-		return onedrive::id2path($itemid,$paid);
-	}
+	
 }

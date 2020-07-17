@@ -186,18 +186,23 @@ mdui.JQ('#rename').on('click', function () {
             httpRequest.setRequestHeader("Content-type","application/x-www-form-urlencoded");//设置请求头 注：post方式必须设置请求头（在建立连接后设置请求头）
             var query='name='+value+'&itemid='+check_val[0];
             httpRequest.send(query);//发送请求 将情头体写在send中
+            var item_dom=document.getElementById(check_val[0]);
+            item_dom.getElementsByClassName('loading-gif')[0].style.display='';
+           
             /**
              * 获取数据后的处理程序
              */
             httpRequest.onreadystatechange = function () {//请求后的回调接口，可将请求成功后要执行的程序写在其中
                 if (httpRequest.readyState == 4 && httpRequest.status == 200) {//验证请求是否发送成功
-                    var item_dom=document.getElementById(check_val[0]);
+                	item=JSON.parse(httpRequest.responseText);
                     var a_dom = item_dom.getElementsByTagName('a')[0];
-                    var a_href = a_dom.getAttribute('href');
-                    a_href = a_href.replace(new RegExp('/(.*)'+item_dom.getElementsByTagName('span')[0].innerHTML+'/'),'$1'+value);
+                    a_href = item.parentReference.path.replace("/drive/root:","?")+"/"+item.name;
                     item_dom.getElementsByTagName('span')[0].innerHTML=value;
+                    item_dom.getElementsByClassName('loading-gif')[0].style.display='none';
                     item_dom.getElementsByTagName('a')[0].setAttribute('href',a_href);
                     item_dom.setAttribute('data-sort-name',value);
+                }else{
+                    item_dom.getElementsByClassName('loading-gif')[0].style.display='none';
                 }
             };
         },
@@ -215,7 +220,7 @@ mdui.JQ('#deleteall').on('click', function(){
     mdui.confirm('请确认是否删除选中项目',
         function(){
             for(var i=0;i<check_val.length;i++){
-                $('#'+check_val[i]).prepend($('#loading').clone().attr('id','deleteloading'));
+            	document.getElementById(check_val[i]).getElementsByClassName('loading-gif')[0].style.display='';
             }
             var httpRequest = new XMLHttpRequest();
             httpRequest.open('POST', '?/deleteitems', true);
@@ -229,19 +234,22 @@ mdui.JQ('#deleteall').on('click', function(){
                 	var resp = JSON.parse(httpRequest.responseText);
                     for(var i=0;i<check_val.length;i++){
                     	if(resp[i]){
-                    		
-                    		deleteerror = 1;
+                            deleteerror++;
+                            document.getElementById(check_val[i]).getElementsByClassName('loading-gif')[0].style.display='none';
                     		errormessage = JSON.parse(resp[i])['error']['message'];
                     	}else{
                     		document.getElementById(check_val[i]).style.display = 'none';
                     	}
                     }
-                    if(deleteerror==1){
-                    	alert('部分文件删除失败！请重试。错误代码：'+errormessage);
+                    if(deleteerror>=1){
+                        alert(deleteerror+'个文件删除失败！请重试。错误代码：'+errormessage);
                     }
                 }
                 if(httpRequest.status==502&&httpRequest.readyState==4){
-                	alert('服务器无响应！请刷新后查看是否删除成功！');
+                    alert('服务器无响应！请刷新后查看是否删除成功！');
+                    for(var i=0;i<check_val.length;i++){
+                        document.getElementById(check_val[i]).getElementsByClassName('loading-gif')[0].style.display='none';
+                    }
                 }
             };
         },
@@ -254,6 +262,7 @@ mdui.JQ('#deleteall').on('click', function(){
         }
     );
 });
+
 
 
 //文件选中某个文件后
@@ -318,7 +327,7 @@ function submitForm() {
             // console.log(JSON.parse(req.responseText).parentReference.path);
             if(item.id){
             	$('#pending').css('display','none');
-                var $dom_items='<li class="mdui-list-item file mdui-ripple filter" data-sort data-sort-name="'+item.name+'" data-sort-date="'+item.lastModifiedDateTime+'" data-sort-size="'+item.size+'" id="'+item.id+'"><label class="mdui-checkbox"><input type="checkbox" value="'+item.id+'" name="itemid" onclick="onClickHander()"><i class="mdui-checkbox-icon"></i></label><a href="'+item.path+'" target="_blank"><div class="mdui-col-xs-12 mdui-col-sm-7 mdui-text-truncate"><i class="mdui-icon material-icons">insert_drive_file</i><span>'+item.name+'</span></div><div class="mdui-col-sm-3 mdui-text-right">'+item.lastModifiedDateTime.replace(/[a-zA-Z]/g,' ')+'</div><div class="mdui-col-sm-2 mdui-text-right">'+item.size+'</div></a></li>';
+                var $dom_items=getListDom(item);
                  if($('#backtolast').length>0){
                     $('#backtolast').after($dom_items);
                     console.log('存在返回上一级');
@@ -331,6 +340,8 @@ function submitForm() {
             	$('#pending').css('display','none');
                 alert('新建文件夹失败,错误代码:'+item.error.message);
             }
+        }else{
+            $('#pending').css('display','none');
         }
     };
 }
@@ -357,6 +368,7 @@ if(!getCookie('cutitems')&&!getCookie('copyitems')){
 }
 //点击粘贴
 function paste(){
+    $('#pending').css('display',null);
     if(getCookie('cutitems')){
     	// var json_data = {cutitems:getCookie('cutitems'),url:window.location.href};
     	var json_data = '{"cutitems":'+getCookie('cutitems')+',"url":"'+window.location.href+'"}';
@@ -365,16 +377,43 @@ function paste(){
             httpRequest.setRequestHeader("Content-type","application/json");//设置请求头 注：post方式必须设置请求头（在建立连接后设置请求头）
             // var query=JSON.stringify(json_data);
             httpRequest.send(json_data);
-            /**
-             * 获取数据后的处理程序
-             */
-            httpRequest.onreadystatechange = function () {//请求后的回调接口，可将请求成功后要执行的程序写在其中
-                if (httpRequest.readyState == 4 && httpRequest.status == 200) {//验证请求是否发送成功
-                    console.log(httpRequest.responseText);
+            var itemsid=JSON.parse(getCookie('cutitems'));
+            httpRequest.onreadystatechange = function () {
+                if (httpRequest.readyState == 4 && httpRequest.status == 200) {
+                    var resp_json = JSON.parse(httpRequest.responseText);
+                    var resperror = 0;
+                    var errormsg ='';
+                    for(var i=0;i<resp_json.length;i++){
+                    	var item_json=JSON.parse(resp_json[i]);
+                    	if(item_json.id){
+                    		var $item_domstr = getListDom(item_json);
+                    		if($('#backtolast').length>0){
+			                    $('#backtolast').after($item_domstr);
+			                }else{
+			                     $('#indexsort').after($item_domstr);
+			                }
+                    	}
+                    	else if(item_json.error){
+                    		resperror = 1;
+                    		errormsg = item_json['error']['message'];
+                    	}
+                    }
+                    if(resperror==1){
+                    	alert('移动失败，错误代码：'+errormsg);
+                    }
+                    $('#pending').css('display','none');
                     document.cookie = "cutitems=; expires=Thu, 01 Jan 1970 00:00:00 GMT";
                     document.getElementById('pastebtn').style.display='none';
                     document.getElementById('cutbtn').style.display="";
                     document.getElementById('copybtn').style.display="";    
+                }
+                if(httpRequest.status==502&&httpRequest.readyState==4){
+                	$('#pending').css('display','none');
+                	document.cookie = "cutitems=; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+                    document.getElementById('pastebtn').style.display='none';
+                    document.getElementById('cutbtn').style.display="";
+                    document.getElementById('copybtn').style.display=""; 
+                    alert('服务器无响应！');
                 }
             };
     }else if(getCookie('copyitems')){
@@ -382,25 +421,38 @@ function paste(){
     	var json_data = '{"copyitems":'+getCookie('copyitems')+',"url":"'+window.location.href+'"}';
         var httpRequest = new XMLHttpRequest();
             httpRequest.open('POST', '?/paste', true);
-            httpRequest.setRequestHeader("Content-type","application/json");//设置请求头 注：post方式必须设置请求头（在建立连接后设置请求头）
-            // var query=JSON.stringify(json_data);
+            httpRequest.setRequestHeader("Content-type","application/json");
             httpRequest.send(json_data);
-            /**
-             * 获取数据后的处理程序
-             */
-            httpRequest.onreadystatechange = function () {//请求后的回调接口，可将请求成功后要执行的程序写在其中
-                if (httpRequest.readyState == 4 && httpRequest.status == 200) {//验证请求是否发送成功
-                    console.log(httpRequest.responseText);
+            var resperror=0;
+            var respsuccess=0
+            httpRequest.onreadystatechange = function () {
+                if (httpRequest.readyState == 4 && httpRequest.status == 200) {
+                    var resp = JSON.parse(httpRequest.responseText);
+                    for(var i=0;i<resp.length;i++){
+                    	var resp_data = resp[i];
+                    	if(resp_data.http_code!=202){
+                    		resperror++;
+                    	}else if(resp_data.http_code==202){
+                    		respsuccess++;
+                    	}
+                    }
                     document.cookie = "copyitems=; expires=Thu, 01 Jan 1970 00:00:00 GMT";
                     document.getElementById('pastebtn').style.display='none';
                     document.getElementById('cutbtn').style.display="";
-                    document.getElementById('copybtn').style.display="";   
+                    document.getElementById('copybtn').style.display="";
+                    $('#pending').css('display','none');
+                	alert('共'+respsuccess+'个文件复制成功,'+resperror+'个文件复制失败,大文件复制时间较长，请自行刷新页面！');
+                }else{
+                	//需要删除
+                	$('#pending').css('display','none');
+                    document.cookie = "copyitems=; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+                    document.getElementById('pastebtn').style.display='none';
+                    document.getElementById('cutbtn').style.display="";
+                    document.getElementById('copybtn').style.display="";  
                 }
             };
     }
     
-    alert("粘贴成功，两秒后刷新页面");
-    setInterval(function(){location.reload();},3000);
 }
 //获取cookie
 function getCookie(cname){
@@ -413,4 +465,15 @@ function getCookie(cname){
         }
     }
     return false;
+}
+//获取新的dom
+function getListDom(item){
+	var $domstr='';
+	var path=item.parentReference.path.replace("/drive/root:","?")+"/"+item.name;
+	if(item['folder']){
+		$domstr='<li class="mdui-list-item mdui-ripple filter" data-sort data-sort-name="'+item.name+'" data-sort-date="'+item.lastModifiedDateTime+'" data-sort-size="'+item.size+'" id="'+item.id+'"><label class="mdui-checkbox"><input type="checkbox" value="'+item.id+'" name="itemid" onclick="onClickHander()"><i class="mdui-checkbox-icon"></i></label><a href="'+path+'"><div class="mdui-col-xs-12 mdui-col-sm-7 mdui-text-truncate"><i class="mdui-icon material-icons">folder_open</i><span>'+item.name+'</span></div><div class="mdui-col-sm-3 mdui-text-right">'+item.lastModifiedDateTime.replace(/[a-zA-Z]/g,' ')+'</div><div class="mdui-col-sm-2 mdui-text-right">'+item.size+'</div></a></li>';
+	}else{
+		$domstr='<li class="mdui-list-item file mdui-ripple filter" data-sort data-sort-name="'+item.name+'" data-sort-date="'+item.lastModifiedDateTime+'" data-sort-size="'+item.size+'" id="'+path+'"><label class="mdui-checkbox"><input type="checkbox" value="'+item.id+'" name="itemid" onclick="onClickHander()"><i class="mdui-checkbox-icon"></i></label><a href="'+path+'" target="_blank"><div class="mdui-col-xs-12 mdui-col-sm-7 mdui-text-truncate"><i class="mdui-icon material-icons">insert_drive_file</i><span>'+item.name+'</span></div><div class="mdui-col-sm-3 mdui-text-right">'+item.lastModifiedDateTime.replace(/[a-zA-Z]/g,' ')+'</div><div class="mdui-col-sm-2 mdui-text-right">'+item.size+'</div></a></li>';
+	}
+	return $domstr;
 }
