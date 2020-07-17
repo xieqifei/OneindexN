@@ -157,15 +157,7 @@ mdui.JQ('#deleteall').on('click', function(){
     mdui.confirm('请确认是否删除选中项目',
         function(){
             for(var i=0;i<check_val.length;i++){
-<<<<<<< HEAD
-<<<<<<< HEAD
-                $('#'+check_val[i]).prepend($('#loading').clone().attr('id','deleteloading'));
-=======
             	document.getElementById(check_val[i]).getElementsByClassName('loading-gif')[0].style.display='';
->>>>>>> dev
-=======
-            	document.getElementById(check_val[i]).getElementsByClassName('loading-gif')[0].style.display='';
->>>>>>> dev
             }
             var httpRequest = new XMLHttpRequest();
             httpRequest.open('POST', '?/deleteitems', true);
@@ -179,34 +171,13 @@ mdui.JQ('#deleteall').on('click', function(){
                 	var resp = JSON.parse(httpRequest.responseText);
                     for(var i=0;i<check_val.length;i++){
                     	if(resp[i]){
-<<<<<<< HEAD
-<<<<<<< HEAD
-                    		
-                    		deleteerror = 1;
-=======
                             deleteerror++;
                             document.getElementById(check_val[i]).getElementsByClassName('loading-gif')[0].style.display='none';
->>>>>>> dev
-=======
-                            deleteerror++;
-                            document.getElementById(check_val[i]).getElementsByClassName('loading-gif')[0].style.display='none';
->>>>>>> dev
                     		errormessage = JSON.parse(resp[i])['error']['message'];
                     	}else{
                     		document.getElementById(check_val[i]).style.display = 'none';
                     	}
                     }
-<<<<<<< HEAD
-<<<<<<< HEAD
-                    if(deleteerror==1){
-                    	alert('部分文件删除失败！请重试。错误代码：'+errormessage);
-                    }
-                }
-                if(httpRequest.status==502&&httpRequest.readyState==4){
-                	alert('服务器无响应！请刷新后查看是否删除成功！');
-=======
-=======
->>>>>>> dev
                     if(deleteerror>=1){
                         alert(deleteerror+'个文件删除失败！请重试。错误代码：'+errormessage);
                     }
@@ -216,10 +187,6 @@ mdui.JQ('#deleteall').on('click', function(){
                     for(var i=0;i<check_val.length;i++){
                         document.getElementById(check_val[i]).getElementsByClassName('loading-gif')[0].style.display='none';
                     }
-<<<<<<< HEAD
->>>>>>> dev
-=======
->>>>>>> dev
                 }
             };
         },
