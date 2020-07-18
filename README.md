@@ -12,11 +12,15 @@
 
 ![](https://i.loli.net/2020/07/16/VnzDaT2Q8Xr3ZuP.png)
 
-##### 关于部署到heroku等，php无硬盘操作权限的平台须知：
+#### 关于部署到heroku等，php无硬盘操作权限的平台须知：
 
-> 安装程序不可用，将无限循环。请自行在其他主机安装后将config下文件拷贝到仓库，然后部署。
-
-建议使用虚拟主机/vps安装此此应用。免费的虚拟主机：https://www.000webhost.com
+> 安装程序不可用，将无限循环。请自行在其他主机安装后将config下文件拷贝到仓库，然后部署。网站的后台也无法修改前台的功能，后台修改都需要在主机上修改后，将config文件拷贝到heroku。
+>
+> 建议使用虚拟主机/vps安装此应用。免费的虚拟主机：https://www.000webhost.com
+>
+> 一个不完整的000webhost使用教程：https://sci.ci/2020/06/22/oneindex-zi-jian-bu-xian-su-wang-pan/
+>
+> 这个虚拟主机安装的网站，网站会有水印，无法去除。你可以在这个主机上进行安装，然后将网站目录下的config文件夹下载下来，放到你fork的github仓库，然后部署到heroku。从而避免在heroku上运行安装程序。然后删除仓库的配置文件，/config/token.php和/config/base.php。关闭heroku的自动部署功能。
 
 如果安装时无法切换世纪互联/国际版本，可以自行修改`/lib/onedrive.php`中的`api_url`和`oauth_url`参数。
 
@@ -204,6 +208,10 @@ rpc-listen-port=6800
 ```
 
 > 请注意，关闭远程请求并不能阻止其他主机向aria2发送请求，在不设置token时，任何人都可以通过直接向`http://yoursite/jsonrpc`这个地址发送请求连接aria2。如果你开启游客离线下载可以这么设置。如果你不希望有人通过其他aria2前端连接你的aria2，请你务必设置token，但是这样做，你也必须在使用的时候修改rpc设置，好在，第一次修改设置后，之后浏览器都会记住这个设置。
+
+> 博客：https://sci.ci
+>
+> 如果应用有bug，或者你有好的修改建议，可以通过邮箱联系我：im@xieqifei.com
 
 # 五：参考资料
 
