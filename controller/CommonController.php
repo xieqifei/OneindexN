@@ -21,7 +21,7 @@ class CommonController{
 				$keyword=$_POST['keyword'];
 				$items = onedrive::search($keyword);
 				if(!$items){
-					return view::load('common/tips')->with('tip','无匹配结果');
+					return view::load('common/tips')->with('tip','没有找到与“'.$_POST['keyword'].'”有关的内容');
 				}
 				$searchinfo['keyword']=$keyword;
 				$searchinfo['count']=count($items);

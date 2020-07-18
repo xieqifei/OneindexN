@@ -20,7 +20,7 @@
 >
 > 一个不完整的000webhost使用教程：https://sci.ci/2020/06/22/oneindex-zi-jian-bu-xian-su-wang-pan/
 >
-> 这个虚拟主机安装的网站，网站会有水印，无法去除。你可以在这个主机上进行安装，然后将网站目录下的config文件夹下载下来，放到你fork的github仓库，然后部署到heroku。从而避免在heroku上运行安装程序。然后删除仓库的配置文件，/config/token.php和/config/base.php。关闭heroku的自动部署功能。
+> 这个虚拟主机安装的网站，网站会有水印，无法去除。你可以在这个主机上进行安装，然后将网站目录下的config文件夹下载下来，放到你fork的github仓库，然后部署到heroku。从而避免在heroku上运行安装程序。然后删除仓库的配置文件，/config/token.php和/config/base.php。务必关闭heroku的自动部署功能。
 
 如果安装时无法切换世纪互联/国际版本，可以自行修改`/lib/onedrive.php`中的`api_url`和`oauth_url`参数。
 
