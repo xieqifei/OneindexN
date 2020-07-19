@@ -85,10 +85,15 @@ class CommonController{
 	//url上传
 	function upload_url(){
 		// if(is_login()){
-			if($_POST['file_url']&&$_POST['path_url']&&$_POST['file_name']){
+			if($_POST['file_url']&&$_POST['path_url']){
 				$file_url=$_POST['file_url'];
 				$path_url=$_POST['path_url'];
-				$file_name = $_POST['file_name'];
+				if($_POST['file_name']){
+					$file_name = $_POST['file_name'];
+				}
+				else{
+					$file_name = pathinfo(parse_url($file_url,PHP_URL_PATH),PATHINFO_BASENAME);
+				}
 				$path = str_replace('//','/',$this->url2path($path_url).'/'.$file_name);
 				$process_url = onedrive::upload_url($path , $file_url);
 				return $process_url;

@@ -21,7 +21,6 @@ function file_ico($item){
 <div class="mdui-container-fluid" >
 	<div class="nexmoe-item">
 	<select class="mdui-select" id="file_upload">
-		<option value="0" disabled>上传</option>	
 		<option value="online_upload">本地上传</option>
 		<option value="remote_upload">远程上传</option>
   	</select>
