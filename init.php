@@ -44,14 +44,13 @@ if (!function_exists('config')) {
 				} else {
 					$configs[$file][$key] = $value;
 				}
-
+				cache::clear();
 			} else {
 				if (is_null($value)) {
 					return unlink($file_name);
 				} else {
 					$configs[$file] = $value;
 				}
-
 			}
 			file_put_contents($file_name, "<?php return " . var_export($configs[$file], true) . ";", FILE_FLAGS);
 		} else {
