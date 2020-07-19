@@ -201,7 +201,6 @@ class AdminController{
 			config('client_id',$_POST['client_id']);
 			config('redirect_uri',$_POST['redirect_uri']);
 			config('area',$_POST['area']);
-			
 			return view::direct('?step=2');
 		}
 		if($_SERVER['HTTP_HOST'] == 'localhost'){

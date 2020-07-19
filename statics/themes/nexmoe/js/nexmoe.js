@@ -84,12 +84,23 @@ $(function(){
 });
 var inst1 = new mdui.Fab('#myFab');
 
-//文件上传对话框
-var inst2 = new mdui.Dialog('#fileupload-dialog');
-// method
-document.getElementById('file_upload').addEventListener('click', function () {
-    inst2.open();
-});
+//文件在线上传对话框
+var inst2 = new mdui.Dialog('#onlineupload-dialog');
+//文件远程上传对话框
+var inst6 = new mdui.Dialog('#remoteupload-dialog');
+var inst7 = new mdui.Dialog('#progress');
+//文件上传方式选择
+var inst5 = new mdui.Select('#file_upload');
+$$('#file_upload').on('closed.mdui.select', function () {
+    var  myselect=document.getElementById("file_upload");
+    var index=myselect.selectedIndex ;
+    var option = myselect.options[index].value;
+    if(option == "online_upload"){
+        inst2.open;
+    }else if(option == "remote_upload"){
+        inst6.open;
+    }
+  });
 
 //全局搜索
 var inst3 = new mdui.Dialog('#search_form');
@@ -345,6 +356,22 @@ function submitForm() {
         }
     };
 }
+
+//远程url上传文件
+function submitRemoteFile() {
+    var formData = new FormData($("#remoteupload")[0]);  //重点：要用这种方法接收表单的参数
+    inst6.close();
+    const req = new XMLHttpRequest();
+    req.open('post', '?/upload_url', true);
+    req.send(formData);
+    req.onreadystatechange = function () {//请求后的回调接口，可将请求成功后要执行的程序写在其中
+        if (req.readyState == 4 && req.status == 200) {//验证请求是否发送成功
+            var progress_url = req.responseText;
+            showProgress(progress_url);
+        }
+    };
+}
+
 //点击复制
 function copy(){
     document.cookie="copyitems="+JSON.stringify(check_val);
@@ -402,55 +429,57 @@ function paste(){
                     	alert('移动失败，错误代码：'+errormsg);
                     }
                     $('#pending').css('display','none');
-                    document.cookie = "cutitems=; expires=Thu, 01 Jan 1970 00:00:00 GMT";
                     document.getElementById('pastebtn').style.display='none';
                     document.getElementById('cutbtn').style.display="";
                     document.getElementById('copybtn').style.display="";    
                 }
                 if(httpRequest.status==502&&httpRequest.readyState==4){
                 	$('#pending').css('display','none');
-                	document.cookie = "cutitems=; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+                	
                     document.getElementById('pastebtn').style.display='none';
                     document.getElementById('cutbtn').style.display="";
                     document.getElementById('copybtn').style.display=""; 
                     alert('服务器无响应！');
                 }
+                document.cookie = "cutitems=; expires=Thu, 01 Jan 1970 00:00:00 GMT";
             };
     }else if(getCookie('copyitems')){
     	// var json_data = {cutitems:getCookie('cutitems'),url:window.location.href};
     	var json_data = '{"copyitems":'+getCookie('copyitems')+',"url":"'+window.location.href+'"}';
         var httpRequest = new XMLHttpRequest();
-            httpRequest.open('POST', '?/paste', true);
-            httpRequest.setRequestHeader("Content-type","application/json");
-            httpRequest.send(json_data);
-            var resperror=0;
-            var respsuccess=0
-            httpRequest.onreadystatechange = function () {
-                if (httpRequest.readyState == 4 && httpRequest.status == 200) {
-                    var resp = JSON.parse(httpRequest.responseText);
-                    for(var i=0;i<resp.length;i++){
-                    	var resp_data = resp[i];
-                    	if(resp_data.http_code!=202){
-                    		resperror++;
-                    	}else if(resp_data.http_code==202){
-                    		respsuccess++;
-                    	}
+        httpRequest.open('POST', '?/paste', true);
+        httpRequest.setRequestHeader("Content-type","application/json");
+        httpRequest.send(json_data);
+        var resperror=0;
+        var respsuccess=0
+        httpRequest.onreadystatechange = function () {
+            if (httpRequest.readyState == 4 && httpRequest.status == 200) {
+                var resp = JSON.parse(httpRequest.responseText);
+                for(var i=0;i<resp.length;i++){
+                    var resp_data = resp[i];
+                    if(resp_data.http_code!=202){
+                        resperror++;
+                    }else if(resp_data.http_code==202){
+                        respsuccess++;
                     }
-                    document.cookie = "copyitems=; expires=Thu, 01 Jan 1970 00:00:00 GMT";
-                    document.getElementById('pastebtn').style.display='none';
-                    document.getElementById('cutbtn').style.display="";
-                    document.getElementById('copybtn').style.display="";
-                    $('#pending').css('display','none');
-                	alert('共'+respsuccess+'个文件复制成功,'+resperror+'个文件复制失败,大文件复制时间较长，请自行刷新页面！');
-                }else{
-                	//需要删除
-                	$('#pending').css('display','none');
-                    document.cookie = "copyitems=; expires=Thu, 01 Jan 1970 00:00:00 GMT";
-                    document.getElementById('pastebtn').style.display='none';
-                    document.getElementById('cutbtn').style.display="";
-                    document.getElementById('copybtn').style.display="";  
                 }
-            };
+                
+                document.getElementById('pastebtn').style.display='none';
+                document.getElementById('cutbtn').style.display="";
+                document.getElementById('copybtn').style.display="";
+                $('#pending').css('display','none');
+                alert('共'+respsuccess+'个文件复制成功,'+resperror+'个文件复制失败,大文件复制时间较长，请自行刷新页面！');
+            }else{
+                //需要删除
+                $('#pending').css('display','none');
+                
+                document.getElementById('pastebtn').style.display='none';
+                document.getElementById('cutbtn').style.display="";
+                document.getElementById('copybtn').style.display="";  
+            }
+            document.cookie = "copyitems=; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+            
+        };
     }
     
 }
@@ -476,4 +505,38 @@ function getListDom(item){
 		$domstr='<li class="mdui-list-item file mdui-ripple filter" data-sort data-sort-name="'+item.name+'" data-sort-date="'+item.lastModifiedDateTime+'" data-sort-size="'+item.size+'" id="'+path+'"><label class="mdui-checkbox"><input type="checkbox" value="'+item.id+'" name="itemid" onclick="onClickHander()"><i class="mdui-checkbox-icon"></i></label><a href="'+path+'" target="_blank"><div class="mdui-col-xs-12 mdui-col-sm-7 mdui-text-truncate"><i class="mdui-icon material-icons">insert_drive_file</i><span>'+item.name+'</span></div><div class="mdui-col-sm-3 mdui-text-right">'+item.lastModifiedDateTime.replace(/[a-zA-Z]/g,' ')+'</div><div class="mdui-col-sm-2 mdui-text-right">'+item.size+'</div></a></li>';
 	}
 	return $domstr;
+}
+
+function showProgress(url){
+    inst7.open();
+    var elem = document.getElementById("progress_width"); 
+    var width = 0;
+    var myInterval = setInterval(updateProgress, 100);
+    function updateProgress() {
+        if (width == 100) {
+        clearInterval(myInterval);
+        inst7.close();
+        alert('加载完成！即将刷新页面。');
+        location.reload();
+        } else {
+            if(getProgress(url)!=-1){
+                width=getProgress(url);
+                elem.style.width = width + '%'; 
+            }
+        }
+    }
+}
+
+function getProgress(url){
+    var url=url;
+    var httpRequest = new XMLHttpRequest();
+    httpRequest.open('GET', url, true);
+    httpRequest.send();
+    httpRequest.onreadystatechange=function(){
+        if (httpRequest.readyState == 4 && httpRequest.status == 200) {
+            var data=JSON.parse(httpRequest.responseText)
+            return data.percentageComplete;
+        }
+    };
+    return -1;
 }

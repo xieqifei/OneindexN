@@ -84,20 +84,20 @@ class CommonController{
 	}
 	//url上传
 	function upload_url(){
-		if(is_login()){
-			if($_POST['file_url']&&$_POST['path_url']){
+		// if(is_login()){
+			if($_POST['file_url']&&$_POST['path_url']&&$_POST['file_name']){
 				$file_url=$_POST['file_url'];
 				$path_url=$_POST['path_url'];
-				$file_name = pathinfo(parse_url($file_url)['path'])['basename'];
+				$file_name = $_POST['file_name'];
 				$path = str_replace('//','/',$this->url2path($path_url).'/'.$file_name);
 				$process_url = onedrive::upload_url($path , $file_url);
 				return $process_url;
 			}else{
 				return '参数错误';
 			}
-		}else{
-			return '未登录';
-		}
+		// }else{
+		// 	return '未登录';
+		// }
 	}
 
 	//在线上传，大小限制在4M
@@ -190,7 +190,12 @@ class CommonController{
 	//url转路径
 	function url2path($url){
 		$paths=array();
-		$paths = explode('/', rawurldecode($url));
+		$urlinfo=parse_url($url);
+		if(stristr($url,'?')){
+			$paths = explode('/', rawurldecode($urlinfo['query']));
+		}else{
+			$paths = explode('/', rawurldecode($urlinfo['path']));
+		}
 		if(strcmp($paths[1],'?')==0){
 			array_shift($paths);
 			array_shift($paths);

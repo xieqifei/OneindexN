@@ -193,6 +193,7 @@
 			$resp = fetch::post($request);
 			list($tmp, $location) = explode('Location:', $resp->headers);
 			list($location, $tmp) = explode(PHP_EOL, $location);
+			// return $resp;
 			return trim($location);
 		}
 		
