@@ -34,7 +34,6 @@ if (!function_exists('config')) {
 		if (empty($configs[$file]) AND file_exists($file_name)) {
 			$configs[$file] = @include $file_name;
 		}
-		cache::clear();
 		if (func_num_args() === 2) {
 			$value = func_get_arg(1);
 			//写入配置

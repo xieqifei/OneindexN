@@ -4,7 +4,7 @@ class CommonController{
 	
 	function __construct(){
 	}
-	//离线下载
+	//aria2
 	function offline(){
 		if(config('offline')['offline']||is_login()){
 			return view::load('common/offline');
@@ -100,7 +100,7 @@ class CommonController{
 		}
 	}
 
-	//任意文件在线上传，从个人电脑上传
+	//在线上传，大小限制在4M
 	//post参数：onlinefile：一个文件；uploadurl：当前url路径
 	function onlinefileupload()
 	{
