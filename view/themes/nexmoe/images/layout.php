@@ -6,7 +6,7 @@
 	<title><?php e($title.' - '.config('site_name'));?></title>
 	<link rel="stylesheet" href="https://cloud.i.chainwon.com/data/User/admin/home/css/main.css">
 	<link rel="stylesheet" href="//cdnjs.loli.net/ajax/libs/mdui/0.4.3/css/mdui.min.css">
-	<script src="//cdnjs.loli.net/ajax/libs/mdui/0.4.3/js/mdui.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/gh/xieqifei/StaticsResources/oneindexn/mdui/mdui.min.js"></script>
 </head>
 <body class="mdui-theme-primary-blue-grey mdui-theme-accent-blue">
 	<header class="mdui-appbar mdui-color-theme">
