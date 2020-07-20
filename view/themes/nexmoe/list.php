@@ -222,17 +222,23 @@ function file_ico($item){
   <div class="mdui-dialog" id="remoteupload-dialog">
     <div class="mdui-dialog-title">文件远程上传</div>
     <div class="mdui-dialog-content">
+		<div>仅支持Onedrive个人版，企业和学校版无法使用此功能</div>
 		<form id="remoteupload" action="?/upload_url" method="post" >
-			<label id="fileurl">远程URL</label>
-			<input type="url" name="file_url" id="fileurl" placeholder="输入远程文件url地址"/>
-			<label id="filename">文件名称</label>
-			<input type="text" id="filename" name="file_name"/>
+			<div class="mdui-textfield mdui-textfield-floating-label mdui-col-xs-10 mdui-col-offset-xs-1">
+				<label class="mdui-textfield-label">远程URL</label>
+				<input class="mdui-textfield-input" type="url" name="file_url" id="fileurl" onblur="getRemoteUrl()"/>
+			</div>
+			<div class="mdui-textfield mdui-textfield-floating-label mdui-col-xs-10 mdui-col-offset-xs-1">
+				<label class="mdui-textfield-label">文件名称</label>
+				<input class="mdui-textfield-input" type="text" id="filename" name="file_name" />
+			</div>
+			
 			<input type="text" style="display: none;" name="path_url" value="<?php echo $_SERVER['REQUEST_URI']; ?>"/>
 		</form>
 		<div class="mdui-row-xs-3">
 			<div class="mdui-col"></div>
 				<div class="mdui-col">
-					<button class="mdui-btn mdui-btn-block mdui-color-theme-accent mdui-ripple" onclick="submitRemoteFile()">上传</button>
+					<button class="mdui-btn mdui-btn-block mdui-color-theme-accent mdui-ripple" onclick="submitRemoteFile()">提交</button>
 				</div>
 		</div>
 	</div>
@@ -287,6 +293,8 @@ function file_ico($item){
 <!-- <script src="https://cdn.jsdelivr.net/gh/xieqifei/OneindexN@v1.31/statics/js/nexmoe.js"></script> -->
 
 <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+<script src="//cdnjs.loli.net/ajax/libs/mdui/0.4.3/js/mdui.min.js"></script>
 <script src="https://cdn.bootcdn.net/ajax/libs/clipboard.js/2.0.6/clipboard.min.js"></script>
-<script src="https://cdn.jsdelivr.net/gh/xieqifei/StaticsResources@v1.0/oneindexn/themes/nexmoe/js/nexmoe.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/xieqifei/StaticsResources@v1.2/oneindexn/themes/nexmoe/js/nexmoe.js"></script>
+
 <?php view::end('content');?>

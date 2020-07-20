@@ -84,7 +84,7 @@ class CommonController{
 	}
 	//url上传
 	function upload_url(){
-		// if(is_login()){
+		if(is_login()){
 			if($_POST['file_url']&&$_POST['path_url']){
 				$file_url=$_POST['file_url'];
 				$path_url=$_POST['path_url'];
@@ -100,9 +100,9 @@ class CommonController{
 			}else{
 				return '参数错误';
 			}
-		// }else{
-		// 	return '未登录';
-		// }
+		}else{
+			return '未登录';
+		}
 	}
 
 	//在线上传，大小限制在4M

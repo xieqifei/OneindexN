@@ -91,14 +91,14 @@ var inst6 = new mdui.Dialog('#remoteupload-dialog');
 var inst7 = new mdui.Dialog('#progress');
 //文件上传方式选择
 var inst5 = new mdui.Select('#file_upload');
-$$('#file_upload').on('closed.mdui.select', function () {
+$('#file_upload').on('closed.mdui.select', function () {
     var  myselect=document.getElementById("file_upload");
     var index=myselect.selectedIndex ;
     var option = myselect.options[index].value;
     if(option == "online_upload"){
-        inst2.open;
+        inst2.open();
     }else if(option == "remote_upload"){
-        inst6.open;
+        inst6.open();
     }
   });
 
@@ -361,16 +361,78 @@ function submitForm() {
 function submitRemoteFile() {
     var formData = new FormData($("#remoteupload")[0]);  //重点：要用这种方法接收表单的参数
     inst6.close();
+    inst7.open();
     const req = new XMLHttpRequest();
     req.open('post', '?/upload_url', true);
     req.send(formData);
     req.onreadystatechange = function () {//请求后的回调接口，可将请求成功后要执行的程序写在其中
         if (req.readyState == 4 && req.status == 200) {//验证请求是否发送成功
+            updateProgress(20)
             var progress_url = req.responseText;
             showProgress(progress_url);
+            
         }
     };
 }
+
+//展示进度条
+function showProgress(url){
+    var num=-1;
+    width = 20;
+    myInterval = setInterval(function(){
+        if (100.0-width <= 1e-5) {
+            // console.log('100');
+            clearInterval(myInterval);
+            inst7.close();
+            location.reload();
+            alert('加载完成！即将刷新页面。');
+        } else {
+            num=getProgress(url);
+        }
+    }, 1000);
+    
+}
+//获取进度并更新。返回获取的进度值。
+function getProgress(url){
+    var url=url;
+    var httpRequest = new XMLHttpRequest();
+    httpRequest.open('GET', url, true);
+    httpRequest.send();
+    httpRequest.onreadystatechange=function(){
+        if (httpRequest.readyState == 4 && (httpRequest.status==200|| httpRequest.status == 202||httpRequest.status == 303)) {
+            console.log(httpRequest.responseText);
+            var data=JSON.parse(httpRequest.responseText);
+            if(data.percentageComplete>=width){
+                width=data.percentageComplete;
+                updateProgress(width);
+            }
+            return data.percentageComplete;
+        }
+    };
+    return -1;
+}
+//更新进度条dom
+function updateProgress(width){
+    var dom = document.getElementById("progress_width");
+    dom.style.width = width+'%';
+}
+
+//自动填写url上传文件名
+function getRemoteUrl(){
+	var filename_dom = document.getElementById("filename");
+	var fileurl_dom = document.getElementById('fileurl');
+	var url = fileurl_dom.value;
+	filename = fileNameFromUrl(url);
+	filename_dom.value = filename;
+}
+
+function fileNameFromUrl(url)
+{ 
+	
+	return url?url.split('/').pop().split('#').shift().split('?').shift():null; 
+	
+}
+
 
 //点击复制
 function copy(){
@@ -507,36 +569,4 @@ function getListDom(item){
 	return $domstr;
 }
 
-function showProgress(url){
-    inst7.open();
-    var elem = document.getElementById("progress_width"); 
-    var width = 0;
-    var myInterval = setInterval(updateProgress, 100);
-    function updateProgress() {
-        if (width == 100) {
-        clearInterval(myInterval);
-        inst7.close();
-        alert('加载完成！即将刷新页面。');
-        location.reload();
-        } else {
-            if(getProgress(url)!=-1){
-                width=getProgress(url);
-                elem.style.width = width + '%'; 
-            }
-        }
-    }
-}
 
-function getProgress(url){
-    var url=url;
-    var httpRequest = new XMLHttpRequest();
-    httpRequest.open('GET', url, true);
-    httpRequest.send();
-    httpRequest.onreadystatechange=function(){
-        if (httpRequest.readyState == 4 && httpRequest.status == 200) {
-            var data=JSON.parse(httpRequest.responseText)
-            return data.percentageComplete;
-        }
-    };
-    return -1;
-}
