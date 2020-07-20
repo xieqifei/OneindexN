@@ -34,7 +34,6 @@ if (!function_exists('config')) {
 		if (empty($configs[$file]) AND file_exists($file_name)) {
 			$configs[$file] = @include $file_name;
 		}
-
 		if (func_num_args() === 2) {
 			$value = func_get_arg(1);
 			//写入配置
@@ -45,14 +44,13 @@ if (!function_exists('config')) {
 				} else {
 					$configs[$file][$key] = $value;
 				}
-
+				//cache::clear();
 			} else {
 				if (is_null($value)) {
 					return unlink($file_name);
 				} else {
 					$configs[$file] = $value;
 				}
-
 			}
 			file_put_contents($file_name, "<?php return " . var_export($configs[$file], true) . ";", FILE_FLAGS);
 		} else {
@@ -63,6 +61,7 @@ if (!function_exists('config')) {
 
 			return $configs[$file];
 		}
+
 	}
 }
 

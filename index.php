@@ -4,12 +4,6 @@ require  __DIR__.'/init.php';
 /**
  *    程序安装
  */
-if( empty( config('refresh_token') ) ){
-	route::any('/','AdminController@install');
-
-}
-
-
 //选择OD国际版?世纪互联版。
 if (strcmp(config('area'),'us')==0){
 	onedrive::$api_url = 'https://graph.microsoft.com/v1.0';
@@ -17,6 +11,10 @@ if (strcmp(config('area'),'us')==0){
 }else{
 	onedrive::$api_url = "https://microsoftgraph.chinacloudapi.cn/v1.0";
 	onedrive::$oauth_url = "https://login.partner.microsoftonline.cn/common/oauth2/v2.0";
+}
+
+if( empty( config('refresh_token') ) ){
+	route::any('/','AdminController@install');
 }
 
 /**
@@ -54,8 +52,6 @@ route::any('/upload_url','CommonController@upload_url');
 route::any('/admin/',function(){
 	return view::direct(get_absolute_path(dirname($_SERVER['SCRIPT_NAME'])).'?/login');
 });
-
-
 
 define('VIEW_PATH', ROOT.'view/themes/'.(config('style')?config('style'):'material').'/');
 /**

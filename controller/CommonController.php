@@ -4,7 +4,7 @@ class CommonController{
 	
 	function __construct(){
 	}
-	//离线下载
+	//aria2
 	function offline(){
 		if(config('offline')['offline']||is_login()){
 			return view::load('common/offline');
@@ -88,10 +88,20 @@ class CommonController{
 			if($_POST['file_url']&&$_POST['path_url']){
 				$file_url=$_POST['file_url'];
 				$path_url=$_POST['path_url'];
-				$file_name = pathinfo(parse_url($file_url)['path'])['basename'];
+				if($_POST['file_name']){
+					$file_name = $_POST['file_name'];
+				}
+				else{
+					$file_name = pathinfo(parse_url($file_url,PHP_URL_PATH),PATHINFO_BASENAME);
+				}
 				$path = str_replace('//','/',$this->url2path($path_url).'/'.$file_name);
 				$process_url = onedrive::upload_url($path , $file_url);
-				return $process_url;
+				if($process_url){
+					return $process_url;
+				}
+				else{
+					return 0;
+				}
 			}else{
 				return '参数错误';
 			}
@@ -100,7 +110,7 @@ class CommonController{
 		}
 	}
 
-	//任意文件在线上传，从个人电脑上传
+	//在线上传，大小限制在4M
 	//post参数：onlinefile：一个文件；uploadurl：当前url路径
 	function onlinefileupload()
 	{
@@ -190,7 +200,12 @@ class CommonController{
 	//url转路径
 	function url2path($url){
 		$paths=array();
-		$paths = explode('/', rawurldecode($url));
+		$urlinfo=parse_url($url);
+		if(stristr($url,'?')){
+			$paths = explode('/', rawurldecode($urlinfo['query']));
+		}else{
+			$paths = explode('/', rawurldecode($urlinfo['path']));
+		}
 		if(strcmp($paths[1],'?')==0){
 			array_shift($paths);
 			array_shift($paths);
