@@ -99,12 +99,13 @@ $('#file_upload').on('closed.mdui.select', function () {
         inst2.open();
     }else if(option == "remote_upload"){
         inst6.open();
+    }else if(option=="offline_upload"){
+        window.open('/?/offline','_blank'); 
     }
   });
 
 //全局搜索
 var inst3 = new mdui.Dialog('#search_form');
-// method
 document.getElementById('search').addEventListener('click', function () {
     inst3.open();
 });
@@ -361,24 +362,26 @@ function submitForm() {
 function submitRemoteFile() {
     var formData = new FormData($("#remoteupload")[0]);  //重点：要用这种方法接收表单的参数
     inst6.close();
-    inst7.open();
     const req = new XMLHttpRequest();
     req.open('post', '?/upload_url', true);
     req.send(formData);
     req.onreadystatechange = function () {//请求后的回调接口，可将请求成功后要执行的程序写在其中
         if (req.readyState == 4 && req.status == 200) {//验证请求是否发送成功
-            updateProgress(20)
-            var progress_url = req.responseText;
-            showProgress(progress_url);
-            
+            if(req.responseText=='0'){
+                alert('远程上传仅支持Onedrive个人版');
+            }else{
+                var progress_url = req.responseText;
+                showProgress(progress_url);
+            }
         }
     };
 }
 
 //展示进度条
 function showProgress(url){
+    inst7.open();
     var num=-1;
-    width = 20;
+    width = 0;
     myInterval = setInterval(function(){
         if (100.0-width <= 1e-5) {
             // console.log('100');

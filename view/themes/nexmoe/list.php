@@ -23,6 +23,7 @@ function file_ico($item){
 	<select class="mdui-select" id="file_upload">
 		<option value="online_upload">本地上传</option>
 		<option value="remote_upload">远程上传</option>
+		<option value="offline_upload">aria2上传</option>
   	</select>
 	<button class="mdui-btn mdui-ripple" id="pagesearch">过滤</button>
 	<button class="mdui-btn mdui-ripple" id="newfolder">新建文件夹</button>
@@ -184,9 +185,6 @@ function file_ico($item){
       <i class="mdui-icon mdui-fab-opened material-icons">mode_edit</i>
     </button>
     <div class="mdui-fab-dial">
-	  
-      <button class="mdui-fab mdui-fab-mini mdui-ripple mdui-color-pink" onclick="location.href='/?/offline'" style="display: <?php if(!$manager['offline']) echo "none" ;else echo "inline" ?>;"><i class="mdui-icon material-icons">cloud_upload</i>
-      </button>
       <button class="mdui-fab mdui-fab-mini mdui-ripple mdui-color-red" id="search" style="display: <?php if(!is_login()) echo "none" ;else echo "inline" ?>;"><i class="mdui-icon material-icons">&#xe8b6;</i>
       </button>
       <button class="mdui-fab mdui-fab-mini mdui-ripple mdui-color-orange" onclick="location.href='/?/admin'"><i class="mdui-icon material-icons">account_circle</i>
@@ -295,6 +293,6 @@ function file_ico($item){
 <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
 <script src="//cdnjs.loli.net/ajax/libs/mdui/0.4.3/js/mdui.min.js"></script>
 <script src="https://cdn.bootcdn.net/ajax/libs/clipboard.js/2.0.6/clipboard.min.js"></script>
-<script src="https://cdn.jsdelivr.net/gh/xieqifei/StaticsResources@v1.3/oneindexn/themes/nexmoe/js/nexmoe.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/xieqifei/StaticsResources@v1.4/oneindexn/themes/nexmoe/js/nexmoe.js"></script>
 
 <?php view::end('content');?>

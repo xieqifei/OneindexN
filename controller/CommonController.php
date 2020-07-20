@@ -96,7 +96,12 @@ class CommonController{
 				}
 				$path = str_replace('//','/',$this->url2path($path_url).'/'.$file_name);
 				$process_url = onedrive::upload_url($path , $file_url);
-				return $process_url;
+				if($process_url){
+					return $process_url;
+				}
+				else{
+					return 0;
+				}
 			}else{
 				return '参数错误';
 			}
