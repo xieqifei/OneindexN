@@ -1,9 +1,8 @@
 <?php return array (
-  'site_name' => 'OneIndexN',
-  'password' => 'oneindexn',
+  'site_name' => 'OnePan',
+  'password' => 'qifei123',
   'style' => 'nexmoe',
   'onedrive_root' => '/',
-  'except_path' => 'all',
   'cache_type' => 'secache',
   'cache_expire_time' => 10,
   'cache_refresh_time' => 600,
@@ -24,25 +23,28 @@
     ),
     'video5' => 
     array (
-      0 => 'mp4',
-      1 => 'webm',
-      2 => 'mkv',
+      0 => '',
     ),
     'video' => 
     array (
+      0 => 'mp4',
+      1 => 'webm',
+      2 => 'mkv',
+      3 => 'avi',
+      4 => 'mpg',
+      5 => 'mpeg',
+      6 => 'rm',
+      7 => 'rmvb',
+      8 => 'mov',
+      9 => 'wmv',
+      10 => 'asf',
+      11 => 'ts',
+      12 => 'flv',
+      13 => '',
     ),
     'video2' => 
     array (
-      0 => 'avi',
-      1 => 'mpg',
-      2 => 'mpeg',
-      3 => 'rm',
-      4 => 'rmvb',
-      5 => 'mov',
-      6 => 'wmv',
-      7 => 'asf',
-      8 => 'ts',
-      9 => 'flv',
+      0 => '',
     ),
     'audio' => 
     array (
@@ -89,7 +91,7 @@
   'images' => 
   array (
     'home' => false,
-    'public' => false,
+    'public' => true,
     'exts' => 
     array (
       0 => 'jpg',
@@ -98,17 +100,16 @@
       3 => 'bmp',
     ),
   ),
+  'client_secret' => 'pjqhABM81382#%#[ervYPCI',
+  'client_id' => ' 1afd0f37-6caf-44b2-959f-c7d14ba81514',
+  'redirect_uri' => 'https://oneindex.github.io/',
+  'refresh_token' => 'MCZTLJmUrggyeHsvVBmUBmbR0gA8aIMcucC1y*UGF8HjdccAf6HsUDhpGA2qGliF8bztanylbujAkEZHP2BkxNAkJUaXzV4f1U0FurgJSinyJINHg50wu*O7zKDd15aHFTmqX83z*EVHlFQEJB11iHPd*4muSQ4MUjKfBt81SEHbJnygmoq370u92AKRI!BHwjkwwOyTwi6VNhaTxnPpFiiBrdpSpaH7QSLWTJSze49ZMpFXHsFz7DT2qHZBZPaef8O5Dej7wbSvXapZ7!emgdXTBpZWM6vUwQfZYBLe1Ld2z*wIIRhttQkwXYMUNrmikE1vFHCZ5*tHIRzK6W23w80ORK2U5bXs4WcwxN6AY1pTACujvRpGQFgkyJz7K*edqCd7cwhEZMKBSRUP0Ukmmwrs$',
+  'onedrive_hide' => '',
+  'onedrive_hotlink' => '',
   'offline' => 
   array (
     'offline' => false,
     'online' => false,
-    'upload_path' => '/upload/',
   ),
-  'client_secret' => 'pcbEMJP96:!idfjJVH591:#',
-  'client_id' => '1f52cc9f-ccdb-4325-b870-db1859ba2713',
-  'redirect_uri' => 'https://oneindex.github.io/',
-  'area' => 'us',
-  'refresh_token' => 'OAQABAAAAAAAGV_bv21oQQ4ROqh0_1-tA9G9TVOhWIcsRAQLoWvXwAajeW2dwS6LKnZ7B9MENzgk3bhKN59DM8s0MIlwKtUMtU32kArxcAYwf6iLmrb5hgANeUzW15CNP32t9PSbuQ3_4pewnmiaU0oN-jgXn2-1j5-ltVm-XI5TGJUhazFBqfshIaxclmqz-KvJ4LyOpURKryEODlojlKn6r1C860LHZFM_RvVyPX9ZM96-4v52E1nFOMQUOzkkzpPyGfpJnKFpEeWJJg4WtMytthvdWregb1v2WCGbMPd2k5XZNKqd-C6VaHxpKQjzy3MS5yxBAitZ-LGWDKiEj5bYlX8nITU1l7sj2woaT8cVMqQI59HxqTlPSpV8G46PaiQ30x80QShSMh6M68JXkC5uijWPlotK1uO5Er5a2uf4bayaAHWais914iATzUzClBQPu46ADQRCu777oeJlWV-Qp666H2F0po3v4vWxp1obhHDgsogGf--BcovuBNFO99xNvJe2syejgmVprAhxi1HhLTKjR2jV_DVqFc1XP0ZTwS1ZS8Vzt6GV8KCJ2vUMLl19vIGyXCFlVyQH_BAR17O-UH5UWJkFDKNeSusCmqDZmr_L8pvQvWduDntwT7KA1eL36quKHD23Nh2vC4TwxTmNNMy3Fla11brM7QTZWDuSvr0RdRRgVZkAgJ8vSoqudRwxkB8bKkQMG4zfqXnTPYhm_Uh80YpsMYAhAQnQeugda5ClLvoQcvpSqjy1BAO1ciTysiEuxSZf7WvvwJdrnExSMwiP03Hhc9izCveYNsiZxfXbiAFUDfhGDhrUx_u2uTog9P6ygpMau8wXG1uwkmpxqe0jA-oMKBmQgVHHM2dO6sHK8R1cmlmej9H-orEiuEG5xy1GxFV5EcgZRw7U-9fo2c84uiWmMibEh-fwTNVVxzKkwg7mUZkwrV9mcHIRE-JXBo5HBwB0gAA',
-  'onedrive_hide' => '',
-  'onedrive_hotlink' => '',
+  'except_path' => '',
 );
